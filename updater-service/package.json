@@ -1,0 +1,16 @@
+{
+  "name": "@beautofuel/updater-service",
+  "private": true,
+  "version": "0.0.0-unversioned",
+  "description": "",
+  "main": "service.js",
+  "scripts": {
+    "start": "node service.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongodb": "^3.6.3"
+  }
+}
