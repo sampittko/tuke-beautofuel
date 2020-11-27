@@ -5,7 +5,7 @@
   "description": "",
   "main": "service.js",
   "scripts": {
-    "start": "node service.js"
+    "start": "nodemon updater.js"
   },
   "author": "",
   "license": "ISC",
