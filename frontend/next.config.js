@@ -1,5 +1,5 @@
 module.exports = {
   env: {
-    API_BASEURL: process.env.REACT_APP_API_BASEURL,
+    CMS_BASEURL: "http://localhost:1337",
   },
 };
