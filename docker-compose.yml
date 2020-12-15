@@ -2,90 +2,75 @@ version: "3.9"
 
 services:
   strapi:
-    image: strapi/strapi
+    image: strapi/strapi:3.3.4-node12-alpine
     restart: always
-    env_file: ./backend/strapi/.env
-    environment:
-      DATABASE_CLIENT: $${DATABASE_CLIENT}
-      DATABASE_NAME: $${DATABASE_NAME}
-      DATABASE_HOST: $${DATABASE_HOST}
-      DATABASE_PORT: $${DATABASE_PORT}
-      DATABASE_USERNAME: $${DATABASE_USERNAME}
-      DATABASE_PASSWORD: $${DATABASE_PASSWORD}
+    env_file: ./strapi/.env
     networks:
       - app-network
+      - core-network
     volumes:
-      - ./backend/strapi:/var/src/strapi
+      - ./strapi:/var/src/strapi
     ports:
       - "1337:1337"
+    depends_on:
+      - strapi-db
 
   strapi-db:
-    image: mongo
+    image: mongo:4.4.2
     restart: always
-    env_file: ./backend/strapi/.env
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: $${DATABASE_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: $${DATABASE_PASSWORD}
+    env_file: ./strapi/.env
     networks:
-      - app-network
-      - updater-network
+      - core-network
     volumes:
       - strapi-db-volume:/data/db
-    ports:
-      - "27017:27017"
 
   updater:
-    image: tiangolo/uvicorn-gunicorn-fastapi:python3.7
+    image: tiangolo/uvicorn-gunicorn-fastapi:python3.7-alpine3.8-2020-06-06
+    environment:
+      PORT: 1338
     restart: always
     networks:
-      - updater-network
+      - core-network
     volumes:
-      - ./backend/updater:/var/src/updater
+      - ./updater:/var/src/updater
     ports:
-      - "1338:1338"
+      - 1338:1338
 
   next:
-    ports:
-      - 3000:3000
     build:
-      context: frontend
-    volumes:
-      - ./frontend:/var/src/next
-      - /var/src/next/node_modules
-      - /var/src/next/.next
+      context: next
     networks:
       - app-network
+    volumes:
+      - ./next:/var/src/next
+      - /var/src/next/node_modules
+      - /var/src/next/.next
+    ports:
+      - 3001:3001
 
   grafana:
-    image: grafana/grafana
+    image: grafana/grafana:7.3.5
     restart: always
     networks:
       - monitoring-network
     volumes:
       - grafana-volume:/var/lib/grafana
     ports:
-      - 3001:3001
+      - 3000:3000
 
   grafana-db:
-    image: influxdb
+    image: influxdb:1.8.3
     restart: always
-    env_file: ./backend/updater/.env
-    environment:
-      INFLUXDB_DB: $${DATABASE_NAME}
-      INFLUXDB_ADMIN_USER: $${DATABASE_ADMIN_USERNAME}
-      INFLUXDB_ADMIN_PASSWORD: $${DATABASE_ADMIN_PASSWORD}
-      INFLUXDB_USER: $${DATABASE_USERNAME}
-      INFLUXDB_USER_PASSWORD: $${DATABASE_PASSWORD}
-    ports:
-      - 8086:8086
+    env_file: ./updater/.env
     networks:
       - monitoring-network
+      - core-network
     volumes:
       - grafana-db-volume:/var/lib/influxdb/data
 
 networks:
   app-network:
-  updater-network:
+  core-network:
   monitoring-network:
 
 volumes:
