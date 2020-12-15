@@ -1,0 +1,94 @@
+version: "3.9"
+
+services:
+  strapi:
+    image: strapi/strapi
+    restart: always
+    env_file: ./backend/strapi/.env
+    environment:
+      DATABASE_CLIENT: $${DATABASE_CLIENT}
+      DATABASE_NAME: $${DATABASE_NAME}
+      DATABASE_HOST: $${DATABASE_HOST}
+      DATABASE_PORT: $${DATABASE_PORT}
+      DATABASE_USERNAME: $${DATABASE_USERNAME}
+      DATABASE_PASSWORD: $${DATABASE_PASSWORD}
+    networks:
+      - app-network
+    volumes:
+      - ./backend/strapi:/var/src/strapi
+    ports:
+      - "1337:1337"
+
+  strapi-db:
+    image: mongo
+    restart: always
+    env_file: ./backend/strapi/.env
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: $${DATABASE_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: $${DATABASE_PASSWORD}
+    networks:
+      - app-network
+      - updater-network
+    volumes:
+      - strapi-db-volume:/data/db
+    ports:
+      - "27017:27017"
+
+  updater:
+    image: tiangolo/uvicorn-gunicorn-fastapi:python3.7
+    restart: always
+    networks:
+      - updater-network
+    volumes:
+      - ./backend/updater:/var/src/updater
+    ports:
+      - "1338:1338"
+
+  next:
+    ports:
+      - 3000:3000
+    build:
+      context: frontend
+    volumes:
+      - ./frontend:/var/src/next
+      - /var/src/next/node_modules
+      - /var/src/next/.next
+    networks:
+      - app-network
+
+  grafana:
+    image: grafana/grafana
+    restart: always
+    networks:
+      - monitoring-network
+    volumes:
+      - grafana-volume:/var/lib/grafana
+    ports:
+      - 3001:3001
+
+  grafana-db:
+    image: influxdb
+    restart: always
+    env_file: ./backend/updater/.env
+    environment:
+      INFLUXDB_DB: $${DATABASE_NAME}
+      INFLUXDB_ADMIN_USER: $${DATABASE_ADMIN_USERNAME}
+      INFLUXDB_ADMIN_PASSWORD: $${DATABASE_ADMIN_PASSWORD}
+      INFLUXDB_USER: $${DATABASE_USERNAME}
+      INFLUXDB_USER_PASSWORD: $${DATABASE_PASSWORD}
+    ports:
+      - 8086:8086
+    networks:
+      - monitoring-network
+    volumes:
+      - grafana-db-volume:/var/lib/influxdb/data
+
+networks:
+  app-network:
+  updater-network:
+  monitoring-network:
+
+volumes:
+  strapi-db-volume:
+  grafana-volume:
+  grafana-db-volume:
