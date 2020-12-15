@@ -27,16 +27,16 @@ services:
     ports:
       - 1337:1337
     depends_on:
-      - strapi-db
+      - strapidb
 
-  strapi-db:
+  strapidb:
     image: mongo:4.4.2
     restart: always
-    env_file: ./strapi/.env
+    env_file: ./.env.strapidb
     networks:
       - core-network
     volumes:
-      - strapi-db-volume:/data/db
+      - strapidb-volume:/data/db
 
   updater:
     image: tiangolo/uvicorn-gunicorn-fastapi:python3.7-alpine3.8-2020-06-06
@@ -51,8 +51,8 @@ services:
       - 1338:1338
     depends_on:
       - strapi
-      - strapi-db
-      - grafana-db
+      - strapidb
+      - grafanadb
 
   grafana:
     image: grafana/grafana:7.3.5
@@ -64,17 +64,17 @@ services:
     ports:
       - 3000:3000
     depends_on:
-      - grafana-db
+      - grafanadb
 
-  grafana-db:
+  grafanadb:
     image: influxdb:1.8.3
     restart: always
-    env_file: ./updater/.env
+    env_file: ./.env.grafanadb
     networks:
       - monitoring-network
       - core-network
     volumes:
-      - grafana-db-volume:/var/lib/influxdb/data
+      - grafanadb-volume:/var/lib/influxdb
 
 networks:
   app-network:
@@ -82,6 +82,6 @@ networks:
   monitoring-network:
 
 volumes:
-  strapi-db-volume:
+  strapidb-volume:
   grafana-volume:
-  grafana-db-volume:
+  grafanadb-volume:
