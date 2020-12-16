@@ -4,13 +4,13 @@ RUN mkdir -p /var/src/next
 WORKDIR /var/src/next
 
 COPY package*.json /var/src/next/
-RUN npm install
-# RUN npm install --production
+RUN yarn install
+# RUN yarn install --production
 
 COPY . /var/src/next
 
-RUN npm run build
+RUN yarn build build
 EXPOSE 3001
 
-CMD "npm" "run" "dev"
+CMD "yarn" "dev"
 # CMD "npm" "start"

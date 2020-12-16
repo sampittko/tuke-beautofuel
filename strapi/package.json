@@ -1,8 +1,7 @@
 {
-  "name": "cms",
+  "name": "strapi",
   "private": true,
-  "version": "0.1.0",
-  "description": "A Strapi application",
+  "version": "0.0.0-unversioned",
   "scripts": {
     "develop": "strapi develop",
     "start": "strapi start",
@@ -13,16 +12,14 @@
   "dependencies": {
     "strapi": "3.3.4",
     "strapi-admin": "3.3.4",
-    "strapi-utils": "3.3.4",
-    "strapi-plugin-content-type-builder": "3.3.4",
+    "strapi-connector-mongoose": "3.3.4",
     "strapi-plugin-content-manager": "3.3.4",
-    "strapi-plugin-users-permissions": "3.3.4",
+    "strapi-plugin-content-type-builder": "3.3.4",
     "strapi-plugin-email": "3.3.4",
+    "strapi-plugin-graphql": "3.3.4",
     "strapi-plugin-upload": "3.3.4",
-    "strapi-connector-mongoose": "3.3.4"
-  },
-  "author": {
-    "name": "A Strapi developer"
+    "strapi-plugin-users-permissions": "3.3.4",
+    "strapi-utils": "3.3.4"
   },
   "strapi": {
     "uuid": "d28db3ea-c9fb-4e25-88e7-6e00bf26e6a1"

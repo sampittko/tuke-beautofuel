@@ -4,6 +4,7 @@ services:
   next:
     build:
       context: next
+    restart: on-failure
     networks:
       - app-network
     volumes:
@@ -16,8 +17,8 @@ services:
       - strapi
 
   strapi:
-    image: strapi/strapi:3.3.4-node12-alpine
-    restart: always
+    image: strapi/strapi:3.3.4-node14-alpine
+    restart: on-failure
     env_file: ./strapi/.env
     networks:
       - app-network
@@ -31,7 +32,7 @@ services:
 
   strapidb:
     image: mongo:4.4.2
-    restart: always
+    restart: on-failure
     env_file: ./.env.strapidb
     networks:
       - core-network
@@ -42,7 +43,7 @@ services:
     image: tiangolo/uvicorn-gunicorn-fastapi:python3.7-alpine3.8-2020-06-06
     environment:
       PORT: 1338
-    restart: always
+    restart: on-failure
     networks:
       - core-network
     volumes:
@@ -56,7 +57,7 @@ services:
 
   grafana:
     image: grafana/grafana:7.3.5
-    restart: always
+    restart: on-failure
     networks:
       - monitoring-network
     volumes:
@@ -68,7 +69,7 @@ services:
 
   grafanadb:
     image: influxdb:1.8.3
-    restart: always
+    restart: on-failure
     env_file: ./.env.grafanadb
     networks:
       - monitoring-network
