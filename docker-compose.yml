@@ -2,17 +2,17 @@ version: "3.9"
 
 services:
   next:
+    image: next:10.0.3
     build:
       context: next
       dockerfile: Dockerfile
-    restart: on-failure
-    image: next:10.0.3
+    restart: unless-stopped
     networks:
       - app-network
     volumes:
-      - ./next:/var/src/next
-      - /var/src/next/node_modules
-      - /var/src/next/.next
+      - ./next:/next
+      # - /next/node_modules
+      # - /next/.next
     ports:
       - 3001:3001
     depends_on:
@@ -20,13 +20,16 @@ services:
 
   strapi:
     image: strapi/strapi:3.4.0-node14-alpine
-    restart: on-failure
+    restart: unless-stopped
     env_file: ./strapi/.env
     networks:
       - app-network
       - core-network
     volumes:
       - ./strapi:/srv/app
+      # - /srv/app/build
+      # - /srv/app/exports/graphql
+      # - /srv/app/node_modules
     ports:
       - 1337:1337
     depends_on:
@@ -34,18 +37,20 @@ services:
 
   strapidb:
     image: mongo:4.4.2
-    restart: on-failure
+    restart: unless-stopped
     env_file: ./.env.strapidb
     networks:
       - core-network
     volumes:
       - strapidb-volume:/data/db
+    ports:
+      - 27017:27017
 
   updater:
     image: tiangolo/uvicorn-gunicorn-fastapi:python3.7-alpine3.8-2020-06-06
     environment:
       PORT: 1338
-    restart: on-failure
+    restart: unless-stopped
     networks:
       - core-network
     volumes:
@@ -59,7 +64,7 @@ services:
 
   grafana:
     image: grafana/grafana:7.3.5
-    restart: on-failure
+    restart: unless-stopped
     networks:
       - monitoring-network
     volumes:
@@ -71,7 +76,7 @@ services:
 
   grafanadb:
     image: influxdb:1.8.3
-    restart: on-failure
+    restart: unless-stopped
     env_file: ./.env.grafanadb
     networks:
       - monitoring-network

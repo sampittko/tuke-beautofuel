@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tracks",
+  "info": {
+    "name": "tracks"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "duration": {
+      "type": "biginteger"
+    },
+    "date": {
+      "type": "date"
+    }
+  }
+}
