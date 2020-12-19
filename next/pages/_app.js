@@ -1,5 +1,6 @@
 import { Provider as NextAuthProvider } from "next-auth/client";
 import Layout from "../components/common/Layout";
+import Head from "next/head";
 import "../styles/main.css";
 
 const App = ({ Component: Page, pageProps }) => {
