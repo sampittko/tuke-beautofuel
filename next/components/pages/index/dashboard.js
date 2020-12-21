@@ -9,8 +9,21 @@ const Dashboard = () => {
   const profileImage = `${session.user.image}?field=image`;
   const profileName = session.user.name;
 
+  const toggleMenuVisibility = () => {
+    setMenuVisibility(!menuVisibility);
+  };
+
+  const handleClickAway = () => {
+    if (menuVisibility) {
+      toggleMenuVisibility();
+    }
+  };
+
   return (
-    <div className="h-screen flex overflow-hidden bg-gray-100">
+    <div
+      className="h-screen flex overflow-hidden bg-gray-100 z-0"
+      onClick={handleClickAway}
+    >
       <div className="flex-1 overflow-auto focus:outline-none" tabIndex="0">
         <div className="relative z-10 flex-shrink-0 flex h-16 bg-white border-b border-gray-200 lg:border-none">
           <div className="flex-1 px-4 flex justify-end sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">
@@ -18,33 +31,21 @@ const Dashboard = () => {
               <div className="ml-3 relative">
                 <div>
                   <button
-                    className="max-w-xs bg-white rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 lg:p-2 lg:rounded-md lg:hover:bg-gray-50"
+                    className="max-w-xs bg-white rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 lg:p-2 lg:rounded-md"
                     id="user-menu"
                     aria-haspopup="true"
-                    onMouseEnter={() => setMenuVisibility(true)}
+                    onClick={toggleMenuVisibility}
                   >
                     <img
                       className="h-8 w-8 rounded-full"
                       src={profileImage}
                       alt=""
                     />
-                    <span className="hidden ml-3 text-gray-700 text-sm font-medium lg:block">
-                      <span className="sr-only">Open user menu for </span>
-                      {profileName}
+                    <span className="hidden text-gray-700 text-sm font-medium lg:block">
+                      <span className="sr-only">
+                        Open user menu for {profileName.split(" ")[0]}
+                      </span>
                     </span>
-                    <svg
-                      className="hidden flex-shrink-0 ml-1 h-5 w-5 text-gray-400 lg:block"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
                   </button>
                 </div>
                 <Transition
@@ -57,11 +58,10 @@ const Dashboard = () => {
                   leaveTo="transform opacity-0 scale-95"
                 >
                   <div
-                    className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5"
+                    className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 z-20"
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="user-menu"
-                    onMouseLeave={() => setMenuVisibility(false)}
                   >
                     <a
                       onClick={(event) => {
@@ -72,7 +72,7 @@ const Dashboard = () => {
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       role="menuitem"
                     >
-                      Logout
+                      Odhlásiť sa
                     </a>
                   </div>
                 </Transition>
@@ -99,7 +99,7 @@ const Dashboard = () => {
                           alt=""
                         />
                         <h1 className="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:leading-9 sm:truncate">
-                          Vitaj, {profileName}
+                          Ahoj, {profileName.split(" ")[0]}
                         </h1>
                       </div>
                       <dl className="mt-6 flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap">
@@ -147,9 +147,23 @@ const Dashboard = () => {
                 <div className="mt-6 flex space-x-3 md:mt-0 md:ml-4">
                   <button
                     type="button"
-                    className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                    className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
                     Synchronizovať jazdy
+                    <svg
+                      className="ml-2 -mr-1 h-5 w-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                      ></path>
+                    </svg>
                   </button>
                 </div>
               </div>
@@ -260,7 +274,7 @@ const Dashboard = () => {
                       <thead>
                         <tr>
                           <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Jazda
+                            Poradie jazdy
                           </th>
                           <th className="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Eko skóre
