@@ -1,0 +1,41 @@
+{
+  "kind": "collectionType",
+  "collectionName": "synchronizations",
+  "info": {
+    "name": "synchronizations"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "startTimestamp": {
+      "type": "datetime"
+    },
+    "endTimestamp": {
+      "type": "datetime"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "success",
+        "failure"
+      ]
+    },
+    "user": {
+      "via": "synchronizations",
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "tracks": {
+      "via": "synchronization",
+      "collection": "tracks"
+    },
+    "wallet": {
+      "via": "synchronizations",
+      "model": "wallets"
+    }
+  }
+}

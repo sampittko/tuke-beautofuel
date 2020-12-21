@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "transactions",
+  "info": {
+    "name": "Purchases",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "quantity": {
+      "type": "integer"
+    },
+    "unitPrice": {
+      "type": "integer"
+    },
+    "procuct": {
+      "via": "purchases",
+      "model": "procucts"
+    },
+    "wallet": {
+      "via": "purchases",
+      "model": "wallets"
+    }
+  }
+}

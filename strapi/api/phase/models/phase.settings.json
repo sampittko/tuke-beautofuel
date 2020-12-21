@@ -1,0 +1,26 @@
+{
+  "kind": "singleType",
+  "collectionName": "phases",
+  "info": {
+    "name": "phase"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "number": {
+      "type": "integer"
+    },
+    "startDate": {
+      "type": "date"
+    },
+    "endDate": {
+      "type": "date"
+    },
+    "description": {
+      "type": "string"
+    }
+  }
+}

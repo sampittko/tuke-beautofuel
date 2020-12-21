@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "procucts",
+  "info": {
+    "name": "procucts",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "price": {
+      "type": "integer"
+    },
+    "stock": {
+      "type": "integer"
+    },
+    "purchases": {
+      "collection": "transactions",
+      "via": "procuct"
+    }
+  }
+}

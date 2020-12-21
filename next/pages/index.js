@@ -1,12 +1,14 @@
+import Head from "next/head";
 import React from "react";
-import Link from "next/link";
+import Page from "../components/pages/index";
 
-const IndexPage = () => {
-  return (
-    <div>
-      <Link href="#">Login</Link>
-    </div>
-  );
-};
+const IndexPage = () => (
+  <>
+    <Head>
+      <title>Index Page</title>
+    </Head>
+    <Page />
+  </>
+);
 
 export default IndexPage;

@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "tracks",
   "info": {
-    "name": "tracks"
+    "name": "tracks",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -15,6 +16,18 @@
     },
     "date": {
       "type": "date"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "tracks"
+    },
+    "score": {
+      "type": "integer"
+    },
+    "synchronization": {
+      "model": "synchronizations",
+      "via": "tracks"
     }
   }
 }

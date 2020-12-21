@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "wallets",
+  "info": {
+    "name": "wallets",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "credits": {
+      "type": "integer"
+    },
+    "purchases": {
+      "collection": "transactions",
+      "via": "wallet"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "wallet"
+    },
+    "synchronizations": {
+      "collection": "synchronizations",
+      "via": "wallet"
+    }
+  }
+}

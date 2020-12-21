@@ -5,6 +5,7 @@ WORKDIR /next
 
 COPY package.json /next/
 COPY yarn.lock /next/
+
 RUN yarn install
 # RUN yarn install --production
 
@@ -14,4 +15,4 @@ RUN yarn run build
 EXPOSE 3001
 
 CMD "yarn" "run" "dev"
-# CMD "npm" "start"
+# CMD "yarn" "run" "start"

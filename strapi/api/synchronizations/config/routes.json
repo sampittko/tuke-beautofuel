@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/synchronizations",
+      "handler": "synchronizations.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/synchronizations/count",
+      "handler": "synchronizations.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/synchronizations/:id",
+      "handler": "synchronizations.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/synchronizations",
+      "handler": "synchronizations.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/synchronizations/:id",
+      "handler": "synchronizations.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/synchronizations/:id",
+      "handler": "synchronizations.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
