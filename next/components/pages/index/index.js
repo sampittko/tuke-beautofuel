@@ -1,37 +1,19 @@
-import React from "react";
-import { signIn, signOut, useSession } from "next-auth/client";
-import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import { useSession } from "next-auth/client";
+import Dashboard from "./dashboard";
+import Unauthenticated from "../../common/unauthenticated";
 
 const IndexPageComponent = () => {
   const [session] = useSession();
+  const [loading, setLoading] = useState(true);
 
-  const SignInButton = () => (
-    <Link href="/api/auth/signin">
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          signIn();
-        }}
-      >
-        Create an account
-      </button>
-    </Link>
-  );
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, []);
 
-  const SignOutButton = () => (
-    <Link href="/api/auth/signout">
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          signOut();
-        }}
-      >
-        Sign Out
-      </button>
-    </Link>
-  );
-
-  return <div>{!session ? <SignInButton /> : <SignOutButton />}</div>;
+  return session ? <Dashboard /> : loading ? null : <Unauthenticated />;
 };
 
 export default IndexPageComponent;

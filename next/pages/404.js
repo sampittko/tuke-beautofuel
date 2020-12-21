@@ -2,15 +2,15 @@ import React from "react";
 import Head from "next/head";
 import Page from "../components/pages/error";
 
-const NotFound = () => {
+const NotFoundPage = () => {
   return (
     <>
       <Head>
-        <title>Error Page</title>
+        <title>Nenájdené | beautofuel</title>
       </Head>
       <Page statusCode={404} />
     </>
   );
 };
 
-export default NotFound;
+export default NotFoundPage;

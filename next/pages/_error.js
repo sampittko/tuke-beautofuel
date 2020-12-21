@@ -5,7 +5,7 @@ import Page from "../components/pages/error";
 const Error = ({ statusCode }) => (
   <>
     <Head>
-      <title>Error Page</title>
+      <title>Chyba {statusCode} | beautofuel</title>
     </Head>
     <Page statusCode={statusCode} />
   </>
