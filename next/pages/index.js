@@ -1,14 +1,23 @@
 import Head from "next/head";
 import React from "react";
-import Page from "../components/pages/index";
+import FullPageSpinner from "../components/common/FullPageSpinner";
+import RedirectToSignIn from "../components/common/redirects/ToSignIn";
+import IndexPageComponent from "../components/pages/index";
+import useLoadingSession from "../hooks/useLoadingSession";
 
-const IndexPage = ({ session }) => (
-  <>
-    <Head>
-      <title>Centrála | beautofuel</title>
-    </Head>
-    <Page session={session} />
-  </>
-);
+const IndexPage = () => {
+  const [session, loadingSession] = useLoadingSession();
+
+  return (
+    <>
+      <Head>
+        <title>Centrála | beautofuel</title>
+      </Head>
+      <FullPageSpinner spinning={loadingSession}>
+        {session ? <IndexPageComponent /> : <RedirectToSignIn />}
+      </FullPageSpinner>
+    </>
+  );
+};
 
 export default IndexPage;

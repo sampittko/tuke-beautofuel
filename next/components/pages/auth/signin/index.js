@@ -1,21 +1,19 @@
 import React from "react";
-import { signIn, useSession } from "next-auth/client";
+import { signIn } from "next-auth/client";
 import Image from "next/image";
-import Authenticated from "../../../common/authenticated";
+import RedirectToDashboard from "../../../common/redirects/ToDashboard";
+import useLoadingSession from "../../../../hooks/useLoadingSession";
+import FullPageSpinner from "../../../common/FullPageSpinner";
 
 const SignInPageComponent = ({ providers }) => {
-  const [session] = useSession();
+  const [session, loadingSession] = useLoadingSession();
 
   const handleClick = (event, provider) => {
     event.preventDefault();
     signIn(provider.id);
   };
 
-  if (session) {
-    return <Authenticated />;
-  }
-
-  return (
+  const Component = () => (
     <div className="min-h-screen bg-white flex">
       <div className="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
         <div className="mx-auto w-full max-w-sm lg:w-96">
@@ -115,6 +113,12 @@ const SignInPageComponent = ({ providers }) => {
         />
       </div>
     </div>
+  );
+
+  return (
+    <FullPageSpinner spinning={loadingSession}>
+      {session ? <RedirectToDashboard /> : <Component />}
+    </FullPageSpinner>
   );
 };
 

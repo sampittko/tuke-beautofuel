@@ -1,16 +1,16 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
-const Authenticated = () => {
+const RedirectToSignIn = () => {
   const router = useRouter();
 
   useEffect(() => {
     if (typeof window !== undefined) {
-      router.push("/");
+      router.push("/auth/signin");
     }
   }, [router]);
 
   return null;
 };
 
-export default Authenticated;
+export default RedirectToSignIn;
