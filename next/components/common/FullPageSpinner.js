@@ -4,7 +4,7 @@ import React from "react";
 const FullPageSpinner = ({ spinning, children }) => (
   <>
     <Transition
-      show={spinning}
+      show={!!spinning}
       enter="transition ease-out duration-300"
       enterFrom="transform opacity-0 scale-95"
       enterTo="transform opacity-100 scale-100"

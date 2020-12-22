@@ -278,17 +278,17 @@ const IndexPageComponent = ({ session }) => {
                   </div>
                   <div className="bg-gray-50 px-5 py-3 sm:py-7 lg:py-3">
                     <div className="text-sm">
-                      <a
-                        href="#"
+                      <Link
+                        href="/public/hall-of-fame"
                         className="font-medium text-gray-700 hover:text-cyan-900"
                       >
                         Zobraziť tabuľku
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
 
-                <div className="hidden lg:block lg:col-span-2" />
+                <div className="hidden sm:block lg:col-span-2" />
 
                 <div className="bg-white overflow-hidden shadow rounded-lg">
                   <div className="p-5">

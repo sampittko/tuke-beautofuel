@@ -6,7 +6,7 @@ const RedirectToDashboard = () => {
 
   useEffect(() => {
     if (typeof window !== undefined) {
-      router.push("/");
+      router.replace("/");
     }
   }, [router]);
 

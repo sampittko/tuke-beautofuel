@@ -6,7 +6,7 @@ const RedirectToSignIn = () => {
 
   useEffect(() => {
     if (typeof window !== undefined) {
-      router.push("/auth/signin");
+      router.replace("/auth/signin");
     }
   }, [router]);
 
