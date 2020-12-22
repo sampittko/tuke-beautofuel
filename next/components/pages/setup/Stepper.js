@@ -1,4 +1,5 @@
 import React from "react";
+import Head from "next/head";
 
 const steps = [
   {
@@ -10,8 +11,12 @@ const steps = [
     description: "Nastavenie služby tretej strany",
   },
   {
+    title: "OBD-II",
+    description: "Informácie o poskytnutom zariadení",
+  },
+  {
     title: "Prvé kroky",
-    description: "Ako pokračovať",
+    description: "Ako pokračovať v experimente",
   },
 ];
 
@@ -143,26 +148,31 @@ const Stepper = ({ activeStep }) => {
   );
 
   return (
-    <div className="lg:border-t lg:border-b lg:border-gray-200">
-      <nav
-        className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
-        aria-label="Progress"
-      >
-        <ol className="rounded-md overflow-hidden lg:flex lg:border-l lg:border-r lg:border-gray-200 lg:rounded-none">
-          {steps.map((step, i) => {
-            const stepOrder = i + 1;
-            const stepProps = { key: i, number: stepOrder, ...step };
-            if (stepOrder === activeStep) {
-              return <CurrentStep {...stepProps} />;
-            }
-            if (stepOrder > activeStep) {
-              return <UpcomingStep {...stepProps} />;
-            }
-            return <CompletedStep {...stepProps} />;
-          })}
-        </ol>
-      </nav>
-    </div>
+    <>
+      <Head>
+        <title>Krok {activeStep}/4 pred spustením | beautofuel</title>
+      </Head>
+      <div className="lg:border-t lg:border-b lg:border-gray-200">
+        <nav
+          className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+          aria-label="Progress"
+        >
+          <ol className="rounded-md overflow-hidden lg:flex lg:border-l lg:border-r lg:border-gray-200 lg:rounded-none">
+            {steps.map((step, i) => {
+              const stepOrder = i + 1;
+              const stepProps = { key: i, number: stepOrder, ...step };
+              if (stepOrder === activeStep) {
+                return <CurrentStep {...stepProps} />;
+              }
+              if (stepOrder > activeStep) {
+                return <UpcomingStep {...stepProps} />;
+              }
+              return <CompletedStep {...stepProps} />;
+            })}
+          </ol>
+        </nav>
+      </div>
+    </>
   );
 };
 

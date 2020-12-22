@@ -14,7 +14,11 @@ const IndexPage = () => {
         <title>Centrála | beautofuel</title>
       </Head>
       <FullPageSpinner spinning={loadingSession}>
-        {session ? <IndexPageComponent /> : <RedirectToSignIn />}
+        {session ? (
+          <IndexPageComponent session={session} />
+        ) : (
+          <RedirectToSignIn />
+        )}
       </FullPageSpinner>
     </>
   );

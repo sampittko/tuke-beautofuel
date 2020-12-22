@@ -70,6 +70,10 @@
     "tracks": {
       "via": "user",
       "collection": "tracks"
+    },
+    "setup": {
+      "via": "user",
+      "model": "setups"
     }
   }
 }

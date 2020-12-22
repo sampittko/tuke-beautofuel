@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "setups",
+  "info": {
+    "name": "setups"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "setup"
+    },
+    "step1": {
+      "type": "boolean"
+    },
+    "step2": {
+      "type": "boolean"
+    },
+    "step3": {
+      "type": "boolean"
+    },
+    "step4": {
+      "type": "boolean"
+    }
+  }
+}

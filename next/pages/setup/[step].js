@@ -5,11 +5,12 @@ import useLoadingSession from "../../hooks/useLoadingSession";
 import StepThree from "../../components/pages/setup/step/Three";
 import StepTwo from "../../components/pages/setup/step/Two";
 import StepOne from "../../components/pages/setup/step/One";
+import StepFour from "../../components/pages/setup/step/Four";
 import FullPageSpinner from "../../components/common/FullPageSpinner";
 import Stepper from "../../components/pages/setup/Stepper";
 
-const validSteps = ["1", "2", "3"];
-const stepComponents = [<StepOne />, <StepTwo />, <StepThree />];
+const validSteps = ["1", "2", "3", "4"];
+const stepComponents = [<StepOne />, <StepTwo />, <StepThree />, <StepFour />];
 
 const SetupStepPage = () => {
   const router = useRouter();
