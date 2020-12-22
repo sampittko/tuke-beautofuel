@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/recommendations",
+      "handler": "recommendations.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/recommendations/count",
+      "handler": "recommendations.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/recommendations/:id",
+      "handler": "recommendations.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/recommendations",
+      "handler": "recommendations.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/recommendations/:id",
+      "handler": "recommendations.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/recommendations/:id",
+      "handler": "recommendations.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
