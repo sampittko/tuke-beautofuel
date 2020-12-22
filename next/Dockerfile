@@ -1,15 +1,15 @@
 FROM node:14-alpine
 
-RUN mkdir -p /next
-WORKDIR /next
+RUN mkdir -p /var/src/next
+WORKDIR /var/src/next
 
-COPY package.json /next/
-COPY yarn.lock /next/
+COPY package.json /var/src/next/
+COPY yarn.lock /var/src/next/
 
 RUN yarn install
 # RUN yarn install --production
 
-COPY . /next
+COPY . /var/src/next
 
 RUN yarn run build
 EXPOSE 3001

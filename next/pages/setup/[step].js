@@ -26,7 +26,7 @@ const SetupStepPage = () => {
         <RedirectToDashboard />
       ) : (
         <>
-          <Stepper step={Number(step)} />
+          <Stepper activeStep={Number(step)} />
           {stepComponents[validSteps.findIndex((elm) => elm === step)]}
         </>
       )}
