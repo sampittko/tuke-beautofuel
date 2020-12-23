@@ -19,9 +19,9 @@
       "via": "wallet"
     },
     "user": {
+      "via": "wallet",
       "plugin": "users-permissions",
-      "model": "user",
-      "via": "wallet"
+      "model": "user"
     },
     "synchronizations": {
       "collection": "synchronizations",

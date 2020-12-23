@@ -1,13 +1,12 @@
 import { gql } from "@apollo/client";
 
 const PhaseAPI = {
-  get: gql`
+  only: gql`
     query {
       phase {
         number
         startDate
         endDate
-        description
       }
     }
   `,

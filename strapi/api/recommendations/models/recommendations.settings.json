@@ -2,12 +2,13 @@
   "kind": "collectionType",
   "collectionName": "recommendations",
   "info": {
-    "name": "recommendations"
+    "name": "recommendations",
+    "description": ""
   },
   "options": {
     "increments": true,
     "timestamps": true,
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "attributes": {
     "text": {

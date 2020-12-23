@@ -11,9 +11,9 @@
   },
   "attributes": {
     "user": {
+      "via": "setup",
       "plugin": "users-permissions",
-      "model": "user",
-      "via": "setup"
+      "model": "user"
     },
     "step1": {
       "type": "boolean"

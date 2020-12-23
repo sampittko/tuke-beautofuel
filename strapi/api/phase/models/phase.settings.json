@@ -19,9 +19,6 @@
     },
     "endDate": {
       "type": "date"
-    },
-    "description": {
-      "type": "string"
     }
   }
 }

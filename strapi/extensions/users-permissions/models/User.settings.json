@@ -60,20 +60,27 @@
       "configurable": false
     },
     "wallet": {
-      "via": "user",
-      "model": "wallets"
+      "model": "wallets",
+      "via": "user"
     },
     "synchronizations": {
       "collection": "synchronizations",
       "via": "user"
     },
     "tracks": {
-      "via": "user",
-      "collection": "tracks"
+      "collection": "tracks",
+      "via": "user"
     },
     "setup": {
-      "via": "user",
-      "model": "setups"
+      "model": "setups",
+      "via": "user"
+    },
+    "group": {
+      "type": "enumeration",
+      "enum": [
+        "rewards",
+        "gamification"
+      ]
     }
   }
 }
