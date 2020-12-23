@@ -3,16 +3,15 @@ import Head from "next/head";
 import React from "react";
 import Redirects from "../components/common/Redirects";
 import PageComponent from "../components/pages/index";
+import WithGraphQL from "../lib/with-graphql";
 
 const IndexPage = ({ session }) => (
-  <>
+  <WithGraphQL session={session}>
     <Head>
       <title>Centrála | beautofuel</title>
     </Head>
-    {(session && <PageComponent session={session} />) || (
-      <Redirects toSignIn replace />
-    )}
-  </>
+    {(session && <PageComponent />) || <Redirects toSignIn replace />}
+  </WithGraphQL>
 );
 
 export const getServerSideProps = async ({ req }) => {

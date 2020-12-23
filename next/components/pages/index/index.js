@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { signOut } from "next-auth/client";
+import { signOut, useSession } from "next-auth/client";
 import { Transition } from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";
 
-const IndexPageComponent = ({ session }) => {
+const IndexPageComponent = () => {
   const [menuVisibility, setMenuVisibility] = useState(false);
+  const [session] = useSession();
 
   const profileImage = `${session.user.image}?field=image`;
   const profileName = session.user.name;

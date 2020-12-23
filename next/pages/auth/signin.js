@@ -9,9 +9,9 @@ const SignInPage = ({ providers, session }) => (
     <Head>
       <title>Prihlásenie | beautofuel</title>
     </Head>
-    {(!session && (
-      <PageComponent providers={providers} session={session} />
-    )) || <Redirects toDashboard replace />}
+    {(!session && <PageComponent providers={providers} />) || (
+      <Redirects toDashboard replace />
+    )}
   </>
 );
 

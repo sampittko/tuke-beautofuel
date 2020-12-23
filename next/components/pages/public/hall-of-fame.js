@@ -2,10 +2,11 @@ import Link from "next/link";
 import Image from "next/image";
 import React, { useState } from "react";
 import { Transition } from "@headlessui/react";
-import { signOut } from "next-auth/client";
+import { signOut, useSession } from "next-auth/client";
 
-const PublicHallOfFamePageComponent = ({ session }) => {
+const PublicHallOfFamePageComponent = () => {
   const [menuVisibility, setMenuVisibility] = useState(false);
+  const [session] = useSession();
 
   const profileImage = session?.user.image;
   const profileName = session?.user.name;
