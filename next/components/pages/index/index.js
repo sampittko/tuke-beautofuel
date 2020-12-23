@@ -47,7 +47,7 @@ const IndexPageComponent = () => {
               recommendations={recommendations}
             />
             <Stats />
-            <History />
+            <History user={user} phase={phase} />
           </main>
         </div>
       </div>
