@@ -31,6 +31,13 @@ const IndexPageComponent = () => {
     }
   );
 
+  // const { loading: setupLoading, error: setupError, data: setup } = useQuery(
+  //   SetupsAPI.bySession,
+  //   {
+  //     variables: { setupId: user?.user.setup.id },
+  //   }
+  // );
+
   return (
     <Spinner
       dependencies={[phaseLoading, recommendationsLoading, userLoading]}

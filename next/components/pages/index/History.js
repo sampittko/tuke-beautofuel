@@ -23,9 +23,11 @@ const History = ({ user, phase }) => {
                 <span className="flex-1 flex space-x-2 truncate">
                   <span className="flex flex-col text-gray-500 text-sm truncate">
                     <span># 2</span>
-                    <span>
-                      <span className="text-gray-900 font-medium">3589</span>
-                    </span>
+                    {phaseNumber !== 1 && (
+                      <span>
+                        <span className="text-gray-900 font-medium">3589</span>
+                      </span>
+                    )}
                     <span>34 km</span>
                     <span>20 min.</span>
                     <span>12. 12. 2020</span>
@@ -62,9 +64,11 @@ const History = ({ user, phase }) => {
                 <span className="flex-1 flex space-x-2 truncate">
                   <span className="flex flex-col text-gray-500 text-sm truncate">
                     <span># 1</span>
-                    <span>
-                      <span className="text-gray-900 font-medium">3589</span>
-                    </span>
+                    {phaseNumber !== 1 && (
+                      <span>
+                        <span className="text-gray-900 font-medium">3589</span>
+                      </span>
+                    )}
                     <span>34 km</span>
                     <span>20 min.</span>
                     <span>12. 12. 2020</span>
@@ -116,9 +120,11 @@ const History = ({ user, phase }) => {
                     <th className="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Dátum
                     </th>
-                    <th className="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Eko skóre
-                    </th>
+                    {phaseNumber !== 1 && (
+                      <th className="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Eko skóre
+                      </th>
+                    )}
                     {actionsVisible && (
                       <th className="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Akcie
@@ -140,9 +146,11 @@ const History = ({ user, phase }) => {
                     <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
                       14. 12. 2020
                     </td>
-                    <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
-                      <span className="text-gray-900 font-medium">3589</span>
-                    </td>
+                    {phaseNumber !== 1 && (
+                      <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
+                        <span className="text-gray-900 font-medium">3589</span>
+                      </td>
+                    )}
                     {actionsVisible && (
                       <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500 flex items-center justify-end">
                         <button
@@ -180,9 +188,11 @@ const History = ({ user, phase }) => {
                     <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
                       12. 12. 2020
                     </td>
-                    <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
-                      <span className="text-gray-900 font-medium">3589</span>
-                    </td>
+                    {phaseNumber !== 1 && (
+                      <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
+                        <span className="text-gray-900 font-medium">3589</span>
+                      </td>
+                    )}
                     {actionsVisible && (
                       <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500 flex items-center justify-end">
                         <button

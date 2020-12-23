@@ -67,6 +67,7 @@ const Header = ({ user, phase }) => {
                         format="DD. MM. YYYY"
                       />
                     )}
+                    <span className="px-1">-</span>
                     {phase && (
                       <Moment
                         date={phase.phase.endDate}

@@ -6,6 +6,9 @@ const UsersAPI = {
       user(id: $userId) {
         id
         group
+        setup {
+          id
+        }
       }
     }
   `,
