@@ -4,7 +4,7 @@ const WithGraphQL = ({ session, children }) => {
   const token = session?.jwt?.toString();
 
   const client = new ApolloClient({
-    uri: `${process.env.PUBLIC_API_URL}/graphql`,
+    uri: "http://localhost:1337/graphql",
     credentials: "same-origin",
     cache: new InMemoryCache(),
     headers: {
