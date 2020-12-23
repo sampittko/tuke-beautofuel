@@ -1,38 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
-import RedirectToDashboard from "../../components/common/redirects/ToDashboard";
-import useLoadingSession from "../../hooks/useLoadingSession";
-import StepThree from "../../components/pages/setup/step/Three";
-import StepTwo from "../../components/pages/setup/step/Two";
-import StepOne from "../../components/pages/setup/step/One";
-import StepFour from "../../components/pages/setup/step/Four";
-import FullPageSpinner from "../../components/common/FullPageSpinner";
-import Stepper from "../../components/pages/setup/Stepper";
+import PageComponent from "../../components/pages/setup/step";
+import { getSession } from "next-auth/client";
+import Redirects from "../../components/common/Redirects";
 
-const validSteps = ["1", "2", "3", "4"];
-const stepComponents = [<StepOne />, <StepTwo />, <StepThree />, <StepFour />];
+const TOTAL_SETUP_STEPS_COUNT = 4;
 
-const SetupStepPage = () => {
+const SetupStepPage = ({ session }) => {
   const router = useRouter();
-  const [session, loadingSession] = useLoadingSession();
-  const { step } = router.query;
+  const [step] = useState(parseInt(router.query.step));
 
-  const isValidStep = () => {
-    return validSteps.includes(step);
+  const isSetupStepValid = () => {
+    if (step) {
+      return step >= 1 && step <= TOTAL_SETUP_STEPS_COUNT;
+    }
+    return false;
   };
 
   return (
-    <FullPageSpinner spinning={!step || loadingSession}>
-      {!isValidStep() || !session ? (
-        <RedirectToDashboard />
-      ) : (
-        <>
-          <Stepper activeStep={Number(step)} />
-          {stepComponents[validSteps.findIndex((elm) => elm === step)]}
-        </>
-      )}
-    </FullPageSpinner>
+    (isSetupStepValid() && session && <PageComponent activeStep={step} />) || (
+      <Redirects toDashboard replace />
+    )
   );
+};
+
+export const getServerSideProps = async ({ req }) => {
+  const session = await getSession({ req });
+
+  return {
+    props: {
+      session,
+    },
+  };
 };
 
 export default SetupStepPage;

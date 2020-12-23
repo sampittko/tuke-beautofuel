@@ -18,8 +18,6 @@ const options = {
       session.jwt = user.jwt;
       session.id = user.id;
 
-      console.log(session, user);
-
       return Promise.resolve(session);
     },
     jwt: async (token, user, account) => {

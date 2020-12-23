@@ -1,20 +1,28 @@
 import React from "react";
-import { providers } from "next-auth/client";
+import { getSession, providers } from "next-auth/client";
 import Head from "next/head";
-import Page from "../../components/pages/auth/signin";
+import PageComponent from "../../components/pages/auth/signin";
+import Redirects from "../../components/common/Redirects";
 
-const SignInPage = ({ providers }) => (
+const SignInPage = ({ providers, session }) => (
   <>
     <Head>
       <title>Prihlásenie | beautofuel</title>
     </Head>
-    <Page providers={providers} />
+    {(!session && (
+      <PageComponent providers={providers} session={session} />
+    )) || <Redirects toDashboard replace />}
   </>
 );
 
-SignInPage.getInitialProps = async (context) => {
+export const getServerSideProps = async (context) => {
+  const session = await getSession({ req: context.req });
+
   return {
-    providers: await providers(context),
+    props: {
+      session,
+      providers: await providers(context),
+    },
   };
 };
 

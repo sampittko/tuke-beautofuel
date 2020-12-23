@@ -1,22 +1,25 @@
+import { getSession } from "next-auth/client";
 import Head from "next/head";
 import React from "react";
-import FullPageSpinner from "../../components/common/FullPageSpinner";
-import PublicHallOfFamePageComponent from "../../components/pages/public/hall-of-fame";
-import useLoadingSession from "../../hooks/useLoadingSession";
+import PageComponent from "../../components/pages/public/hall-of-fame";
 
-const PublicHallOfFamePage = () => {
-  const [session, loadingSession] = useLoadingSession();
+const PublicHallOfFamePage = ({ session }) => (
+  <>
+    <Head>
+      <title>Sieň slávy | beautofuel</title>
+    </Head>
+    <PageComponent session={session} />
+  </>
+);
 
-  return (
-    <>
-      <Head>
-        <title>Sieň slávy | beautofuel</title>
-      </Head>
-      <FullPageSpinner spinning={loadingSession}>
-        <PublicHallOfFamePageComponent session={session} />
-      </FullPageSpinner>
-    </>
-  );
+export const getServerSideProps = async ({ req }) => {
+  const session = await getSession({ req });
+
+  return {
+    props: {
+      session,
+    },
+  };
 };
 
 export default PublicHallOfFamePage;

@@ -1,13 +1,13 @@
 import React from "react";
 import Head from "next/head";
-import Page from "../components/pages/error";
+import PageComponent from "../components/pages/error";
 
 const Error = ({ statusCode }) => (
   <>
     <Head>
       <title>Chyba {statusCode} | beautofuel</title>
     </Head>
-    <Page statusCode={statusCode} />
+    <PageComponent statusCode={statusCode} />
   </>
 );
 
