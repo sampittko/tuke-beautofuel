@@ -1,100 +1,40 @@
-import React, { useState } from "react";
-import { signOut, useSession } from "next-auth/client";
-import { Transition } from "@headlessui/react";
-import Image from "next/image";
+import React from "react";
 import Link from "next/link";
+import { gql, useQuery } from "@apollo/client";
+import Navigation from "../../common/Navigation";
+import { useSession } from "next-auth/client";
+
+const phaseQuery = gql`
+  query {
+    phase {
+      number
+      startDate
+      endDate
+      description
+    }
+  }
+`;
 
 const IndexPageComponent = () => {
-  const [menuVisibility, setMenuVisibility] = useState(false);
   const [session] = useSession();
 
   const profileImage = `${session.user.image}?field=image`;
   const profileName = session.user.name;
 
-  const toggleMenuVisibility = () => {
-    setMenuVisibility(!menuVisibility);
-  };
+  const {
+    loading: fetchPhaseLoading,
+    error: fetchPhaseError,
+    data: fetchPhaseData,
+  } = useQuery(phaseQuery);
 
-  const handleClickAway = () => {
-    if (menuVisibility) {
-      toggleMenuVisibility();
-    }
-  };
+  console.log(fetchPhaseData);
+  console.log(fetchPhaseError);
+  console.log(fetchPhaseLoading);
 
   return (
-    <div
-      className="h-screen flex overflow-hidden bg-gray-100"
-      onClick={handleClickAway}
-    >
+    <div className="h-screen flex overflow-hidden bg-gray-100">
       <div className="flex-1 overflow-auto focus:outline-none" tabIndex="0">
-        <div className="relative z-10 flex-shrink-0 flex h-16 bg-white border-b border-gray-200 lg:border-none">
-          <div className="flex-1 px-4 flex justify-between sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">
-            <div className="flex">
-              <div className="flex-shrink-0 flex items-center">
-                <Link href="/">
-                  <Image
-                    width={32}
-                    height={25}
-                    className="block h-8 w-auto lg:p-2"
-                    src="/images/envirocar_logo.png"
-                    alt="enviroCar logo"
-                  />
-                </Link>
-              </div>
-            </div>
-            <div className="ml-4 flex items-center md:ml-6">
-              <div className="ml-3 relative">
-                <div>
-                  <button
-                    className="max-w-xs bg-white rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 lg:p-2 lg:rounded-md"
-                    id="user-menu"
-                    aria-haspopup="true"
-                    onClick={toggleMenuVisibility}
-                  >
-                    <img
-                      className="h-8 w-8 rounded-full"
-                      src={profileImage}
-                      alt=""
-                    />
-                    <span className="hidden text-gray-700 text-sm font-medium lg:block">
-                      <span className="sr-only">
-                        Open user menu for {profileName.split(" ")[0]}
-                      </span>
-                    </span>
-                  </button>
-                </div>
-                <Transition
-                  show={menuVisibility}
-                  enter="transition ease-out duration-100"
-                  enterFrom="transform opacity-0 scale-95"
-                  enterTo="transform opacity-100 scale-100"
-                  leave="transition ease-in duration-75"
-                  leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95"
-                >
-                  <div
-                    className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5"
-                    role="menu"
-                    aria-orientation="vertical"
-                    aria-labelledby="user-menu"
-                  >
-                    <a
-                      onClick={(event) => {
-                        event.preventDefault();
-                        signOut();
-                      }}
-                      href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      role="menuitem"
-                    >
-                      Odhlásiť sa
-                    </a>
-                  </div>
-                </Transition>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Navigation />
         <main className="flex-1 relative pb-8 z-0 overflow-y-auto">
           <div className="bg-white shadow">
             <div className="px-4 sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">

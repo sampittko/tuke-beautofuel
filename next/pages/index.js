@@ -5,14 +5,16 @@ import Redirects from "../components/common/Redirects";
 import PageComponent from "../components/pages/index";
 import WithGraphQL from "../lib/with-graphql";
 
-const IndexPage = ({ session }) => (
-  <WithGraphQL session={session}>
-    <Head>
-      <title>Centrála | beautofuel</title>
-    </Head>
-    {(session && <PageComponent />) || <Redirects toSignIn replace />}
-  </WithGraphQL>
-);
+const IndexPage = ({ session }) => {
+  return (
+    <WithGraphQL session={session}>
+      <Head>
+        <title>Centrála | beautofuel</title>
+      </Head>
+      {(session && <PageComponent />) || <Redirects toSignIn replace />}
+    </WithGraphQL>
+  );
+};
 
 export const getServerSideProps = async ({ req }) => {
   const session = await getSession({ req });
