@@ -24,7 +24,7 @@ services:
     env_file: ./strapi/.env
     networks:
       - app-network
-      - core-network
+      - updater-network
     volumes:
       - ./strapi:/srv/app
     ports:
@@ -37,11 +37,11 @@ services:
     restart: unless-stopped
     env_file: ./.env.strapidb
     networks:
-      - core-network
+      - app-network
     volumes:
       - strapidb-volume:/data/db
-    ports:
-      - 27017:27017
+    # ports:
+    #   - 27017:27017
 
   updater:
     image: tiangolo/uvicorn-gunicorn-fastapi:python3.7-alpine3.8-2020-06-06
@@ -49,7 +49,7 @@ services:
       PORT: 1338
     restart: unless-stopped
     networks:
-      - core-network
+      - updater-network
     volumes:
       - ./updater:/app
     ports:
@@ -77,13 +77,13 @@ services:
     env_file: ./.env.grafanadb
     networks:
       - monitoring-network
-      - core-network
+      - updater-network
     volumes:
       - grafanadb-volume:/var/lib/influxdb
 
 networks:
   app-network:
-  core-network:
+  updater-network:
   monitoring-network:
 
 volumes:
