@@ -4,15 +4,11 @@ services:
   next:
     image: my-next:10.0.3
     build:
-      context: next
+      context: ../../src/next
       dockerfile: Dockerfile
     restart: unless-stopped
     networks:
       - app-network
-    volumes:
-      - ./next:/var/src/next
-      - /var/src/next/node_modules
-      - /var/src/next/.next
     ports:
       - 3001:3001
     depends_on:
@@ -21,12 +17,12 @@ services:
   strapi:
     image: strapi/strapi:3.4.0-node14-alpine
     restart: unless-stopped
-    env_file: ./strapi/.env
+    env_file: ../../src/strapi/.env
     networks:
       - app-network
       - updater-network
     volumes:
-      - ./strapi:/srv/app
+      - ../../src/strapi:/srv/app
     ports:
       - 1337:1337
     depends_on:
@@ -35,13 +31,11 @@ services:
   strapidb:
     image: mongo:4.4.2
     restart: unless-stopped
-    env_file: ./.env.strapidb
+    env_file: ../../src/.env.strapidb
     networks:
       - app-network
     volumes:
       - strapidb-volume:/data/db
-    # ports:
-    #   - 27017:27017
 
   updater:
     image: tiangolo/uvicorn-gunicorn-fastapi:python3.7-alpine3.8-2020-06-06
@@ -51,7 +45,7 @@ services:
     networks:
       - updater-network
     volumes:
-      - ./updater:/app
+      - ../../src/updater:/app
     ports:
       - 1338:1338
     depends_on:
@@ -74,7 +68,7 @@ services:
   grafanadb:
     image: influxdb:1.8.3
     restart: unless-stopped
-    env_file: ./.env.grafanadb
+    env_file: ../../src/.env.grafanadb
     networks:
       - monitoring-network
       - updater-network

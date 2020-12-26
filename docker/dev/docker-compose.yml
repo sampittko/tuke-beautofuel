@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  strapidb:
+    image: mongo:4.4.2
+    restart: unless-stopped
+    env_file: ../../src/.env.strapidb
+    volumes:
+      - strapidb-volume:/data/db
+    ports:
+      - 27017:27017
+
+volumes:
+  strapidb-volume:

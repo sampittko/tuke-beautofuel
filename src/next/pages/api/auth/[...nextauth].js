@@ -8,7 +8,10 @@ const options = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
-  database: process.env.PUBLIC_DATABASE_URL,
+  database:
+    process.env.NODE_ENV === "production"
+      ? process.env.PUBLIC_DATABASE_URL
+      : process.env.PUBLIC_DATABASE_URL_DEV,
   session: {
     jwt: true,
   },

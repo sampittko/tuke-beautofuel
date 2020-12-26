@@ -1,0 +1,60 @@
+version: "3.9"
+
+services:
+  next:
+    image: my-next:10.0.3
+    build:
+      context: ../../src/next
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    networks:
+      - app-network
+    ports:
+      - 3001:3001
+    depends_on:
+      - strapi
+
+  strapi:
+    image: strapi/strapi:3.4.0-node14-alpine
+    restart: unless-stopped
+    env_file: ../../src/strapi/.env
+    networks:
+      - app-network
+      - updater-network
+    volumes:
+      - ../../src/strapi:/srv/app
+    ports:
+      - 1337:1337
+    depends_on:
+      - strapidb
+
+  strapidb:
+    image: mongo:4.4.2
+    restart: unless-stopped
+    env_file: ../../src/.env.strapidb
+    networks:
+      - app-network
+    volumes:
+      - strapidb-volume:/data/db
+
+  updater:
+    image: tiangolo/uvicorn-gunicorn-fastapi:python3.7-alpine3.8-2020-06-06
+    environment:
+      PORT: 1338
+    restart: unless-stopped
+    networks:
+      - updater-network
+    volumes:
+      - ../../src/updater:/app
+    ports:
+      - 1338:1338
+    depends_on:
+      - strapi
+      - strapidb
+
+networks:
+  app-network:
+  updater-network:
+
+volumes:
+  strapidb-volume:

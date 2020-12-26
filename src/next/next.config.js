@@ -1,6 +1,6 @@
 module.exports = {
   images: {
-    domains: ["lh3.googleusercontent.com", "localhost:3001"],
+    domains: ["lh3.googleusercontent.com", "localhost:3000"],
   },
   webpackDevMiddleware: (config) => {
     config.watchOptions = {
