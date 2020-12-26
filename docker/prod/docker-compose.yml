@@ -3,8 +3,6 @@ version: "3.9"
 services:
   next:
     image: my-next:10.0.3
-    environment:
-      NODE_ENV: production
     build:
       context: ./../../src/next
       dockerfile: Dockerfile
@@ -12,7 +10,7 @@ services:
     networks:
       - app-network
     ports:
-      - 3001:3001
+      - 3000:3000
     depends_on:
       - strapi
 
