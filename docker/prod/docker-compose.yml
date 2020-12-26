@@ -3,8 +3,10 @@ version: "3.9"
 services:
   next:
     image: my-next:10.0.3
+    environment:
+      NODE_ENV: production
     build:
-      context: ../../src/next
+      context: ./../../src/next
       dockerfile: Dockerfile
     restart: unless-stopped
     networks:
@@ -16,13 +18,15 @@ services:
 
   strapi:
     image: strapi/strapi:3.4.0-node14-alpine
+    environment:
+      NODE_ENV: production
     restart: unless-stopped
-    env_file: ../../src/strapi/.env
+    env_file: ./../../src/strapi/.env
     networks:
       - app-network
       - updater-network
     volumes:
-      - ../../src/strapi:/srv/app
+      - ./../../src/strapi:/srv/app
     ports:
       - 1337:1337
     depends_on:
@@ -31,7 +35,7 @@ services:
   strapidb:
     image: mongo:4.4.2
     restart: unless-stopped
-    env_file: ../../src/.env.strapidb
+    env_file: ./../../src/.strapidb.env
     networks:
       - app-network
     volumes:
@@ -45,7 +49,7 @@ services:
     networks:
       - updater-network
     volumes:
-      - ../../src/updater:/app
+      - ./../../src/updater:/app
     ports:
       - 1338:1338
     depends_on:

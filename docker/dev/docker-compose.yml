@@ -4,7 +4,7 @@ services:
   strapidb:
     image: mongo:4.4.2
     restart: unless-stopped
-    env_file: ../../src/.env.strapidb
+    env_file: ./../../src/.strapidb.env
     volumes:
       - strapidb-volume:/data/db
     ports:

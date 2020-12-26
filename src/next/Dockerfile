@@ -8,7 +8,6 @@ RUN yarn install --frozen-lockfile
 # Rebuild the source code only when needed
 FROM node:14-alpine AS builder
 
-ENV NODE_ENV=production
 WORKDIR /opt/app
 COPY . .
 COPY --from=deps /opt/app/node_modules ./node_modules
@@ -18,7 +17,6 @@ RUN yarn build
 FROM node:14-alpine AS runner
 
 WORKDIR /opt/app
-ENV NODE_ENV=production
 COPY --from=builder /opt/app/next.config.js ./
 COPY --from=builder /opt/app/public ./public
 COPY --from=builder /opt/app/.next ./.next
