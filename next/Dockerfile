@@ -6,13 +6,13 @@ WORKDIR /var/src/next
 COPY package.json /var/src/next/
 COPY yarn.lock /var/src/next/
 
-RUN yarn install
-# RUN yarn install --production
+# RUN yarn install
+RUN yarn install --production
 
 COPY . /var/src/next
 
 RUN yarn run build
 EXPOSE 3001
 
-CMD "yarn" "run" "dev"
-# CMD "yarn" "run" "start"
+# CMD "yarn" "run" "dev"
+CMD "yarn" "run" "start"
