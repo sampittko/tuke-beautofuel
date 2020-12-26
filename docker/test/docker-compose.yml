@@ -21,9 +21,9 @@ services:
     environment:
       NODE_ENV: production
     restart: unless-stopped
-    env_file: ./../../src/strapi/.env
     networks:
       - app-network
+      - core-network
       - updater-network
     volumes:
       - ./../../src/strapi:/srv/app
@@ -37,7 +37,7 @@ services:
     restart: unless-stopped
     env_file: ./../../src/.strapidb.env
     networks:
-      - app-network
+      - core-network
     volumes:
       - strapidb-volume:/data/db
 
@@ -81,6 +81,7 @@ services:
 
 networks:
   app-network:
+  core-network:
   updater-network:
   monitoring-network:
 
