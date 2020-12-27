@@ -2,20 +2,15 @@
   "kind": "collectionType",
   "collectionName": "synchronizations",
   "info": {
-    "name": "synchronizations"
+    "name": "synchronizations",
+    "description": ""
   },
   "options": {
     "increments": true,
     "timestamps": true,
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "attributes": {
-    "startTimestamp": {
-      "type": "datetime"
-    },
-    "endTimestamp": {
-      "type": "datetime"
-    },
     "status": {
       "type": "enumeration",
       "enum": [
@@ -30,12 +25,8 @@
       "model": "user"
     },
     "tracks": {
-      "via": "synchronization",
-      "collection": "tracks"
-    },
-    "wallet": {
-      "via": "synchronizations",
-      "model": "wallets"
+      "collection": "tracks",
+      "via": "synchronization"
     }
   }
 }

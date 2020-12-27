@@ -587,6 +587,9 @@
               "group": {
                 "type": "string"
               },
+              "envirocar": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -606,12 +609,6 @@
               "id": {
                 "type": "string"
               },
-              "startTimestamp": {
-                "type": "string"
-              },
-              "endTimestamp": {
-                "type": "string"
-              },
               "status": {
                 "type": "string"
               },
@@ -624,12 +621,6 @@
                   "type": "string"
                 }
               },
-              "wallet": {
-                "type": "string"
-              },
-              "published_at": {
-                "type": "string"
-              },
               "created_by": {
                 "type": "string"
               },
@@ -637,10 +628,6 @@
                 "type": "string"
               }
             }
-          },
-          "published_at": {
-            "type": "string",
-            "format": "date-time"
           }
         }
       },
@@ -661,10 +648,6 @@
           },
           "synchronization": {
             "type": "string"
-          },
-          "published_at": {
-            "type": "string",
-            "format": "date-time"
           },
           "created_by": {
             "type": "string"

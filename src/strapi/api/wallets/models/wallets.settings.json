@@ -22,10 +22,6 @@
       "via": "wallet",
       "plugin": "users-permissions",
       "model": "user"
-    },
-    "synchronizations": {
-      "collection": "synchronizations",
-      "via": "wallet"
     }
   }
 }

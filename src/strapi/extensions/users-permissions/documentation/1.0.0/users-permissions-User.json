@@ -1271,12 +1271,6 @@
               "user": {
                 "type": "string"
               },
-              "synchronizations": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "created_by": {
                 "type": "string"
               },
@@ -1295,12 +1289,6 @@
                 "id": {
                   "type": "string"
                 },
-                "startTimestamp": {
-                  "type": "string"
-                },
-                "endTimestamp": {
-                  "type": "string"
-                },
                 "status": {
                   "type": "string"
                 },
@@ -1312,12 +1300,6 @@
                   "items": {
                     "type": "string"
                   }
-                },
-                "wallet": {
-                  "type": "string"
-                },
-                "published_at": {
-                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -1351,9 +1333,6 @@
                   "type": "integer"
                 },
                 "synchronization": {
-                  "type": "string"
-                },
-                "published_at": {
                   "type": "string"
                 },
                 "created_by": {
@@ -1402,6 +1381,9 @@
               "rewards",
               "gamification"
             ]
+          },
+          "envirocar": {
+            "type": "string"
           }
         }
       },
@@ -1468,6 +1450,9 @@
               "rewards",
               "gamification"
             ]
+          },
+          "envirocar": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

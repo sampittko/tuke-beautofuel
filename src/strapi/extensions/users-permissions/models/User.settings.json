@@ -81,6 +81,9 @@
         "rewards",
         "gamification"
       ]
+    },
+    "envirocar": {
+      "type": "string"
     }
   }
 }

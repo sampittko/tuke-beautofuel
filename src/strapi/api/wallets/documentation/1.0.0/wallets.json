@@ -614,54 +614,14 @@
               "group": {
                 "type": "string"
               },
+              "envirocar": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
               "updated_by": {
                 "type": "string"
-              }
-            }
-          },
-          "synchronizations": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "startTimestamp": {
-                  "type": "string"
-                },
-                "endTimestamp": {
-                  "type": "string"
-                },
-                "status": {
-                  "type": "string"
-                },
-                "user": {
-                  "type": "string"
-                },
-                "tracks": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "wallet": {
-                  "type": "string"
-                },
-                "published_at": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
               }
             }
           }
@@ -680,12 +640,6 @@
           },
           "user": {
             "type": "string"
-          },
-          "synchronizations": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
           },
           "created_by": {
             "type": "string"

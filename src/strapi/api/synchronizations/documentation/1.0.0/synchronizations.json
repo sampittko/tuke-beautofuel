@@ -522,14 +522,6 @@
           "id": {
             "type": "string"
           },
-          "startTimestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "endTimestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
           "status": {
             "type": "string",
             "enum": [
@@ -596,6 +588,9 @@
               "group": {
                 "type": "string"
               },
+              "envirocar": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -629,9 +624,6 @@
                 "synchronization": {
                   "type": "string"
                 },
-                "published_at": {
-                  "type": "string"
-                },
                 "created_by": {
                   "type": "string"
                 },
@@ -640,57 +632,11 @@
                 }
               }
             }
-          },
-          "wallet": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "credits": {
-                "type": "integer"
-              },
-              "purchases": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "user": {
-                "type": "string"
-              },
-              "synchronizations": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "published_at": {
-            "type": "string",
-            "format": "date-time"
           }
         }
       },
       "NewSynchronizations": {
         "properties": {
-          "startTimestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "endTimestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
           "status": {
             "type": "string",
             "enum": [
@@ -707,13 +653,6 @@
             "items": {
               "type": "string"
             }
-          },
-          "wallet": {
-            "type": "string"
-          },
-          "published_at": {
-            "type": "string",
-            "format": "date-time"
           },
           "created_by": {
             "type": "string"

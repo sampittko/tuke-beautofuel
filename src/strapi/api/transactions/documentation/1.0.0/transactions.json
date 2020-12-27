@@ -548,9 +548,6 @@
                   "type": "string"
                 }
               },
-              "published_at": {
-                "type": "string"
-              },
               "created_by": {
                 "type": "string"
               },
@@ -578,12 +575,6 @@
               },
               "user": {
                 "type": "string"
-              },
-              "synchronizations": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
               },
               "created_by": {
                 "type": "string"

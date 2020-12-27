@@ -8,7 +8,7 @@
   "options": {
     "increments": true,
     "timestamps": true,
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "attributes": {
     "duration": {
@@ -26,8 +26,8 @@
       "type": "integer"
     },
     "synchronization": {
-      "model": "synchronizations",
-      "via": "tracks"
+      "via": "tracks",
+      "model": "synchronizations"
     }
   }
 }

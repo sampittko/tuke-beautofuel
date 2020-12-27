@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "12/27/2020 3:11:38 PM"
+    "x-generation-date": "12/27/2020 9:38:23 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -6116,10 +6116,6 @@
                 }
               }
             }
-          },
-          "published_at": {
-            "type": "string",
-            "format": "date-time"
           }
         }
       },
@@ -6136,10 +6132,6 @@
             "items": {
               "type": "string"
             }
-          },
-          "published_at": {
-            "type": "string",
-            "format": "date-time"
           },
           "created_by": {
             "type": "string"
@@ -6241,6 +6233,9 @@
               "group": {
                 "type": "string"
               },
+              "envirocar": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -6295,14 +6290,6 @@
         "properties": {
           "id": {
             "type": "string"
-          },
-          "startTimestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "endTimestamp": {
-            "type": "string",
-            "format": "date-time"
           },
           "status": {
             "type": "string",
@@ -6370,6 +6357,9 @@
               "group": {
                 "type": "string"
               },
+              "envirocar": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -6403,9 +6393,6 @@
                 "synchronization": {
                   "type": "string"
                 },
-                "published_at": {
-                  "type": "string"
-                },
                 "created_by": {
                   "type": "string"
                 },
@@ -6414,57 +6401,11 @@
                 }
               }
             }
-          },
-          "wallet": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "credits": {
-                "type": "integer"
-              },
-              "purchases": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "user": {
-                "type": "string"
-              },
-              "synchronizations": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "published_at": {
-            "type": "string",
-            "format": "date-time"
           }
         }
       },
       "NewSynchronizations": {
         "properties": {
-          "startTimestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "endTimestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
           "status": {
             "type": "string",
             "enum": [
@@ -6481,13 +6422,6 @@
             "items": {
               "type": "string"
             }
-          },
-          "wallet": {
-            "type": "string"
-          },
-          "published_at": {
-            "type": "string",
-            "format": "date-time"
           },
           "created_by": {
             "type": "string"
@@ -6570,6 +6504,9 @@
               "group": {
                 "type": "string"
               },
+              "envirocar": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -6589,12 +6526,6 @@
               "id": {
                 "type": "string"
               },
-              "startTimestamp": {
-                "type": "string"
-              },
-              "endTimestamp": {
-                "type": "string"
-              },
               "status": {
                 "type": "string"
               },
@@ -6607,12 +6538,6 @@
                   "type": "string"
                 }
               },
-              "wallet": {
-                "type": "string"
-              },
-              "published_at": {
-                "type": "string"
-              },
               "created_by": {
                 "type": "string"
               },
@@ -6620,10 +6545,6 @@
                 "type": "string"
               }
             }
-          },
-          "published_at": {
-            "type": "string",
-            "format": "date-time"
           }
         }
       },
@@ -6644,10 +6565,6 @@
           },
           "synchronization": {
             "type": "string"
-          },
-          "published_at": {
-            "type": "string",
-            "format": "date-time"
           },
           "created_by": {
             "type": "string"
@@ -6691,9 +6608,6 @@
                   "type": "string"
                 }
               },
-              "published_at": {
-                "type": "string"
-              },
               "created_by": {
                 "type": "string"
               },
@@ -6721,12 +6635,6 @@
               },
               "user": {
                 "type": "string"
-              },
-              "synchronizations": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
               },
               "created_by": {
                 "type": "string"
@@ -6860,54 +6768,14 @@
               "group": {
                 "type": "string"
               },
+              "envirocar": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
               "updated_by": {
                 "type": "string"
-              }
-            }
-          },
-          "synchronizations": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "startTimestamp": {
-                  "type": "string"
-                },
-                "endTimestamp": {
-                  "type": "string"
-                },
-                "status": {
-                  "type": "string"
-                },
-                "user": {
-                  "type": "string"
-                },
-                "tracks": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "wallet": {
-                  "type": "string"
-                },
-                "published_at": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
               }
             }
           }
@@ -6926,12 +6794,6 @@
           },
           "user": {
             "type": "string"
-          },
-          "synchronizations": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
           },
           "created_by": {
             "type": "string"
@@ -7059,6 +6921,9 @@
                   "type": "string"
                 },
                 "group": {
+                  "type": "string"
+                },
+                "envirocar": {
                   "type": "string"
                 },
                 "created_by": {
@@ -7194,12 +7059,6 @@
               "user": {
                 "type": "string"
               },
-              "synchronizations": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "created_by": {
                 "type": "string"
               },
@@ -7218,12 +7077,6 @@
                 "id": {
                   "type": "string"
                 },
-                "startTimestamp": {
-                  "type": "string"
-                },
-                "endTimestamp": {
-                  "type": "string"
-                },
                 "status": {
                   "type": "string"
                 },
@@ -7235,12 +7088,6 @@
                   "items": {
                     "type": "string"
                   }
-                },
-                "wallet": {
-                  "type": "string"
-                },
-                "published_at": {
-                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -7274,9 +7121,6 @@
                   "type": "integer"
                 },
                 "synchronization": {
-                  "type": "string"
-                },
-                "published_at": {
                   "type": "string"
                 },
                 "created_by": {
@@ -7325,6 +7169,9 @@
               "rewards",
               "gamification"
             ]
+          },
+          "envirocar": {
+            "type": "string"
           }
         }
       },
@@ -7391,6 +7238,9 @@
               "rewards",
               "gamification"
             ]
+          },
+          "envirocar": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

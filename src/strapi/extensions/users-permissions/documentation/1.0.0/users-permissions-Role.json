@@ -582,6 +582,9 @@
                 "group": {
                   "type": "string"
                 },
+                "envirocar": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },
