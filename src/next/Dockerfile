@@ -3,7 +3,7 @@ FROM node:14-alpine AS deps
 
 WORKDIR /opt/app
 COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile --production
+RUN yarn install --frozen-lockfile
 
 # Rebuild the source code only when needed
 FROM node:14-alpine AS builder
