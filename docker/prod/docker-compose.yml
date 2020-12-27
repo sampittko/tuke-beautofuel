@@ -3,8 +3,6 @@ version: "3.9"
 services:
   next:
     image: my-next:10.0.3
-    environment:
-      NODE_ENV: production
     build:
       context: ./../../src/next
       dockerfile: Dockerfile
