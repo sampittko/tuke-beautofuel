@@ -1,4 +1,112 @@
+############################
+# global
+############################
 .DS_Store
+.AppleDouble
+.LSOverride
+Icon
+.Spotlight-V100
+.Trashes
+._*
+
+.secrets
+.commands
+.env
 .strapidb.env
 .grafanadb.env
-.secrets
+
+############################
+# strapi
+############################
+# packages
+src/strapi/*.7z
+src/strapi/*.csv
+src/strapi/*.dat
+src/strapi/*.dmg
+src/strapi/*.gz
+src/strapi/*.iso
+src/strapi/*.jar
+src/strapi/*.rar
+src/strapi/*.tar
+src/strapi/*.zip
+src/strapi/*.com
+src/strapi/*.class
+src/strapi/*.dll
+src/strapi/*.exe
+src/strapi/*.o
+src/strapi/*.seed
+src/strapi/*.swp
+src/strapi/*.so
+src/strapi/*.swm
+src/strapi/*.swo
+src/strapi/*.pid
+src/strapi/*.swn
+src/strapi/*.out
+
+# logs and databases
+src/strapi/.tmp
+src/strapi/*.log
+src/strapi/*.sql
+src/strapi/*.sqlite
+src/strapi/*.sqlite3
+
+# misc
+src/strapi/*#
+src/strapi/ssl
+src/strapi/.idea
+src/strapi/nbproject
+src/strapi/public/uploads/*
+src/strapi/!public/uploads/.gitkeep
+
+# node.js
+src/strapi/src/strapi/lib-cov
+src/strapi/lcov.info
+src/strapi/pids
+src/strapi/logs
+src/strapi/results
+src/strapi/node_modules
+src/strapi/.node_history
+
+# tests
+src/strapi/testApp
+src/strapi/coverage
+
+# strapi
+src/strapi/.env
+src/strapi/license.txt
+src/strapi/exports
+src/strapi/*.cache
+src/strapi/build
+src/strapi/.strapi-updater.json
+
+############################
+# updater
+############################
+src/updater/__pycache__
+
+############################
+# next
+############################
+# dependencies
+src/next/node_modules
+src/next/.pnp
+src/next/.pnp.js
+
+# testing
+src/next/coverage
+
+# next.js
+src/next/.next/
+src/next/out/
+
+# production
+src/next/build
+
+# misc
+src/next/.DS_Store
+src/next/*.pem
+
+# debug
+src/next/npm-debug.log*
+src/next/yarn-debug.log*
+src/next/yarn-error.log*
