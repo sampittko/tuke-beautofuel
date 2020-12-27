@@ -22,4 +22,4 @@ COPY --from=builder /opt/app/next.config.js ./
 COPY --from=builder /opt/app/public ./public
 COPY --from=builder /opt/app/.next ./.next
 COPY --from=builder /opt/app/node_modules ./node_modules
-CMD ["NODE_ENV=production", "node_modules/.bin/next", "start"]
+CMD ["node_modules/.bin/next", "start", "NODE_ENV=production"]
