@@ -3,8 +3,6 @@ version: "3.9"
 services:
   next:
     image: my-next:10.0.3
-    environment:
-      NODE_ENV: production
     build:
       context: ./../../src/next
       dockerfile: Dockerfile
@@ -18,6 +16,8 @@ services:
 
   strapi:
     image: strapi/strapi:3.4.0-node14-alpine
+    environment:
+      NODE_ENV: production
     restart: unless-stopped
     networks:
       - app-network

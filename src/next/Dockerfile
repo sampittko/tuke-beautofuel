@@ -16,12 +16,10 @@ RUN yarn build
 # Production image, copy all the files and run next
 FROM node:14-alpine AS runner
 
-ENV NODE_ENV=production
-
 WORKDIR /opt/app
 COPY .env ./
 COPY --from=builder /opt/app/next.config.js ./
 COPY --from=builder /opt/app/public ./public
 COPY --from=builder /opt/app/.next ./.next
 COPY --from=builder /opt/app/node_modules ./node_modules
-CMD ["node_modules/.bin/next", "start"]
+CMD ["NODE_ENV=production", node_modules/.bin/next", "start"]
