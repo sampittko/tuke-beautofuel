@@ -23,8 +23,8 @@ const options = {
       const isSignedIn = !!user;
       const publicApiUrl =
         process.env.NODE_ENV === "production"
-          ? process.env.NEXT_PUBLIC_PUBLIC_API_URL
-          : process.env.NEXT_PUBLIC_PUBLIC_API_URL_DEV;
+          ? process.env.NEXT_PUBLIC_API_URL
+          : process.env.NEXT_PUBLIC_API_URL_DEV;
 
       if (isSignedIn) {
         const response = await fetch(

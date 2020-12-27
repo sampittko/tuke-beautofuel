@@ -6,8 +6,8 @@ const WithGraphQL = ({ session, children }) => {
   const client = new ApolloClient({
     uri:
       process.env.NODE_ENV === "production"
-        ? `${process.env.NEXT_PUBLIC_PUBLIC_API_URL}/graphql`
-        : `${process.env.NEXT_PUBLIC_PUBLIC_API_URL_DEV}/graphql`,
+        ? `${process.env.NEXT_PUBLIC_API_URL}/graphql`
+        : `${process.env.NEXT_PUBLIC_API_URL_DEV}/graphql`,
     credentials: "same-origin",
     cache: new InMemoryCache(),
     headers: {
