@@ -6,12 +6,13 @@ const options = {
     Providers.Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      state: process.env.NODE_ENV === "production",
     }),
   ],
   session: {
     jwt: true,
   },
-  debug: true,
+  debug: process.env.NODE_ENV !== "production",
   callbacks: {
     session: async (session, user) => {
       session.jwt = user.jwt;
