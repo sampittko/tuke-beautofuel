@@ -9,8 +9,7 @@ Icon
 .Trashes
 ._*
 
-.secrets
-.commands
+.vps
 .env
 .strapidb.env
 .grafanadb.env
