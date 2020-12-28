@@ -1,9 +1,9 @@
 import { gql } from "@apollo/client";
 
 const RecommendationsAPI = {
-  all: gql`
+  random: gql`
     query {
-      recommendations {
+      recommendation(id: "random") {
         text
       }
     }

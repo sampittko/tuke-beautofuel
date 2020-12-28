@@ -1,6 +1,6 @@
 import React from "react";
 
-const EcoScore = ({ recommendations }) => (
+const EcoScore = ({ recommendation }) => (
   <div className="lg:col-span-2 bg-gradient-to-r from-cyan-600 to-green-400 overflow-hidden shadow rounded-lg">
     <div className="p-5">
       <div className="flex items-center">
@@ -42,7 +42,7 @@ const EcoScore = ({ recommendations }) => (
                   <span className="font-medium uppercase">Tip</span>
                 </span>
               </span>
-              <span>{recommendations?.recommendations[0].text}</span>
+              <span>{recommendation?.recommendation.text}</span>
             </div>
           </div>
         </span>

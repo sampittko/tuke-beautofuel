@@ -15,6 +15,12 @@ module.exports = {
    */
 
   async findOne(ctx) {
+    const { number: phaseNumber } = await strapi.query("phase").findOne();
+
+    if (phaseNumber === 1) {
+      return ctx.badRequest("Cannot get recommendations during the 1st phase");
+    }
+
     const { id } = ctx.params;
 
     if (id !== "random") {

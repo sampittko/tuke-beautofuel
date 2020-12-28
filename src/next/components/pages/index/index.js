@@ -19,10 +19,12 @@ const IndexPageComponent = () => {
   );
 
   const {
-    loading: recommendationsLoading,
-    error: recommendationsError,
-    data: recommendations,
-  } = useQuery(RecommendationsAPI.all);
+    loading: recommendationLoading,
+    error: recommendationError,
+    data: recommendation,
+  } = useQuery(RecommendationsAPI.random);
+
+  console.log(recommendationError);
 
   const { loading: userLoading, error: userError, data: user } = useQuery(
     UsersAPI.bySession,
@@ -40,8 +42,8 @@ const IndexPageComponent = () => {
 
   return (
     <Spinner
-      dependencies={[phaseLoading, recommendationsLoading, userLoading]}
-      errors={[phaseError, recommendationsError, userError]}
+      dependencies={[phaseLoading, recommendationLoading, userLoading]}
+      errors={[phaseError, recommendationError, userError]}
     >
       <div className="h-screen flex overflow-hidden bg-gray-100">
         <div className="flex-1 overflow-auto focus:outline-none" tabIndex="0">
@@ -51,7 +53,7 @@ const IndexPageComponent = () => {
             <Strategies
               user={user}
               phase={phase}
-              recommendations={recommendations}
+              recommendation={recommendation}
             />
             <Stats />
             <History user={user} phase={phase} />

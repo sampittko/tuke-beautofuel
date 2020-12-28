@@ -4,7 +4,7 @@ import Gamification from "./Gamification";
 import Rewards from "./Rewards";
 import { USER_GROUPS } from "../../../../utils/constants";
 
-const Strategies = ({ phase, user, recommendations }) => {
+const Strategies = ({ phase, user, recommendation }) => {
   const phaseNumber = phase?.phase.number;
   const userGroup = user?.user.group;
 
@@ -14,7 +14,7 @@ const Strategies = ({ phase, user, recommendations }) => {
     <div className="mt-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          <EcoScore recommendations={recommendations} />
+          <EcoScore recommendation={recommendation} />
 
           {phaseNumber === 2 && userGroup === USER_GROUPS.rewards && (
             <div className="hidden sm:block" />
