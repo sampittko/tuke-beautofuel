@@ -577,6 +577,12 @@
               "transaction": {
                 "type": "string"
               },
+              "statusCode": {
+                "type": "integer"
+              },
+              "message": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },

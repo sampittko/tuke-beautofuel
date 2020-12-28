@@ -21,7 +21,7 @@ module.exports = async (ctx, next) => {
       if (ctx.request.query && ctx.request.query.token) {
         // find the token entry that match the token from the request
         const [token] = await strapi
-          .query("token")
+          .query("tokens")
           .find({ token: ctx.request.query.token });
 
         if (!token) {

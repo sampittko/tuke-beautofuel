@@ -22,17 +22,23 @@
       "default": "pending"
     },
     "user": {
-      "via": "synchronizations",
       "plugin": "users-permissions",
-      "model": "user"
+      "model": "user",
+      "via": "synchronizations"
     },
     "tracks": {
-      "via": "synchronization",
-      "collection": "tracks"
+      "collection": "tracks",
+      "via": "synchronization"
     },
     "transaction": {
       "model": "transactions",
       "via": "synchronization"
+    },
+    "statusCode": {
+      "type": "integer"
+    },
+    "message": {
+      "type": "string"
     }
   }
 }

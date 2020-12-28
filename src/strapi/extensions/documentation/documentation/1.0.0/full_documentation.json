@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "12/28/2020 11:47:30 AM"
+    "x-generation-date": "12/28/2020 2:49:37 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -8267,6 +8267,12 @@
                 "type": "string"
               }
             }
+          },
+          "statusCode": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
           }
         }
       },
@@ -8291,6 +8297,12 @@
             }
           },
           "transaction": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "integer"
+          },
+          "message": {
             "type": "string"
           },
           "created_by": {
@@ -8537,6 +8549,12 @@
               "transaction": {
                 "type": "string"
               },
+              "statusCode": {
+                "type": "integer"
+              },
+              "message": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -8660,6 +8678,12 @@
                 }
               },
               "transaction": {
+                "type": "string"
+              },
+              "statusCode": {
+                "type": "integer"
+              },
+              "message": {
                 "type": "string"
               },
               "created_by": {
@@ -9190,6 +9214,12 @@
                   }
                 },
                 "transaction": {
+                  "type": "string"
+                },
+                "statusCode": {
+                  "type": "integer"
+                },
+                "message": {
                   "type": "string"
                 },
                 "created_by": {

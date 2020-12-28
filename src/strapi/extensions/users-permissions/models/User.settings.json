@@ -64,8 +64,8 @@
       "via": "user"
     },
     "synchronizations": {
-      "collection": "synchronizations",
-      "via": "user"
+      "via": "user",
+      "collection": "synchronizations"
     },
     "tracks": {
       "via": "user",

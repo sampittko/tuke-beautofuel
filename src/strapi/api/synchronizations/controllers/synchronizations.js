@@ -27,8 +27,21 @@ module.exports = {
       return ctx.badRequest("ID from enviroCar is not set for the user");
     }
 
+    const user = ctx.state.user.id;
+
+    const pendingSynchronization = await strapi
+      .query("synchronizations")
+      .findOne({
+        user,
+        status: SYNCHRONIZATION_STATUSES.pending,
+      });
+
+    if (pendingSynchronization) {
+      return ctx.badRequest("Synchronization is already in progress");
+    }
+
     const entity = await strapi.services.synchronizations.create({
-      user: ctx.state.user.id,
+      user,
     });
 
     const { number: phaseNumber } = await strapi.query("phase").findOne();
@@ -43,6 +56,7 @@ module.exports = {
         `${updaterUrl}/newTracks`,
         JSON.stringify({
           synchronization: entity.id,
+          user,
           phaseNumber,
         }),
         {
@@ -52,10 +66,22 @@ module.exports = {
           },
         }
       )
-      .catch(() => {
+      .then(({ data }) => {
         strapi.query("synchronizations").update(
           { id: entity.id },
           {
+            statusCode: data.statusCode,
+            message: data.message,
+            status: SYNCHRONIZATION_STATUSES.success,
+          }
+        );
+      })
+      .catch((error) => {
+        strapi.query("synchronizations").update(
+          { id: entity.id },
+          {
+            statusCode: error.statusCode,
+            message: error.message,
             status: SYNCHRONIZATION_STATUSES.failure,
           }
         );
