@@ -45,6 +45,8 @@ services:
     image: tiangolo/uvicorn-gunicorn-fastapi:python3.7-alpine3.8-2020-06-06
     environment:
       PORT: 1338
+    env_file:
+      - ./../../src/updater/.env
     restart: unless-stopped
     networks:
       - updater-network
