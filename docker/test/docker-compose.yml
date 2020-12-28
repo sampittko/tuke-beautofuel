@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   next:
-    image: my-next:10.0.3
+    image: my-next:0.0.0
     environment:
       NODE_ENV: production
     build:
@@ -42,11 +42,12 @@ services:
       - strapidb-volume:/data/db
 
   updater:
-    image: tiangolo/uvicorn-gunicorn-fastapi:python3.7-alpine3.8-2020-06-06
-    environment:
-      PORT: 1338
+    image: my-updater:0.0.0
     env_file:
-      - ./../../src/updater/.env
+      - ./../../src/updater/app/.env
+    build:
+      context: ./../../src/updater
+      dockerfile: Dockerfile
     restart: unless-stopped
     networks:
       - updater-network

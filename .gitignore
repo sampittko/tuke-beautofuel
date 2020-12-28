@@ -81,7 +81,7 @@ src/strapi/.strapi-updater.json
 ############################
 # updater
 ############################
-src/updater/__pycache__
+src/updater/app/__pycache__
 
 ############################
 # next
