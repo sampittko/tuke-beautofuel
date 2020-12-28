@@ -93,6 +93,10 @@
     "questionnaires": {
       "collection": "questionnaires",
       "via": "user"
+    },
+    "apiToken": {
+      "via": "user",
+      "model": "tokens"
     }
   }
 }

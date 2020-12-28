@@ -598,6 +598,9 @@
                   "type": "string"
                 }
               },
+              "apiToken": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },

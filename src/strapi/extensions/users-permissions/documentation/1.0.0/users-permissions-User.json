@@ -1434,6 +1434,29 @@
                 }
               }
             }
+          },
+          "apiToken": {
+            "required": [
+              "id",
+              "token"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "token": {
+                "type": "string"
+              },
+              "user": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           }
         }
       },
@@ -1511,6 +1534,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "apiToken": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
