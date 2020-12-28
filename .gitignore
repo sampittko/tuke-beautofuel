@@ -77,7 +77,7 @@ src/strapi/exports
 src/strapi/*.cache
 src/strapi/build
 src/strapi/.strapi-updater.json
-src/strapi/extensions/documentation/documentation
+src/strapi/extensions/documentation
 
 ############################
 # updater

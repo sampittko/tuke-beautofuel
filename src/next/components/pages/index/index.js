@@ -24,8 +24,6 @@ const IndexPageComponent = () => {
     data: recommendation,
   } = useQuery(RecommendationsAPI.random);
 
-  console.log(recommendationError);
-
   const { loading: userLoading, error: userError, data: user } = useQuery(
     UsersAPI.bySession,
     {
