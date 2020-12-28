@@ -3,3 +3,8 @@ exports.SYNCHRONIZATION_STATUSES = {
   success: "success",
   failure: "failure",
 };
+
+exports.TRANSACTION_TYPES = {
+  addition: "addition",
+  substraction: "substraction",
+};

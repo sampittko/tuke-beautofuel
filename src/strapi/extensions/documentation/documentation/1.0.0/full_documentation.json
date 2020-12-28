@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "12/28/2020 2:49:37 PM"
+    "x-generation-date": "12/28/2020 3:45:55 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -7761,9 +7761,6 @@
               "purchase": {
                 "type": "string"
               },
-              "synchronization": {
-                "type": "string"
-              },
               "type": {
                 "type": "string"
               },
@@ -7771,6 +7768,9 @@
                 "type": "number"
               },
               "wallet": {
+                "type": "string"
+              },
+              "synchronization": {
                 "type": "string"
               },
               "created_by": {
@@ -8235,36 +8235,39 @@
               }
             }
           },
-          "transaction": {
-            "required": [
-              "id",
-              "type",
-              "value"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "purchase": {
-                "type": "string"
-              },
-              "synchronization": {
-                "type": "string"
-              },
-              "type": {
-                "type": "string"
-              },
-              "value": {
-                "type": "number"
-              },
-              "wallet": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
+          "transactions": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "type",
+                "value"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "purchase": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "number"
+                },
+                "wallet": {
+                  "type": "string"
+                },
+                "synchronization": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
               }
             }
           },
@@ -8296,8 +8299,11 @@
               "type": "string"
             }
           },
-          "transaction": {
-            "type": "string"
+          "transactions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "statusCode": {
             "type": "integer"
@@ -8546,8 +8552,11 @@
                   "type": "string"
                 }
               },
-              "transaction": {
-                "type": "string"
+              "transactions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "statusCode": {
                 "type": "integer"
@@ -8657,43 +8666,6 @@
               }
             }
           },
-          "synchronization": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "status": {
-                "type": "string"
-              },
-              "user": {
-                "type": "string"
-              },
-              "tracks": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "transaction": {
-                "type": "string"
-              },
-              "statusCode": {
-                "type": "integer"
-              },
-              "message": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
           "type": {
             "type": "string",
             "enum": [
@@ -8731,6 +8703,46 @@
                 "type": "string"
               }
             }
+          },
+          "synchronization": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "user": {
+                "type": "string"
+              },
+              "tracks": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "transactions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "statusCode": {
+                "type": "integer"
+              },
+              "message": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           }
         }
       },
@@ -8741,9 +8753,6 @@
         ],
         "properties": {
           "purchase": {
-            "type": "string"
-          },
-          "synchronization": {
             "type": "string"
           },
           "type": {
@@ -8757,6 +8766,9 @@
             "type": "number"
           },
           "wallet": {
+            "type": "string"
+          },
+          "synchronization": {
             "type": "string"
           },
           "created_by": {
@@ -8872,9 +8884,6 @@
                 "purchase": {
                   "type": "string"
                 },
-                "synchronization": {
-                  "type": "string"
-                },
                 "type": {
                   "type": "string"
                 },
@@ -8882,6 +8891,9 @@
                   "type": "number"
                 },
                 "wallet": {
+                  "type": "string"
+                },
+                "synchronization": {
                   "type": "string"
                 },
                 "created_by": {
@@ -9213,8 +9225,11 @@
                     "type": "string"
                   }
                 },
-                "transaction": {
-                  "type": "string"
+                "transactions": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "statusCode": {
                   "type": "integer"

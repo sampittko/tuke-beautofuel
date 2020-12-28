@@ -30,8 +30,8 @@
       "collection": "tracks",
       "via": "synchronization"
     },
-    "transaction": {
-      "model": "transactions",
+    "transactions": {
+      "collection": "transactions",
       "via": "synchronization"
     },
     "statusCode": {

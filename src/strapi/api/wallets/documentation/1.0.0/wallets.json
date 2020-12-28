@@ -619,9 +619,6 @@
                 "purchase": {
                   "type": "string"
                 },
-                "synchronization": {
-                  "type": "string"
-                },
                 "type": {
                   "type": "string"
                 },
@@ -629,6 +626,9 @@
                   "type": "number"
                 },
                 "wallet": {
+                  "type": "string"
+                },
+                "synchronization": {
                   "type": "string"
                 },
                 "created_by": {

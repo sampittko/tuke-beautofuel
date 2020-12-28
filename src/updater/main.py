@@ -99,9 +99,14 @@ async def post_new_tracks(data: PostNewTracks, x_user: str = Header(None), x_tok
 
     newTracks = filter_tracks(allTracks, existingTracks)
 
+    newTracksLen = len(newTracks)
+
+    if newTracksLen == 0:
+        return {'statusCode': 200, 'message': 'There are no new track records'}
+
     await update_strapi_tracks(newTracks, data.user, data.synchronization)
 
-    return {'statusCode': 200, 'message': f'Synchronization was successful with {len(newTracks)} new tracks'}
+    return {'statusCode': 200, 'message': f'Synchronization was successful with {newTracksLen} new tracks'}
 
 
 @app.get("/userExists/{user_id}")

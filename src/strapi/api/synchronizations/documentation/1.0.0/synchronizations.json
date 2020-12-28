@@ -658,36 +658,39 @@
               }
             }
           },
-          "transaction": {
-            "required": [
-              "id",
-              "type",
-              "value"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "purchase": {
-                "type": "string"
-              },
-              "synchronization": {
-                "type": "string"
-              },
-              "type": {
-                "type": "string"
-              },
-              "value": {
-                "type": "number"
-              },
-              "wallet": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
+          "transactions": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "type",
+                "value"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "purchase": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "number"
+                },
+                "wallet": {
+                  "type": "string"
+                },
+                "synchronization": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
               }
             }
           },
@@ -719,8 +722,11 @@
               "type": "string"
             }
           },
-          "transaction": {
-            "type": "string"
+          "transactions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "statusCode": {
             "type": "integer"

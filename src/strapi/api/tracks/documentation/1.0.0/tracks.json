@@ -636,8 +636,11 @@
                   "type": "string"
                 }
               },
-              "transaction": {
-                "type": "string"
+              "transactions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "statusCode": {
                 "type": "integer"

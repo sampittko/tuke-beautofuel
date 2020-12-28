@@ -554,43 +554,6 @@
               }
             }
           },
-          "synchronization": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "status": {
-                "type": "string"
-              },
-              "user": {
-                "type": "string"
-              },
-              "tracks": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "transaction": {
-                "type": "string"
-              },
-              "statusCode": {
-                "type": "integer"
-              },
-              "message": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
           "type": {
             "type": "string",
             "enum": [
@@ -628,6 +591,46 @@
                 "type": "string"
               }
             }
+          },
+          "synchronization": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "user": {
+                "type": "string"
+              },
+              "tracks": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "transactions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "statusCode": {
+                "type": "integer"
+              },
+              "message": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           }
         }
       },
@@ -638,9 +641,6 @@
         ],
         "properties": {
           "purchase": {
-            "type": "string"
-          },
-          "synchronization": {
             "type": "string"
           },
           "type": {
@@ -654,6 +654,9 @@
             "type": "number"
           },
           "wallet": {
+            "type": "string"
+          },
+          "synchronization": {
             "type": "string"
           },
           "created_by": {
