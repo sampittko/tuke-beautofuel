@@ -22,8 +22,8 @@
       "model": "user"
     },
     "transactions": {
-      "collection": "transactions",
-      "via": "wallet"
+      "via": "wallet",
+      "collection": "transactions"
     }
   }
 }

@@ -677,7 +677,7 @@
                   "type": "string"
                 },
                 "value": {
-                  "type": "number"
+                  "type": "integer"
                 },
                 "wallet": {
                   "type": "string"

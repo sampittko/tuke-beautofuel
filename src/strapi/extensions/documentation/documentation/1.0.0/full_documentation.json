@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "12/28/2020 3:45:55 PM"
+    "x-generation-date": "12/28/2020 4:08:24 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -7765,7 +7765,7 @@
                 "type": "string"
               },
               "value": {
-                "type": "number"
+                "type": "integer"
               },
               "wallet": {
                 "type": "string"
@@ -8254,7 +8254,7 @@
                   "type": "string"
                 },
                 "value": {
-                  "type": "number"
+                  "type": "integer"
                 },
                 "wallet": {
                   "type": "string"
@@ -8674,7 +8674,7 @@
             ]
           },
           "value": {
-            "type": "number"
+            "type": "integer"
           },
           "wallet": {
             "required": [
@@ -8763,7 +8763,7 @@
             ]
           },
           "value": {
-            "type": "number"
+            "type": "integer"
           },
           "wallet": {
             "type": "string"
@@ -8888,7 +8888,7 @@
                   "type": "string"
                 },
                 "value": {
-                  "type": "number"
+                  "type": "integer"
                 },
                 "wallet": {
                   "type": "string"

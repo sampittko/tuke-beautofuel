@@ -16,26 +16,34 @@ module.exports = {
    */
 
   async create(ctx) {
+    if (ctx.state.user.username !== "updater") {
+      return ctx.badRequest("You are not allowed to perform this action");
+    }
+
     const data = ctx.request.body;
     const entity = await strapi.services.tracks.create(data);
 
-    const wallet = await strapi.query("wallets").findOne({
-      user: data.user,
-    });
+    const { number: phaseNumber } = await strapi.query("phase").findOne();
 
-    await strapi.controllers.transactions.create({
-      request: {
-        body: {
-          type:
-            data.score > 0
-              ? TRANSACTION_TYPES.addition
-              : TRANSACTION_TYPES.substraction,
-          value: Math.abs(data.score),
-          synchronization: data.synchronization,
-          wallet: wallet.id,
+    if (phaseNumber !== 1) {
+      const wallet = await strapi.query("wallets").findOne({
+        user: data.user,
+      });
+
+      await strapi.controllers.transactions.create({
+        request: {
+          body: {
+            type:
+              data.score > 0
+                ? TRANSACTION_TYPES.addition
+                : TRANSACTION_TYPES.substraction,
+            value: Math.abs(data.score),
+            synchronization: data.synchronization,
+            wallet: wallet.id,
+          },
         },
-      },
-    });
+      });
+    }
 
     return sanitizeEntity(entity, { model: strapi.models.tracks });
   },

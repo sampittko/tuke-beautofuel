@@ -31,8 +31,8 @@
       "via": "synchronization"
     },
     "transactions": {
-      "collection": "transactions",
-      "via": "synchronization"
+      "via": "synchronization",
+      "collection": "transactions"
     },
     "statusCode": {
       "type": "integer"

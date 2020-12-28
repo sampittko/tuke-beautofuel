@@ -24,16 +24,16 @@
       "required": true
     },
     "value": {
-      "type": "decimal",
+      "type": "integer",
       "required": true
     },
     "wallet": {
-      "via": "transactions",
-      "model": "wallets"
+      "model": "wallets",
+      "via": "transactions"
     },
     "synchronization": {
-      "via": "transactions",
-      "model": "synchronizations"
+      "model": "synchronizations",
+      "via": "transactions"
     }
   }
 }

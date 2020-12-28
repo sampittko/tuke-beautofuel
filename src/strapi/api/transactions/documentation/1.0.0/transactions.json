@@ -562,7 +562,7 @@
             ]
           },
           "value": {
-            "type": "number"
+            "type": "integer"
           },
           "wallet": {
             "required": [
@@ -651,7 +651,7 @@
             ]
           },
           "value": {
-            "type": "number"
+            "type": "integer"
           },
           "wallet": {
             "type": "string"
