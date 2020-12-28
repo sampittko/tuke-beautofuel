@@ -68,8 +68,8 @@
       "via": "user"
     },
     "tracks": {
-      "collection": "tracks",
-      "via": "user"
+      "via": "user",
+      "collection": "tracks"
     },
     "setup": {
       "model": "setups",
@@ -79,11 +79,20 @@
       "type": "enumeration",
       "enum": [
         "rewards",
-        "gamification"
-      ]
+        "gamification",
+        "unassigned"
+      ],
+      "default": "unassigned",
+      "unique": false
     },
     "envirocar": {
-      "type": "string"
+      "type": "string",
+      "unique": true,
+      "required": false
+    },
+    "questionnaires": {
+      "collection": "questionnaires",
+      "via": "user"
     }
   }
 }

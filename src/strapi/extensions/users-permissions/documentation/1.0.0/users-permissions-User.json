@@ -1262,14 +1262,14 @@
               "credits": {
                 "type": "integer"
               },
-              "purchases": {
+              "user": {
+                "type": "string"
+              },
+              "transactions": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
-              },
-              "user": {
-                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -1301,6 +1301,9 @@
                     "type": "string"
                   }
                 },
+                "transaction": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -1314,7 +1317,13 @@
             "type": "array",
             "items": {
               "required": [
-                "id"
+                "id",
+                "duration",
+                "date",
+                "score",
+                "totalDistance",
+                "scoreDistance",
+                "envirocar"
               ],
               "properties": {
                 "id": {
@@ -1333,6 +1342,15 @@
                   "type": "integer"
                 },
                 "synchronization": {
+                  "type": "string"
+                },
+                "totalDistance": {
+                  "type": "number"
+                },
+                "scoreDistance": {
+                  "type": "number"
+                },
+                "envirocar": {
                   "type": "string"
                 },
                 "created_by": {
@@ -1377,13 +1395,45 @@
           },
           "group": {
             "type": "string",
+            "default": "unassigned",
             "enum": [
               "rewards",
-              "gamification"
+              "gamification",
+              "unassigned"
             ]
           },
           "envirocar": {
             "type": "string"
+          },
+          "questionnaires": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "phaseNumber",
+                "answers"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "phaseNumber": {
+                  "type": "integer"
+                },
+                "answers": {
+                  "type": "object"
+                },
+                "user": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       },
@@ -1446,13 +1496,21 @@
           },
           "group": {
             "type": "string",
+            "default": "unassigned",
             "enum": [
               "rewards",
-              "gamification"
+              "gamification",
+              "unassigned"
             ]
           },
           "envirocar": {
             "type": "string"
+          },
+          "questionnaires": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "created_by": {
             "type": "string"

@@ -12,22 +12,38 @@
   },
   "attributes": {
     "duration": {
-      "type": "biginteger"
+      "type": "biginteger",
+      "required": true
     },
     "date": {
-      "type": "date"
+      "type": "date",
+      "required": true
     },
     "user": {
-      "via": "tracks",
       "plugin": "users-permissions",
-      "model": "user"
+      "model": "user",
+      "via": "tracks"
     },
     "score": {
-      "type": "integer"
+      "type": "integer",
+      "required": true
     },
     "synchronization": {
-      "via": "tracks",
-      "model": "synchronizations"
+      "model": "synchronizations",
+      "via": "tracks"
+    },
+    "totalDistance": {
+      "type": "decimal",
+      "required": true
+    },
+    "scoreDistance": {
+      "type": "decimal",
+      "required": true
+    },
+    "envirocar": {
+      "type": "string",
+      "required": true,
+      "unique": true
     }
   }
 }

@@ -1,18 +1,18 @@
 {
   "paths": {
-    "/phase": {
+    "/questionnaires": {
       "get": {
         "deprecated": false,
-        "description": "Find all the phase's records",
+        "description": "Find all the questionnaires's records",
         "responses": {
           "200": {
-            "description": "Retrieve phase document(s)",
+            "description": "Retrieve questionnaires document(s)",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Phase"
+                    "$ref": "#/components/schemas/Questionnaires"
                   }
                 }
               }
@@ -51,7 +51,7 @@
         },
         "summary": "",
         "tags": [
-          "Phase"
+          "Questionnaires"
         ],
         "parameters": [
           {
@@ -192,16 +192,16 @@
           }
         ]
       },
-      "put": {
+      "post": {
         "deprecated": false,
-        "description": "Update a single phase record",
+        "description": "Create a new questionnaires record",
         "responses": {
           "200": {
-            "description": "Retrieve phase document(s)",
+            "description": "Retrieve questionnaires document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Phase"
+                  "$ref": "#/components/schemas/Questionnaires"
                 }
               }
             }
@@ -239,7 +239,7 @@
         },
         "summary": "",
         "tags": [
-          "Phase"
+          "Questionnaires"
         ],
         "requestBody": {
           "description": "",
@@ -247,19 +247,212 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewPhase"
+                "$ref": "#/components/schemas/NewQuestionnaires"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/questionnaires/count": {
+      "get": {
+        "deprecated": false,
+        "description": "Retrieve the numver of questionnaires documents",
+        "responses": {
+          "200": {
+            "description": "Retrieve questionnaires document(s)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             }
           }
         },
+        "summary": "",
+        "tags": [
+          "Questionnaires"
+        ],
         "parameters": []
+      }
+    },
+    "/questionnaires/{id}": {
+      "get": {
+        "deprecated": false,
+        "description": "Find one questionnaires record",
+        "responses": {
+          "200": {
+            "description": "Retrieve questionnaires document(s)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Questionnaires"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Questionnaires"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "put": {
+        "deprecated": false,
+        "description": "Update a single questionnaires record",
+        "responses": {
+          "200": {
+            "description": "Retrieve questionnaires document(s)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Questionnaires"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Questionnaires"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewQuestionnaires"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
       },
       "delete": {
         "deprecated": false,
-        "description": "Delete a single phase record",
+        "description": "Delete a single questionnaires record",
         "responses": {
           "200": {
-            "description": "deletes a single phase based on the ID supplied",
+            "description": "deletes a single questionnaires based on the ID supplied",
             "content": {
               "application/json": {
                 "schema": {
@@ -302,55 +495,132 @@
         },
         "summary": "",
         "tags": [
-          "Phase"
+          "Questionnaires"
         ],
-        "parameters": []
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
       }
     }
   },
   "components": {
     "schemas": {
-      "Phase": {
+      "Questionnaires": {
         "required": [
           "id",
-          "number",
-          "startDate",
-          "endDate"
+          "phaseNumber",
+          "answers"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
-          "number": {
+          "phaseNumber": {
             "type": "integer"
           },
-          "startDate": {
-            "type": "string",
-            "format": "date"
+          "answers": {
+            "type": "object"
           },
-          "endDate": {
-            "type": "string",
-            "format": "date"
+          "user": {
+            "required": [
+              "id",
+              "username",
+              "email"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "username": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "provider": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "resetPasswordToken": {
+                "type": "string"
+              },
+              "confirmationToken": {
+                "type": "string"
+              },
+              "confirmed": {
+                "type": "boolean"
+              },
+              "blocked": {
+                "type": "boolean"
+              },
+              "role": {
+                "type": "string"
+              },
+              "wallet": {
+                "type": "string"
+              },
+              "synchronizations": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "tracks": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "setup": {
+                "type": "string"
+              },
+              "group": {
+                "type": "string"
+              },
+              "envirocar": {
+                "type": "string"
+              },
+              "questionnaires": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           }
         }
       },
-      "NewPhase": {
+      "NewQuestionnaires": {
         "required": [
-          "number",
-          "startDate",
-          "endDate"
+          "phaseNumber",
+          "answers"
         ],
         "properties": {
-          "number": {
+          "phaseNumber": {
             "type": "integer"
           },
-          "startDate": {
-            "type": "string",
-            "format": "date"
+          "answers": {
+            "type": "object"
           },
-          "endDate": {
-            "type": "string",
-            "format": "date"
+          "user": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
@@ -364,7 +634,7 @@
   },
   "tags": [
     {
-      "name": "Phase"
+      "name": "Questionnaires"
     }
   ]
 }

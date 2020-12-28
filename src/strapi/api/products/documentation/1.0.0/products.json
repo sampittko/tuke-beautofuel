@@ -1,18 +1,18 @@
 {
   "paths": {
-    "/procucts": {
+    "/products": {
       "get": {
         "deprecated": false,
-        "description": "Find all the procucts's records",
+        "description": "Find all the products's records",
         "responses": {
           "200": {
-            "description": "Retrieve procucts document(s)",
+            "description": "Retrieve products document(s)",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Procucts"
+                    "$ref": "#/components/schemas/Products"
                   }
                 }
               }
@@ -51,7 +51,7 @@
         },
         "summary": "",
         "tags": [
-          "Procucts"
+          "Products"
         ],
         "parameters": [
           {
@@ -194,14 +194,14 @@
       },
       "post": {
         "deprecated": false,
-        "description": "Create a new procucts record",
+        "description": "Create a new products record",
         "responses": {
           "200": {
-            "description": "Retrieve procucts document(s)",
+            "description": "Retrieve products document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Procucts"
+                  "$ref": "#/components/schemas/Products"
                 }
               }
             }
@@ -239,7 +239,7 @@
         },
         "summary": "",
         "tags": [
-          "Procucts"
+          "Products"
         ],
         "requestBody": {
           "description": "",
@@ -247,20 +247,20 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewProcucts"
+                "$ref": "#/components/schemas/NewProducts"
               }
             }
           }
         }
       }
     },
-    "/procucts/count": {
+    "/products/count": {
       "get": {
         "deprecated": false,
-        "description": "Retrieve the numver of procucts documents",
+        "description": "Retrieve the numver of products documents",
         "responses": {
           "200": {
-            "description": "Retrieve procucts document(s)",
+            "description": "Retrieve products document(s)",
             "content": {
               "application/json": {
                 "schema": {
@@ -306,22 +306,22 @@
         },
         "summary": "",
         "tags": [
-          "Procucts"
+          "Products"
         ],
         "parameters": []
       }
     },
-    "/procucts/{id}": {
+    "/products/{id}": {
       "get": {
         "deprecated": false,
-        "description": "Find one procucts record",
+        "description": "Find one products record",
         "responses": {
           "200": {
-            "description": "Retrieve procucts document(s)",
+            "description": "Retrieve products document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Procucts"
+                  "$ref": "#/components/schemas/Products"
                 }
               }
             }
@@ -359,7 +359,7 @@
         },
         "summary": "",
         "tags": [
-          "Procucts"
+          "Products"
         ],
         "parameters": [
           {
@@ -376,14 +376,14 @@
       },
       "put": {
         "deprecated": false,
-        "description": "Update a single procucts record",
+        "description": "Update a single products record",
         "responses": {
           "200": {
-            "description": "Retrieve procucts document(s)",
+            "description": "Retrieve products document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Procucts"
+                  "$ref": "#/components/schemas/Products"
                 }
               }
             }
@@ -421,7 +421,7 @@
         },
         "summary": "",
         "tags": [
-          "Procucts"
+          "Products"
         ],
         "requestBody": {
           "description": "",
@@ -429,7 +429,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewProcucts"
+                "$ref": "#/components/schemas/NewProducts"
               }
             }
           }
@@ -449,10 +449,10 @@
       },
       "delete": {
         "deprecated": false,
-        "description": "Delete a single procucts record",
+        "description": "Delete a single products record",
         "responses": {
           "200": {
-            "description": "deletes a single procucts based on the ID supplied",
+            "description": "deletes a single products based on the ID supplied",
             "content": {
               "application/json": {
                 "schema": {
@@ -495,7 +495,7 @@
         },
         "summary": "",
         "tags": [
-          "Procucts"
+          "Products"
         ],
         "parameters": [
           {
@@ -514,40 +514,48 @@
   },
   "components": {
     "schemas": {
-      "Procucts": {
+      "Products": {
         "required": [
-          "id"
+          "id",
+          "name",
+          "stock",
+          "price"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
-          "price": {
-            "type": "integer"
+          "name": {
+            "type": "string"
           },
           "stock": {
             "type": "integer"
+          },
+          "price": {
+            "type": "number"
           },
           "purchases": {
             "type": "array",
             "items": {
               "required": [
-                "id"
+                "id",
+                "quantity",
+                "unitPrice"
               ],
               "properties": {
                 "id": {
+                  "type": "string"
+                },
+                "product": {
                   "type": "string"
                 },
                 "quantity": {
                   "type": "integer"
                 },
                 "unitPrice": {
-                  "type": "integer"
+                  "type": "number"
                 },
-                "procuct": {
-                  "type": "string"
-                },
-                "wallet": {
+                "transaction": {
                   "type": "string"
                 },
                 "created_by": {
@@ -561,13 +569,21 @@
           }
         }
       },
-      "NewProcucts": {
+      "NewProducts": {
+        "required": [
+          "name",
+          "stock",
+          "price"
+        ],
         "properties": {
-          "price": {
-            "type": "integer"
+          "name": {
+            "type": "string"
           },
           "stock": {
             "type": "integer"
+          },
+          "price": {
+            "type": "number"
           },
           "purchases": {
             "type": "array",
@@ -587,7 +603,7 @@
   },
   "tags": [
     {
-      "name": "Procucts"
+      "name": "Products"
     }
   ]
 }

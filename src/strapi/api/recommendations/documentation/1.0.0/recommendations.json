@@ -516,7 +516,8 @@
     "schemas": {
       "Recommendations": {
         "required": [
-          "id"
+          "id",
+          "text"
         ],
         "properties": {
           "id": {
@@ -528,6 +529,9 @@
         }
       },
       "NewRecommendations": {
+        "required": [
+          "text"
+        ],
         "properties": {
           "text": {
             "type": "string"

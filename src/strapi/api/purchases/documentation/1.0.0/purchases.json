@@ -1,18 +1,18 @@
 {
   "paths": {
-    "/phase": {
+    "/purchases": {
       "get": {
         "deprecated": false,
-        "description": "Find all the phase's records",
+        "description": "Find all the purchases's records",
         "responses": {
           "200": {
-            "description": "Retrieve phase document(s)",
+            "description": "Retrieve purchases document(s)",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Phase"
+                    "$ref": "#/components/schemas/Purchases"
                   }
                 }
               }
@@ -51,7 +51,7 @@
         },
         "summary": "",
         "tags": [
-          "Phase"
+          "Purchases"
         ],
         "parameters": [
           {
@@ -192,16 +192,16 @@
           }
         ]
       },
-      "put": {
+      "post": {
         "deprecated": false,
-        "description": "Update a single phase record",
+        "description": "Create a new purchases record",
         "responses": {
           "200": {
-            "description": "Retrieve phase document(s)",
+            "description": "Retrieve purchases document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Phase"
+                  "$ref": "#/components/schemas/Purchases"
                 }
               }
             }
@@ -239,7 +239,7 @@
         },
         "summary": "",
         "tags": [
-          "Phase"
+          "Purchases"
         ],
         "requestBody": {
           "description": "",
@@ -247,19 +247,212 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewPhase"
+                "$ref": "#/components/schemas/NewPurchases"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/purchases/count": {
+      "get": {
+        "deprecated": false,
+        "description": "Retrieve the numver of purchases documents",
+        "responses": {
+          "200": {
+            "description": "Retrieve purchases document(s)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             }
           }
         },
+        "summary": "",
+        "tags": [
+          "Purchases"
+        ],
         "parameters": []
+      }
+    },
+    "/purchases/{id}": {
+      "get": {
+        "deprecated": false,
+        "description": "Find one purchases record",
+        "responses": {
+          "200": {
+            "description": "Retrieve purchases document(s)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Purchases"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Purchases"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "put": {
+        "deprecated": false,
+        "description": "Update a single purchases record",
+        "responses": {
+          "200": {
+            "description": "Retrieve purchases document(s)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Purchases"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Purchases"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewPurchases"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
       },
       "delete": {
         "deprecated": false,
-        "description": "Delete a single phase record",
+        "description": "Delete a single purchases record",
         "responses": {
           "200": {
-            "description": "deletes a single phase based on the ID supplied",
+            "description": "deletes a single purchases based on the ID supplied",
             "content": {
               "application/json": {
                 "schema": {
@@ -302,55 +495,127 @@
         },
         "summary": "",
         "tags": [
-          "Phase"
+          "Purchases"
         ],
-        "parameters": []
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
       }
     }
   },
   "components": {
     "schemas": {
-      "Phase": {
+      "Purchases": {
         "required": [
           "id",
-          "number",
-          "startDate",
-          "endDate"
+          "quantity",
+          "unitPrice"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
-          "number": {
+          "product": {
+            "required": [
+              "id",
+              "name",
+              "stock",
+              "price"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "stock": {
+                "type": "integer"
+              },
+              "price": {
+                "type": "number"
+              },
+              "purchases": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "quantity": {
             "type": "integer"
           },
-          "startDate": {
-            "type": "string",
-            "format": "date"
+          "unitPrice": {
+            "type": "number"
           },
-          "endDate": {
-            "type": "string",
-            "format": "date"
+          "transaction": {
+            "required": [
+              "id",
+              "type",
+              "value"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "purchase": {
+                "type": "string"
+              },
+              "synchronization": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              },
+              "wallet": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           }
         }
       },
-      "NewPhase": {
+      "NewPurchases": {
         "required": [
-          "number",
-          "startDate",
-          "endDate"
+          "quantity",
+          "unitPrice"
         ],
         "properties": {
-          "number": {
+          "product": {
+            "type": "string"
+          },
+          "quantity": {
             "type": "integer"
           },
-          "startDate": {
-            "type": "string",
-            "format": "date"
+          "unitPrice": {
+            "type": "number"
           },
-          "endDate": {
-            "type": "string",
-            "format": "date"
+          "transaction": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
@@ -364,7 +629,7 @@
   },
   "tags": [
     {
-      "name": "Phase"
+      "name": "Purchases"
     }
   ]
 }

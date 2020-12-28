@@ -1,12 +1,18 @@
 from fastapi import FastAPI, Header
+from pydantic import BaseModel
 import requests
+
+
+class PostNewTracks(BaseModel):
+    synchronization: str
+    phaseNumber: int
 
 
 app = FastAPI()
 
 
-@app.get("/newTracks")
-async def get_new_tracks(x_user: str = Header(None), x_token: str = Header(None)):
+@app.post("/newTracks")
+async def post_new_tracks(data: PostNewTracks, x_user: str = Header(None), x_token: str = Header(None)):
     res = requests.get(
         f'https://envirocar.org/api/stable/users/{x_user}/tracks',
         headers={
@@ -14,7 +20,8 @@ async def get_new_tracks(x_user: str = Header(None), x_token: str = Header(None)
             'X-Token': x_token
         }
     )
-    return res.json()
+    tracks = res.json()['tracks']
+    print(tracks)
 
 
 @app.get("/userExists/{user_id}")

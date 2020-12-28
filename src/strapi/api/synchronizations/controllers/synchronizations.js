@@ -20,40 +20,38 @@ module.exports = {
     const enviroCarToken = ctx.request.header["x-token"];
 
     if (!enviroCarToken) {
-      return ctx.badRequest("Request header token field is not set correctly");
+      return ctx.badRequest("Request header token field is not set");
     }
+
+    if (!ctx.state.user.envirocar) {
+      return ctx.badRequest("ID from enviroCar is not set for the user");
+    }
+
+    const entity = await strapi.services.synchronizations.create({
+      user: ctx.state.user.id,
+    });
+
+    const { number: phaseNumber } = await strapi.query("phase").findOne();
 
     const updaterUrl =
       process.env.NODE_ENV === "production"
         ? process.env.UPDATER_URL
         : process.env.UPDATER_URL_DEV;
 
-    const entity = await strapi.services.synchronizations.create({
-      status: SYNCHRONIZATION_STATUSES.pending,
-      user: ctx.state.user.id,
-    });
-
     axios
-      .get(`${updaterUrl}/newTracks`, {
-        headers: {
-          "X-User": ctx.state.user.envirocar,
-          "X-Token": ctx.request.header["x-token"],
-        },
-      })
-      .then(async (res) => {
-        const newTracks = res.data.tracks;
-
-        for (const newTrack of newTracks) {
-          await strapi.controllers.tracks.create(ctx.state.user, entity);
+      .post(
+        `${updaterUrl}/newTracks`,
+        JSON.stringify({
+          synchronization: entity.id,
+          phaseNumber,
+        }),
+        {
+          headers: {
+            "X-User": ctx.state.user.envirocar,
+            "X-Token": ctx.request.header["x-token"],
+          },
         }
-
-        strapi.query("synchronizations").update(
-          { id: entity.id },
-          {
-            status: SYNCHRONIZATION_STATUSES.success,
-          }
-        );
-      })
+      )
       .catch(() => {
         strapi.query("synchronizations").update(
           { id: entity.id },

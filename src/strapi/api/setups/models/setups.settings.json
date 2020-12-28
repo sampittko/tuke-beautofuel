@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "setups",
   "info": {
-    "name": "setups"
+    "name": "setups",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -16,16 +17,20 @@
       "model": "user"
     },
     "step1": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
     },
     "step2": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
     },
     "step3": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
     },
     "step4": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
     }
   }
 }

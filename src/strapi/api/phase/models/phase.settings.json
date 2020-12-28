@@ -12,13 +12,16 @@
   },
   "attributes": {
     "number": {
-      "type": "integer"
+      "type": "integer",
+      "required": true
     },
     "startDate": {
-      "type": "date"
+      "type": "date",
+      "required": true
     },
     "endDate": {
-      "type": "date"
+      "type": "date",
+      "required": true
     }
   }
 }

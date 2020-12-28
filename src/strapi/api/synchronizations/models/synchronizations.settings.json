@@ -17,7 +17,9 @@
         "pending",
         "success",
         "failure"
-      ]
+      ],
+      "required": false,
+      "default": "pending"
     },
     "user": {
       "via": "synchronizations",
@@ -25,7 +27,11 @@
       "model": "user"
     },
     "tracks": {
-      "collection": "tracks",
+      "via": "synchronization",
+      "collection": "tracks"
+    },
+    "transaction": {
+      "model": "transactions",
       "via": "synchronization"
     }
   }

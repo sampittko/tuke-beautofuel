@@ -2,7 +2,7 @@
   "kind": "collectionType",
   "collectionName": "transactions",
   "info": {
-    "name": "Purchases",
+    "name": "transactions",
     "description": ""
   },
   "options": {
@@ -11,18 +11,28 @@
     "draftAndPublish": false
   },
   "attributes": {
-    "quantity": {
-      "type": "integer"
+    "purchase": {
+      "model": "purchases",
+      "via": "transaction"
     },
-    "unitPrice": {
-      "type": "integer"
+    "synchronization": {
+      "via": "transaction",
+      "model": "synchronizations"
     },
-    "procuct": {
-      "via": "purchases",
-      "model": "procucts"
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "addition",
+        "substraction"
+      ],
+      "required": true
+    },
+    "value": {
+      "type": "decimal",
+      "required": true
     },
     "wallet": {
-      "via": "purchases",
+      "via": "transactions",
       "model": "wallets"
     }
   }

@@ -166,7 +166,7 @@ module.exports = {
 
       // Create wallet for the user if it does not exist
       if (!user.wallet) {
-        await strapi.query("wallets").create({ user: user.id, credits: 0 });
+        await strapi.query("wallets").create({ user: user.id });
       }
 
       // Create setup for the user if it does not exist

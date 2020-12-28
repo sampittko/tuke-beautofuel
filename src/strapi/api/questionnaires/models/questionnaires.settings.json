@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "wallets",
+  "collectionName": "questionnaires",
   "info": {
-    "name": "wallets",
+    "name": "questionnaires",
     "description": ""
   },
   "options": {
@@ -11,19 +11,18 @@
     "draftAndPublish": false
   },
   "attributes": {
-    "credits": {
+    "phaseNumber": {
       "type": "integer",
-      "required": false,
-      "default": 0
+      "required": true
+    },
+    "answers": {
+      "type": "json",
+      "required": true
     },
     "user": {
-      "via": "wallet",
+      "via": "questionnaires",
       "plugin": "users-permissions",
       "model": "user"
-    },
-    "transactions": {
-      "collection": "transactions",
-      "via": "wallet"
     }
   }
 }

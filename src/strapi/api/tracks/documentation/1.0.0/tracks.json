@@ -516,7 +516,13 @@
     "schemas": {
       "Tracks": {
         "required": [
-          "id"
+          "id",
+          "duration",
+          "date",
+          "score",
+          "totalDistance",
+          "scoreDistance",
+          "envirocar"
         ],
         "properties": {
           "id": {
@@ -590,6 +596,12 @@
               "envirocar": {
                 "type": "string"
               },
+              "questionnaires": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "created_by": {
                 "type": "string"
               },
@@ -621,6 +633,9 @@
                   "type": "string"
                 }
               },
+              "transaction": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -628,10 +643,27 @@
                 "type": "string"
               }
             }
+          },
+          "totalDistance": {
+            "type": "number"
+          },
+          "scoreDistance": {
+            "type": "number"
+          },
+          "envirocar": {
+            "type": "string"
           }
         }
       },
       "NewTracks": {
+        "required": [
+          "duration",
+          "date",
+          "score",
+          "totalDistance",
+          "scoreDistance",
+          "envirocar"
+        ],
         "properties": {
           "duration": {
             "type": "integer"
@@ -647,6 +679,15 @@
             "type": "integer"
           },
           "synchronization": {
+            "type": "string"
+          },
+          "totalDistance": {
+            "type": "number"
+          },
+          "scoreDistance": {
+            "type": "number"
+          },
+          "envirocar": {
             "type": "string"
           },
           "created_by": {

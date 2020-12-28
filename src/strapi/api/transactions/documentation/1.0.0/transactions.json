@@ -516,37 +516,35 @@
     "schemas": {
       "Transactions": {
         "required": [
-          "id"
+          "id",
+          "type",
+          "value"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
-          "quantity": {
-            "type": "integer"
-          },
-          "unitPrice": {
-            "type": "integer"
-          },
-          "procuct": {
+          "purchase": {
             "required": [
-              "id"
+              "id",
+              "quantity",
+              "unitPrice"
             ],
             "properties": {
               "id": {
                 "type": "string"
               },
-              "price": {
+              "product": {
+                "type": "string"
+              },
+              "quantity": {
                 "type": "integer"
               },
-              "stock": {
-                "type": "integer"
+              "unitPrice": {
+                "type": "number"
               },
-              "purchases": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
+              "transaction": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -555,6 +553,47 @@
                 "type": "string"
               }
             }
+          },
+          "synchronization": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "user": {
+                "type": "string"
+              },
+              "tracks": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "transaction": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "addition",
+              "substraction"
+            ]
+          },
+          "value": {
+            "type": "number"
           },
           "wallet": {
             "required": [
@@ -567,14 +606,14 @@
               "credits": {
                 "type": "integer"
               },
-              "purchases": {
+              "user": {
+                "type": "string"
+              },
+              "transactions": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
-              },
-              "user": {
-                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -587,15 +626,26 @@
         }
       },
       "NewTransactions": {
+        "required": [
+          "type",
+          "value"
+        ],
         "properties": {
-          "quantity": {
-            "type": "integer"
-          },
-          "unitPrice": {
-            "type": "integer"
-          },
-          "procuct": {
+          "purchase": {
             "type": "string"
+          },
+          "synchronization": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "addition",
+              "substraction"
+            ]
+          },
+          "value": {
+            "type": "number"
           },
           "wallet": {
             "type": "string"

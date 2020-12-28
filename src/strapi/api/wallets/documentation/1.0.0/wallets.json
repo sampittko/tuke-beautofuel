@@ -523,38 +523,8 @@
             "type": "string"
           },
           "credits": {
-            "type": "integer"
-          },
-          "purchases": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "quantity": {
-                  "type": "integer"
-                },
-                "unitPrice": {
-                  "type": "integer"
-                },
-                "procuct": {
-                  "type": "string"
-                },
-                "wallet": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
+            "type": "integer",
+            "default": 0
           },
           "user": {
             "required": [
@@ -617,11 +587,53 @@
               "envirocar": {
                 "type": "string"
               },
+              "questionnaires": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "created_by": {
                 "type": "string"
               },
               "updated_by": {
                 "type": "string"
+              }
+            }
+          },
+          "transactions": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "type",
+                "value"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "purchase": {
+                  "type": "string"
+                },
+                "synchronization": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "number"
+                },
+                "wallet": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
               }
             }
           }
@@ -630,16 +642,17 @@
       "NewWallets": {
         "properties": {
           "credits": {
-            "type": "integer"
+            "type": "integer",
+            "default": 0
           },
-          "purchases": {
+          "user": {
+            "type": "string"
+          },
+          "transactions": {
             "type": "array",
             "items": {
               "type": "string"
             }
-          },
-          "user": {
-            "type": "string"
           },
           "created_by": {
             "type": "string"
