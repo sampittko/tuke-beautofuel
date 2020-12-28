@@ -51,8 +51,6 @@ services:
     restart: unless-stopped
     networks:
       - updater-network
-    volumes:
-      - ./../../src/updater:/app
     ports:
       - 1338:1338
     depends_on:
