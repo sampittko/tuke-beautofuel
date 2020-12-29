@@ -106,7 +106,7 @@ async def post_new_tracks(data: PostNewTracks, x_user: str = Header(None), x_tok
 
     await update_strapi_tracks(newTracks, data.user, data.synchronization)
 
-    return {'statusCode': 200, 'message': f'Synchronization was successful with {newTracksLen} new tracks'}
+    return {'statusCode': 200, 'message': f'There are {newTracksLen} tracks that were potentially processed'}
 
 
 @app.get("/userCredentialsValid")
