@@ -22,14 +22,14 @@ const options = {
     },
     jwt: async (token, user, account) => {
       const isSignedIn = !!user;
-      const publicApiUrl =
+      const apiUrl =
         process.env.NODE_ENV === "production"
           ? process.env.API_URL
           : process.env.API_URL_DEV;
 
       if (isSignedIn) {
         const response = await fetch(
-          `${publicApiUrl}/auth/${account.provider}/callback?access_token=${account?.accessToken}`
+          `${apiUrl}/auth/${account.provider}/callback?access_token=${account?.accessToken}`
         );
 
         const data = await response.json();
