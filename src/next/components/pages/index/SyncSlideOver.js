@@ -2,6 +2,7 @@ import { useMutation } from "@apollo/client";
 import { useSession } from "next-auth/client";
 import SynchronizationsAPI from "../../../lib/api/synchronizations";
 import React, { useEffect, useState } from "react";
+import { SYNCHRONIZATION_STATUSES } from "../../../../strapi/utils/constants";
 
 const SyncSlideOver = ({
   open,
@@ -11,7 +12,7 @@ const SyncSlideOver = ({
   const [session] = useSession();
   const [syncToken, setSyncToken] = useState("");
 
-  const [createSynchronization, { loading }] = useMutation(
+  const [createSynchronization, { loading, data }] = useMutation(
     SynchronizationsAPI.create,
     {
       context: {
@@ -24,7 +25,13 @@ const SyncSlideOver = ({
   );
 
   useEffect(() => {
-    handleSyncToggle(loading);
+    let mutationSuccessful = true;
+    if (data) {
+      mutationSuccessful =
+        data.createSynchronization.synchronization.status ===
+        SYNCHRONIZATION_STATUSES.pending;
+    }
+    handleSyncToggle(loading, mutationSuccessful);
   }, [loading]);
 
   const handleSubmit = (e) => {

@@ -109,10 +109,16 @@ async def post_new_tracks(data: PostNewTracks, x_user: str = Header(None), x_tok
     return {'statusCode': 200, 'message': f'Synchronization was successful with {newTracksLen} new tracks'}
 
 
-@app.get("/userExists/{user_id}")
-async def get_user_exists(user_id: str):
+@app.get("/userCredentialsValid")
+async def get_user_exists(x_user: str = Header(None), x_token: str = Header(None)):
     res = requests.get(
-        f'https://envirocar.org/api/stable/users/{user_id}'
+        f'https://envirocar.org/api/stable/users/{x_user}',
+        headers={
+            'X-User': x_user,
+            'X-Token': x_token
+        }
     )
-    statusCode = res.json()['statusCode']
-    return statusCode == 401
+
+    data = res.json()
+
+    return {'valid': False if 'statusCode' in data else True}

@@ -12,12 +12,14 @@ import Stats from "./Stats";
 import History from "./History";
 import SyncSlideOver from "./SyncSlideOver";
 import SyncNotification from "./SyncNotification";
+import Skeleton from "./Skeleton";
 
 const IndexPageComponent = () => {
   const [session] = useSession();
   const [syncing, setSyncing] = useState(false);
   const [syncSlideOverOpen, setSyncSlideOverOpen] = useState(false);
   const [syncNotificationVisible, setSyncNotificationVisible] = useState(false);
+  const [syncError, setSyncError] = useState(false);
 
   const { loading: phaseLoading, error: phaseError, data: phase } = useQuery(
     PhaseAPI.only
@@ -51,7 +53,7 @@ const IndexPageComponent = () => {
     setSyncSlideOverOpen(false);
   };
 
-  const handleSyncToggle = (loading) => {
+  const handleSyncToggle = (loading, mutationSuccessful) => {
     if (loading) {
       setSyncing(true);
       setTimeout(() => {
@@ -59,8 +61,15 @@ const IndexPageComponent = () => {
         setSyncNotificationVisible(true);
         setTimeout(() => {
           setSyncNotificationVisible(false);
-        }, 3000);
+          setTimeout(() => {
+            setSyncError(false);
+          }, 100);
+        }, 4000);
       }, 3000);
+    } else {
+      if (!mutationSuccessful) {
+        setSyncError(true);
+      }
     }
   };
 
@@ -79,13 +88,15 @@ const IndexPageComponent = () => {
               onSyncClick={handleSlideOverOpen}
               syncing={syncing}
             />
-            <Strategies
-              user={user}
-              phase={phase}
-              recommendation={recommendation}
-            />
-            <Stats />
-            <History user={user} phase={phase} />
+            <Skeleton visible={syncing}>
+              <Strategies
+                user={user}
+                phase={phase}
+                recommendation={recommendation}
+              />
+              <Stats />
+              <History user={user} phase={phase} />
+            </Skeleton>
           </main>
         </div>
       </div>
@@ -94,7 +105,7 @@ const IndexPageComponent = () => {
         onClose={handleSlideOverClose}
         onSyncToggle={handleSyncToggle}
       />
-      <SyncNotification show={syncNotificationVisible} />
+      <SyncNotification show={syncNotificationVisible} error={syncError} />
     </Spinner>
   );
 };

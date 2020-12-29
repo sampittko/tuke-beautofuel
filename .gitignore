@@ -82,7 +82,7 @@ src/strapi/extensions/documentation
 ############################
 # updater
 ############################
-src/updater/app/__pycache__
+src/updater/__pycache__
 
 ############################
 # next

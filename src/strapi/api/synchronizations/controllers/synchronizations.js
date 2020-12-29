@@ -40,16 +40,31 @@ module.exports = {
       return ctx.badRequest("Synchronization is already in progress");
     }
 
+    const updaterUrl =
+      process.env.NODE_ENV === "production"
+        ? process.env.UPDATER_URL
+        : process.env.UPDATER_URL_DEV;
+
+    const res = await axios.get(`${updaterUrl}/userCredentialsValid`, {
+      headers: {
+        "X-User": ctx.state.user.envirocar,
+        "X-Token": ctx.request.header["x-token"],
+      },
+    });
+
+    if (res.error) {
+      return ctx.badRequest("There was a problem with updater");
+    }
+
+    if (!res.data.valid) {
+      return ctx.badRequest("Invalid enviroCar password");
+    }
+
     const entity = await strapi.services.synchronizations.create({
       user,
     });
 
     const { number: phaseNumber } = await strapi.query("phase").findOne();
-
-    const updaterUrl =
-      process.env.NODE_ENV === "production"
-        ? process.env.UPDATER_URL
-        : process.env.UPDATER_URL_DEV;
 
     axios
       .post(
