@@ -21,6 +21,15 @@ module.exports = {
     }
 
     const data = ctx.request.body;
+
+    const synchronization = await strapi.query("synchronizations").findOne({
+      id: data.synchronization,
+    });
+
+    if (!synchronization) {
+      return ctx.badRequest("Synchronization does not exist");
+    }
+
     const entity = await strapi.services.tracks.create(data);
 
     const { number: phaseNumber } = await strapi.query("phase").findOne();

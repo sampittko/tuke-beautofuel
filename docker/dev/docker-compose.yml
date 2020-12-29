@@ -6,9 +6,9 @@ services:
     restart: unless-stopped
     env_file: ./../../src/.strapidb.env
     volumes:
-      - strapidb-volume:/data/db
+      - strapidb-dev-volume:/data/db
     ports:
       - 27017:27017
 
 volumes:
-  strapidb-volume:
+  strapidb-dev-volume:
