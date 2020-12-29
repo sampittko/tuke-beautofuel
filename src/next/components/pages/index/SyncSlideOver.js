@@ -2,7 +2,7 @@ import { useMutation } from "@apollo/client";
 import { useSession } from "next-auth/client";
 import SynchronizationsAPI from "../../../lib/api/synchronizations";
 import React, { useEffect, useState } from "react";
-import { SYNCHRONIZATION_STATUSES } from "../../../../strapi/utils/constants";
+import { SYNCHRONIZATION_STATUSES } from "../../../utils/constants";
 
 const SyncSlideOver = ({
   open,
@@ -21,6 +21,8 @@ const SyncSlideOver = ({
           "X-Token": syncToken,
         },
       },
+      // TODO add refetchQueries
+      refetchQueries: [],
     }
   );
 

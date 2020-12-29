@@ -1,3 +1,9 @@
+exports.USER_GROUPS = {
+  rewards: "rewards",
+  gamification: "gamification",
+  unassigned: "unassigned",
+};
+
 exports.SYNCHRONIZATION_STATUSES = {
   pending: "pending",
   success: "success",
