@@ -9,7 +9,7 @@ const StepTwo = ({
   onSubmit,
   loading: setupUpdateLoading,
   error: setupUpdateError,
-  data: setupData,
+  data: setupUpdateData,
   onSuccess,
 }) => {
   const [session] = useSession();
@@ -50,12 +50,14 @@ const StepTwo = ({
   };
 
   useEffect(() => {
-    if (!setupUpdateError && setupData) {
+    if (!setupUpdateError && setupUpdateData) {
       onSuccess();
     } else {
-      setStatus("Nastala chyba pri ukladaní, skúste znovu");
+      if (setupUpdateError) {
+        setStatus("Nastala chyba pri ukladaní, skúste znovu");
+      }
     }
-  }, [setupUpdateError, setupData]);
+  }, [setupUpdateError, setupUpdateData]);
 
   const submitDisabled = !verified || setupUpdateLoading || setupUpdateError;
 

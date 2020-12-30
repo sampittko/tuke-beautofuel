@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const StepThree = ({
   onSubmit,
   onSuccess,
   loading: setupFinishedLoading,
   error: setupFinishedError,
+  data: setupFinishedData,
 }) => {
   const [accepted, setAccepted] = useState(false);
   const [status, setStatus] = useState(null);
@@ -15,15 +16,16 @@ const StepThree = ({
   };
 
   useEffect(() => {
-    if (!setupFinishedError) {
+    if (!setupFinishedError && setupFinishedData) {
       onSuccess();
     } else {
-      setStatus("Nastala chyba pri ukladaní, skúste znovu");
+      if (setupFinishedError) {
+        setStatus("Nastala chyba pri ukladaní, skúste znovu");
+      }
     }
-  }, [setupUpdateError]);
+  }, [setupFinishedError, setupFinishedData]);
 
-  const submitDisabled =
-    !accepted || setupFinishedLoading || setupFinishedError;
+  const submitDisabled = !accepted || setupFinishedLoading;
 
   return (
     <div className="bg-white py-16 px-4 overflow-hidden sm:px-6 lg:px-8 lg:py-24">
@@ -38,10 +40,41 @@ const StepThree = ({
             uložené do jeho databázy.
           </p>
           <p className="text-left mt-4 text-lg leading-6 text-gray-500">
-            Dáta sa zhromažďujú len za účelom blablabalba.
+            Dáta sú použité výhradne na účely vyhodnotenia diplomovej práce. Po
+            vyhodnotení budú všetky zozbierané dáta odstránené.
           </p>
           <p className="text-left mt-4 text-lg leading-6 text-gray-500">
-            A sme na konci.
+            Autor experimentu si vyhradzuje právo nedodať akékoľvek výhody,
+            ktoré mohli byť nadobudnuté počas experimentu. Tieto odmeny majú
+            pôsobiť len motivačne.
+          </p>
+          <p className="text-left mt-4 text-lg leading-6 text-gray-500">
+            Vykonanie synchronizácie dát spôsobí, že dáta, ktoré ste poskytli
+            cez mobilnú aplikáciu enviroCar budú spracované týmto systémom a
+            uložené do jeho databázy.
+          </p>
+          <p className="text-left mt-4 text-lg leading-6 text-gray-500">
+            Dáta sú použité výhradne na účely vyhodnotenia diplomovej práce. Po
+            vyhodnotení budú všetky zozbierané dáta odstránené.
+          </p>
+          <p className="text-left mt-4 text-lg leading-6 text-gray-500">
+            Autor experimentu si vyhradzuje právo nedodať akékoľvek výhody,
+            ktoré mohli byť nadobudnuté počas experimentu. Tieto odmeny majú
+            pôsobiť len motivačne.
+          </p>
+          <p className="text-left mt-4 text-lg leading-6 text-gray-500">
+            Vykonanie synchronizácie dát spôsobí, že dáta, ktoré ste poskytli
+            cez mobilnú aplikáciu enviroCar budú spracované týmto systémom a
+            uložené do jeho databázy.
+          </p>
+          <p className="text-left mt-4 text-lg leading-6 text-gray-500">
+            Dáta sú použité výhradne na účely vyhodnotenia diplomovej práce. Po
+            vyhodnotení budú všetky zozbierané dáta odstránené.
+          </p>
+          <p className="text-left mt-4 text-lg leading-6 text-gray-500">
+            Autor experimentu si vyhradzuje právo nedodať akékoľvek výhody,
+            ktoré mohli byť nadobudnuté počas experimentu. Tieto odmeny majú
+            pôsobiť len motivačne.
           </p>
         </div>
         <div className="mt-8">
@@ -89,7 +122,7 @@ const StepThree = ({
                 disabled={submitDisabled}
                 type="submit"
                 className={`w-full inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-green-600  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 ${
-                  submitDisabled
+                  !submitDisabled
                     ? "hover:bg-green-700"
                     : "hover:cursor-default opacity-60"
                 }`}

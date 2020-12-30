@@ -26,13 +26,13 @@ const UsersAPI = {
       }
     }
   `,
-  setupFinished: gql`
-    mutation setupFinished($userId: ID!) {
+  setupCompleted: gql`
+    mutation setupCompleted($userId: ID!) {
       updateUser(
-        input: { where: { id: $userId }, data: { setupFinished: true } }
+        input: { where: { id: $userId }, data: { setupCompleted: true } }
       ) {
         user {
-          setupFinished
+          setupCompleted
         }
       }
     }

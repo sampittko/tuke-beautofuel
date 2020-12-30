@@ -35,15 +35,19 @@ const SetupStepPageComponent = ({
   });
 
   const [
-    setupFinished,
-    { error: setupFinishedError, loading: setupFinishedLoading },
-  ] = useMutation(UsersAPI.setupFinished, {
+    setupCompleted,
+    {
+      data: setupFinishedData,
+      error: setupFinishedError,
+      loading: setupFinishedLoading,
+    },
+  ] = useMutation(UsersAPI.setupCompleted, {
     variables: {
       userId: session.id,
     },
   });
 
-  const handleSuccess = () => {
+  const handleThreeSuccess = () => {
     setFinished(true);
     handleNextStep();
   };
@@ -79,10 +83,11 @@ const SetupStepPageComponent = ({
             )}
             {activeStep === 3 && !finished && (
               <Three
-                onSubmit={() => setupFinished()}
-                onSuccess={() => handleSuccess()}
+                onSubmit={() => setupCompleted()}
+                onSuccess={() => handleThreeSuccess()}
                 loading={setupFinishedLoading}
                 error={setupFinishedError}
+                data={setupFinishedData}
               />
             )}
             {activeStep === 3 && finished && <Success />}
