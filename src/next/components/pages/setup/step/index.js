@@ -17,7 +17,7 @@ const SetupStepPageComponent = ({
 
   const [username, setUsername] = useState("");
   const [envirocar, setEnvirocar] = useState("");
-  const [finished, setFinished] = useState(false);
+  const [completed, setCompleted] = useState(false);
 
   const [
     setupUpdate,
@@ -37,9 +37,9 @@ const SetupStepPageComponent = ({
   const [
     setupCompleted,
     {
-      data: setupFinishedData,
-      error: setupFinishedError,
-      loading: setupFinishedLoading,
+      data: setupCompletedData,
+      error: setupCompletedError,
+      loading: setupCompletedLoading,
     },
   ] = useMutation(UsersAPI.setupCompleted, {
     variables: {
@@ -48,7 +48,7 @@ const SetupStepPageComponent = ({
   });
 
   const handleThreeSuccess = () => {
-    setFinished(true);
+    setCompleted(true);
     handleNextStep();
   };
 
@@ -62,7 +62,7 @@ const SetupStepPageComponent = ({
       <main className="-mt-32">
         <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-lg shadow py-6">
-            <Stepper activeStep={activeStep} finished={finished} />
+            <Stepper activeStep={activeStep} completed={completed} />
             {activeStep === 1 && (
               <One
                 username={username}
@@ -81,16 +81,16 @@ const SetupStepPageComponent = ({
                 error={setupUpdateError}
               />
             )}
-            {activeStep === 3 && !finished && (
+            {activeStep === 3 && !completed && (
               <Three
                 onSubmit={() => setupCompleted()}
                 onSuccess={() => handleThreeSuccess()}
-                loading={setupFinishedLoading}
-                error={setupFinishedError}
-                data={setupFinishedData}
+                loading={setupCompletedLoading}
+                error={setupCompletedError}
+                data={setupCompletedData}
               />
             )}
-            {activeStep === 3 && finished && <Success />}
+            {activeStep === 3 && completed && <Success />}
           </div>
         </div>
       </main>

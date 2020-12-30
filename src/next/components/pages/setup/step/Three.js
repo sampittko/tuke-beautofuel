@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 const StepThree = ({
   onSubmit,
   onSuccess,
-  loading: setupFinishedLoading,
-  error: setupFinishedError,
+  loading: setupCompletedLoading,
+  error: setupCompletedError,
   data: setupFinishedData,
 }) => {
   const [accepted, setAccepted] = useState(false);
@@ -16,16 +16,16 @@ const StepThree = ({
   };
 
   useEffect(() => {
-    if (!setupFinishedError && setupFinishedData) {
+    if (!setupCompletedError && setupFinishedData) {
       onSuccess();
     } else {
-      if (setupFinishedError) {
+      if (setupCompletedError) {
         setStatus("Nastala chyba pri ukladaní, skúste znovu");
       }
     }
-  }, [setupFinishedError, setupFinishedData]);
+  }, [setupCompletedError, setupFinishedData]);
 
-  const submitDisabled = !accepted || setupFinishedLoading;
+  const submitDisabled = !accepted || setupCompletedLoading;
 
   return (
     <div className="bg-white py-16 px-4 overflow-hidden sm:px-6 lg:px-8 lg:py-24">

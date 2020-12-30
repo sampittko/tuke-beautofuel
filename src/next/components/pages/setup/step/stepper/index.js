@@ -21,7 +21,7 @@ const steps = [
   },
 ];
 
-const Stepper = ({ activeStep, finished }) => (
+const Stepper = ({ activeStep, completed }) => (
   <>
     <Head>
       <title>
@@ -38,7 +38,7 @@ const Stepper = ({ activeStep, finished }) => (
             const stepOrder = i + 1;
             const stepProps = { key: i, number: stepOrder, ...step };
 
-            if (finished) {
+            if (completed) {
               return <CompletedStep {...stepProps} />;
             }
 
