@@ -20,7 +20,13 @@ module.exports = {
               process.env.CORS_ORIGIN_UPDATER_DEV,
               process.env.CORS_ORIGIN_DOCKER_UPDATER,
             ],
-      headers: ["Content-Type", "Authorization", "X-Frame-Options", "X-Token"],
+      headers: [
+        "Content-Type",
+        "Authorization",
+        "X-Frame-Options",
+        "X-Token",
+        "X-User",
+      ],
     },
   },
 };

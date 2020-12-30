@@ -24,6 +24,7 @@ const SetupStepPage = ({ session }) => {
   const handleNextStep = () => {
     const nextStep = step + 1;
     if (nextStep <= TOTAL_SETUP_STEPS_COUNT) {
+      router.replace(`/setup/${nextStep}`);
       setStep(nextStep);
       setCompletedSteps(completedSteps + 1);
     } else {

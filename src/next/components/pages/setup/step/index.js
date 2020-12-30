@@ -4,21 +4,13 @@ import One from "./One";
 import Two from "./Two";
 import Three from "./Three";
 import Navigation from "../../../common/Navigation";
-import { useRouter } from "next/router";
 
 const SetupStepPageComponent = ({
   activeStep,
   onStepChange: handleNextStep,
 }) => {
   const [username, setUsername] = useState("");
-  const router = useRouter();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const nextStep = activeStep + 1;
-    router.replace(`/setup/${nextStep}`);
-    handleNextStep();
-  };
+  const [envirocar, setEnvirocar] = useState("");
 
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -34,11 +26,17 @@ const SetupStepPageComponent = ({
             {activeStep === 1 && (
               <One
                 username={username}
-                setUsername={setUsername}
-                onSubmit={handleSubmit}
+                onUsernameChange={setUsername}
+                onSubmit={handleNextStep}
               />
             )}
-            {activeStep === 2 && <Two />}
+            {activeStep === 2 && (
+              <Two
+                envirocar={envirocar}
+                onEnvirocarChange={setEnvirocar}
+                onSubmit={handleNextStep}
+              />
+            )}
             {activeStep === 3 && <Three />}
           </div>
         </div>

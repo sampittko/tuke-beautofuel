@@ -8,15 +8,16 @@ import { TOTAL_SETUP_STEPS_COUNT } from "../../../../../pages/setup/[step]";
 const steps = [
   {
     title: "Základné údaje",
-    description: "Ako budete viditeľný pre ostatných",
+    description: "Overenie Vašich prihlasovacích údajov a nastavenie prezývky",
   },
   {
     title: "enviroCar",
-    description: "Nastavenie služby tretej strany",
+    description:
+      "Nastavenie služby tretej strany pre zber dát z jazdy automobilom",
   },
   {
     title: "Zber dát",
-    description: "Dáta zhromažďované počas experimentu",
+    description: "Prehľad dát, ktoré sú zhromažďované počas experimentu",
   },
 ];
 

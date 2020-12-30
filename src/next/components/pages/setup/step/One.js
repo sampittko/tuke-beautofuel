@@ -1,7 +1,11 @@
 import { useSession } from "next-auth/client";
 import React, { useEffect, useState } from "react";
 
-const StepOne = ({ username, setUsername, onSubmit: handleSubmit }) => {
+const StepOne = ({
+  username,
+  onUsernameChange: handleUsernameChange,
+  onSubmit,
+}) => {
   const [session] = useSession();
   const [accepted, setAccepted] = useState(false);
   const [placeholder, setPlaceholder] = useState("");
@@ -12,7 +16,7 @@ const StepOne = ({ username, setUsername, onSubmit: handleSubmit }) => {
     setPlaceholder(emailAlias.replaceAll(".", ""));
   }, []);
 
-  const handleUsernameChange = (e) => {
+  const onUsernameChange = (e) => {
     e.preventDefault();
     const newUsername = e.target.value;
 
@@ -20,7 +24,7 @@ const StepOne = ({ username, setUsername, onSubmit: handleSubmit }) => {
     const validLength = newUsername.length <= 20;
 
     if ((validCharacters || newUsername === "") && validLength) {
-      setUsername(newUsername);
+      handleUsernameChange(newUsername);
       setUsernameStatus("");
       if (newUsername !== "" && newUsername.length >= 6) {
         setUsernameStatus("Táto prezývka je vhodná!");
@@ -34,6 +38,11 @@ const StepOne = ({ username, setUsername, onSubmit: handleSubmit }) => {
         }
       }
     }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit();
   };
 
   return (
@@ -130,7 +139,7 @@ const StepOne = ({ username, setUsername, onSubmit: handleSubmit }) => {
                   required
                   value={username}
                   placeholder={`napr. ${placeholder}`}
-                  onChange={handleUsernameChange}
+                  onChange={onUsernameChange}
                   id="username"
                   name="username"
                   type="text"
