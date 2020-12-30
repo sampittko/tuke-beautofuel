@@ -1,10 +1,10 @@
 import { getSession } from "next-auth/client";
 import Head from "next/head";
 import React from "react";
-import PageComponent from "../../components/pages/public/hall-of-fame";
-import WithGraphQL from "../../lib/with-graphql";
+import PageComponent from "../components/pages/top10";
+import WithGraphQL from "../lib/with-graphql";
 
-const PublicHallOfFamePage = ({ session }) => (
+const Top10Page = ({ session }) => (
   <WithGraphQL session={session}>
     <Head>
       <title>Sieň slávy | beautofuel</title>
@@ -23,4 +23,4 @@ export const getServerSideProps = async ({ req }) => {
   };
 };
 
-export default PublicHallOfFamePage;
+export default Top10Page;

@@ -5,23 +5,36 @@ import { getSession } from "next-auth/client";
 import Redirects from "../../components/common/Redirects";
 import WithGraphQL from "../../lib/with-graphql";
 
-const TOTAL_SETUP_STEPS_COUNT = 4;
+export const TOTAL_SETUP_STEPS_COUNT = 3;
 
 const SetupStepPage = ({ session }) => {
   const router = useRouter();
-  const [step] = useState(parseInt(router.query.step));
+  const [step, setStep] = useState(parseInt(router.query.step));
+  const [completedSteps, setCompletedSteps] = useState(0);
 
-  const isSetupStepValid = () => {
+  const isStepValid = () => {
     if (step) {
-      return step >= 1 && step <= TOTAL_SETUP_STEPS_COUNT;
+      const validNumber = step >= 1 && step <= TOTAL_SETUP_STEPS_COUNT;
+      const previousCompleted = step === 1 || completedSteps === step - 1;
+      return validNumber && previousCompleted;
     }
     return false;
   };
 
+  const handleNextStep = () => {
+    const nextStep = step + 1;
+    if (nextStep <= TOTAL_SETUP_STEPS_COUNT) {
+      setStep(nextStep);
+      setCompletedSteps(completedSteps + 1);
+    } else {
+      console.log("konecna");
+    }
+  };
+
   return (
     <WithGraphQL session={session}>
-      {(isSetupStepValid() && session && (
-        <PageComponent activeStep={step} />
+      {(session && isStepValid() && (
+        <PageComponent activeStep={step} onStepChange={handleNextStep} />
       )) || <Redirects toDashboard replace />}
     </WithGraphQL>
   );

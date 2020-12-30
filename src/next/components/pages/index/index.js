@@ -7,7 +7,7 @@ import Spinner from "../../common/Spinner";
 import RecommendationsAPI from "../../../lib/api/recommendations";
 import UsersAPI from "../../../lib/api/users";
 import Strategies from "./strategies/";
-import Header from "./header/Header";
+import Header from "./header/";
 import Stats from "./Stats";
 import History from "./History";
 import SyncSlideOver from "./SyncSlideOver";

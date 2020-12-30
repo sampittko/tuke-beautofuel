@@ -38,7 +38,7 @@ const Gamification = () => (
     <div className="bg-gray-50 px-5 py-3 sm:py-7 lg:py-3">
       <div className="text-sm">
         <Link
-          href="/public/hall-of-fame"
+          href="/top10"
           className="font-medium text-gray-700 hover:text-cyan-900"
         >
           Zobraziť tabuľku

@@ -8,6 +8,17 @@ const UsersAPI = {
       }
     }
   `,
+  updateUsername: gql`
+    mutation updateUsername($userId: ID!, $username: String!) {
+      updateUser(
+        input: { where: { id: $userId }, data: { username: $username } }
+      ) {
+        user {
+          username
+        }
+      }
+    }
+  `,
 };
 
 export default UsersAPI;

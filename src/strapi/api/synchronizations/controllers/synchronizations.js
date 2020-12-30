@@ -8,6 +8,7 @@
 const { sanitizeEntity } = require("strapi-utils");
 const axios = require("axios");
 const { SYNCHRONIZATION_STATUSES } = require("../../../utils/constants");
+const { getUpdaterUrl } = require("../../../utils/functions");
 
 module.exports = {
   /**
@@ -40,10 +41,7 @@ module.exports = {
       return ctx.badRequest("Synchronization is already in progress");
     }
 
-    const updaterUrl =
-      process.env.NODE_ENV === "production"
-        ? process.env.UPDATER_URL
-        : process.env.UPDATER_URL_DEV;
+    const updaterUrl = getUpdaterUrl();
 
     const res = await axios.get(`${updaterUrl}/userCredentialsValid`, {
       headers: {
