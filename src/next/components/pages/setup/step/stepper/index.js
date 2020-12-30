@@ -21,7 +21,7 @@ const steps = [
   },
 ];
 
-const Stepper = ({ activeStep }) => (
+const Stepper = ({ activeStep, finished }) => (
   <>
     <Head>
       <title>
@@ -37,6 +37,11 @@ const Stepper = ({ activeStep }) => (
           {steps.map((step, i) => {
             const stepOrder = i + 1;
             const stepProps = { key: i, number: stepOrder, ...step };
+
+            if (finished) {
+              return <CompletedStep {...stepProps} />;
+            }
+
             if (stepOrder === activeStep) {
               return <CurrentStep {...stepProps} />;
             }

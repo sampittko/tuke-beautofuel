@@ -161,7 +161,6 @@ const StepOne = ({
               <div className="flex items-start">
                 <div className="flex-shrink-0">
                   <button
-                    value={accepted}
                     onClick={() => setAccepted(!accepted)}
                     type="button"
                     aria-pressed={accepted}

@@ -10,7 +10,7 @@ export const TOTAL_SETUP_STEPS_COUNT = 3;
 const SetupStepPage = ({ session }) => {
   const router = useRouter();
   const [step, setStep] = useState(parseInt(router.query.step));
-  const [completedSteps, setCompletedSteps] = useState(0);
+  const [completedSteps, setCompletedSteps] = useState(step);
 
   const isStepValid = () => {
     if (step) {
@@ -27,8 +27,6 @@ const SetupStepPage = ({ session }) => {
       router.replace(`/setup/${nextStep}`);
       setStep(nextStep);
       setCompletedSteps(completedSteps + 1);
-    } else {
-      console.log("konecna");
     }
   };
 
