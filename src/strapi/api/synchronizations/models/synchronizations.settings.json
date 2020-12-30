@@ -22,13 +22,13 @@
       "default": "pending"
     },
     "user": {
+      "via": "synchronizations",
       "plugin": "users-permissions",
-      "model": "user",
-      "via": "synchronizations"
+      "model": "user"
     },
     "tracks": {
-      "collection": "tracks",
-      "via": "synchronization"
+      "via": "synchronization",
+      "collection": "tracks"
     },
     "transactions": {
       "via": "synchronization",

@@ -20,17 +20,17 @@
       "required": true
     },
     "user": {
+      "via": "tracks",
       "plugin": "users-permissions",
-      "model": "user",
-      "via": "tracks"
+      "model": "user"
     },
     "score": {
       "type": "integer",
       "required": true
     },
     "synchronization": {
-      "via": "tracks",
-      "model": "synchronizations"
+      "model": "synchronizations",
+      "via": "tracks"
     },
     "totalDistance": {
       "type": "decimal",
@@ -44,6 +44,10 @@
       "type": "string",
       "required": true,
       "unique": true
+    },
+    "converted": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

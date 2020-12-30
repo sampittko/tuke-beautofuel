@@ -1,13 +1,11 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import { getApiUrl } from "../utils/functions";
 
 const WithGraphQL = ({ session, children }) => {
   const token = session?.jwt?.toString();
 
   const client = new ApolloClient({
-    uri:
-      process.env.NODE_ENV === "production"
-        ? `${process.env.NEXT_PUBLIC_API_URL}/graphql`
-        : `${process.env.NEXT_PUBLIC_API_URL_DEV}/graphql`,
+    uri: `${getApiUrl()}/graphql`,
     credentials: "same-origin",
     cache: new InMemoryCache(),
     headers: {

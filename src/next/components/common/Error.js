@@ -27,16 +27,9 @@ const Error = ({ errors }) => (
               </button>
               <div className="ml-3 inline-flex">
                 <a
-                  href={`mailto:samuel.pitonak@student.tuke.sk?subject=nefunkčný beautofuel (chyby: ${errors.map(
-                    (error, i) => {
-                      if (error) {
-                        if (i === errors.length - 1) {
-                          return error;
-                        }
-                        return `${error}, `;
-                      }
-                    }
-                  )})`}
+                  href={`mailto:samuel.pitonak@student.tuke.sk?subject=nefunkčný beautofuel - ${errors.map(
+                    (error, i) => (error !== undefined ? ` ${error} ` : "")
+                  )}`}
                   className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200"
                 >
                   {" "}
@@ -54,16 +47,21 @@ const Error = ({ errors }) => (
           </div>
         </div>
       </div>
-      <footer class="absolute bottom-0 left-0 w-screen">
-        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 md:flex md:items-center md:justify-between lg:px-8">
-          <div class="flex justify-center space-x-6 md:order-2">
-            <div class="mt-8 md:mt-0 md:order-1">
-              <p class="text-center text-base text-gray-400">
-                {errors.map((error, i) => (
-                  <span className="px-1" key={i}>
-                    {error}
-                  </span>
-                ))}
+      <footer className="absolute bottom-0 left-0 w-screen">
+        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 md:flex md:items-center md:justify-between lg:px-8">
+          <div className="flex justify-center space-x-6 md:order-2">
+            <div className="mt-8 md:mt-0 md:order-1">
+              <p className="text-center text-base text-gray-400">
+                {errors.map((error, i) => {
+                  if (!error) return null;
+
+                  console.log(error);
+                  return (
+                    <span className="px-1" key={i}>
+                      {error.toString()}
+                    </span>
+                  );
+                })}
               </p>
             </div>
           </div>

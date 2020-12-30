@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
+import { getApiUrl } from "../../../utils/functions";
 
 const options = {
   providers: [
@@ -22,14 +23,12 @@ const options = {
     },
     jwt: async (token, user, account) => {
       const isSignedIn = !!user;
-      const apiUrl =
-        process.env.NODE_ENV === "production"
-          ? process.env.API_URL
-          : process.env.API_URL_DEV;
 
       if (isSignedIn) {
         const response = await fetch(
-          `${apiUrl}/auth/${account.provider}/callback?access_token=${account?.accessToken}`
+          `${getApiUrl(true)}/auth/${account.provider}/callback?access_token=${
+            account?.accessToken
+          }`
         );
 
         const data = await response.json();

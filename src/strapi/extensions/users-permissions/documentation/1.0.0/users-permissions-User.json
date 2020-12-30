@@ -1362,43 +1362,15 @@
                 "envirocar": {
                   "type": "string"
                 },
+                "converted": {
+                  "type": "boolean"
+                },
                 "created_by": {
                   "type": "string"
                 },
                 "updated_by": {
                   "type": "string"
                 }
-              }
-            }
-          },
-          "setup": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "user": {
-                "type": "string"
-              },
-              "step1": {
-                "type": "boolean"
-              },
-              "step2": {
-                "type": "boolean"
-              },
-              "step3": {
-                "type": "boolean"
-              },
-              "step4": {
-                "type": "boolean"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
               }
             }
           },
@@ -1413,36 +1385,6 @@
           },
           "envirocar": {
             "type": "string"
-          },
-          "questionnaires": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id",
-                "phaseNumber",
-                "answers"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "phaseNumber": {
-                  "type": "integer"
-                },
-                "answers": {
-                  "type": "object"
-                },
-                "user": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
           },
           "apiToken": {
             "required": [
@@ -1466,6 +1408,10 @@
                 "type": "string"
               }
             }
+          },
+          "setupCompleted": {
+            "type": "boolean",
+            "default": false
           }
         }
       },
@@ -1523,9 +1469,6 @@
               "type": "string"
             }
           },
-          "setup": {
-            "type": "string"
-          },
           "group": {
             "type": "string",
             "default": "unassigned",
@@ -1538,14 +1481,12 @@
           "envirocar": {
             "type": "string"
           },
-          "questionnaires": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
           "apiToken": {
             "type": "string"
+          },
+          "setupCompleted": {
+            "type": "boolean",
+            "default": false
           },
           "created_by": {
             "type": "string"

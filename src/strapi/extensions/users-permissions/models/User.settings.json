@@ -64,15 +64,11 @@
       "via": "user"
     },
     "synchronizations": {
-      "via": "user",
-      "collection": "synchronizations"
+      "collection": "synchronizations",
+      "via": "user"
     },
     "tracks": {
-      "via": "user",
-      "collection": "tracks"
-    },
-    "setup": {
-      "model": "setups",
+      "collection": "tracks",
       "via": "user"
     },
     "group": {
@@ -90,13 +86,13 @@
       "unique": true,
       "required": false
     },
-    "questionnaires": {
-      "collection": "questionnaires",
+    "apiToken": {
+      "model": "tokens",
       "via": "user"
     },
-    "apiToken": {
-      "via": "user",
-      "model": "tokens"
+    "setupCompleted": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

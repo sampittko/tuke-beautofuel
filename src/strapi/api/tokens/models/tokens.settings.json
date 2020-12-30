@@ -16,9 +16,9 @@
       "required": true
     },
     "user": {
+      "via": "apiToken",
       "plugin": "users-permissions",
-      "model": "user",
-      "via": "apiToken"
+      "model": "user"
     }
   }
 }

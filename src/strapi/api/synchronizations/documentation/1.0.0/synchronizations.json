@@ -583,23 +583,17 @@
                   "type": "string"
                 }
               },
-              "setup": {
-                "type": "string"
-              },
               "group": {
                 "type": "string"
               },
               "envirocar": {
                 "type": "string"
               },
-              "questionnaires": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "apiToken": {
                 "type": "string"
+              },
+              "setupCompleted": {
+                "type": "boolean"
               },
               "created_by": {
                 "type": "string"
@@ -648,6 +642,9 @@
                 },
                 "envirocar": {
                   "type": "string"
+                },
+                "converted": {
+                  "type": "boolean"
                 },
                 "created_by": {
                   "type": "string"

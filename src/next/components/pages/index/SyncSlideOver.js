@@ -52,9 +52,8 @@ const SyncSlideOver = ({
           className="absolute top-0 left-0 h-screen w-screen bg-black opacity-60"
           onClick={handleClose}
         />
-
         <section
-          className="absolute inset-y-0 pl-16 max-w-full right-0 flex"
+          className="absolute inset-y-0 max-w-full right-0 flex"
           aria-labelledby="slide-over-heading"
         >
           <div className="w-screen max-w-md">

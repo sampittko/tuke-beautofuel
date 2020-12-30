@@ -169,11 +169,6 @@ module.exports = {
         await strapi.query("wallets").create({ user: user.id });
       }
 
-      // Create setup for the user if it does not exist
-      if (!user.setup) {
-        await strapi.query("setups").create({ user: user.id });
-      }
-
       ctx.send({
         jwt: strapi.plugins["users-permissions"].services.jwt.issue({
           id: user.id,

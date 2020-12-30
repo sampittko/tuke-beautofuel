@@ -4,8 +4,14 @@ import React from "react";
 import Redirects from "../components/common/Redirects";
 import PageComponent from "../components/pages/index";
 import WithGraphQL from "../lib/with-graphql";
+import axios from "axios";
+import { getApiUrl } from "../utils/functions";
 
-const IndexPage = ({ session }) => {
+const IndexPage = ({ session, setupCompleted }) => {
+  if (session && !setupCompleted) {
+    return <Redirects toSetup step={1} />;
+  }
+
   return (
     <WithGraphQL session={session}>
       <Head>
@@ -17,11 +23,27 @@ const IndexPage = ({ session }) => {
 };
 
 export const getServerSideProps = async ({ req }) => {
-  const session = await getSession({ req });
+  let session = await getSession({ req });
+  let setupCompleted = true;
+
+  if (session) {
+    try {
+      const res = await axios.get(`${getApiUrl(true)}/users/me`, {
+        headers: {
+          authorization: `Bearer ${session.jwt}`,
+        },
+      });
+      setupCompleted = res.data.setupCompleted;
+    } catch (error) {
+      setupCompleted = false;
+      session = null;
+    }
+  }
 
   return {
     props: {
       session,
+      setupCompleted,
     },
   };
 };
