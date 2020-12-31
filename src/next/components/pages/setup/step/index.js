@@ -26,7 +26,7 @@ const SetupStepPageComponent = ({
       error: setupUpdateError,
       loading: setupUpdateLoading,
     },
-  ] = useMutation(UsersAPI.setupUpdate, {
+  ] = useMutation(UsersAPI.updateCredentials, {
     variables: {
       userId: session.id,
       username,
@@ -41,7 +41,7 @@ const SetupStepPageComponent = ({
       error: setupCompletedError,
       loading: setupCompletedLoading,
     },
-  ] = useMutation(UsersAPI.setupCompleted, {
+  ] = useMutation(UsersAPI.updateSetup, {
     variables: {
       userId: session.id,
     },

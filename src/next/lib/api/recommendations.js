@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 const RecommendationsAPI = {
   random: gql`
-    query {
+    query randomRecommendation {
       recommendation(id: "random") {
         text
       }

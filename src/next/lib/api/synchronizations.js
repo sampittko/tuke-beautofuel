@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 const SynchronizationsAPI = {
   create: gql`
-    mutation {
+    mutation createSynchronization {
       createSynchronization {
         synchronization {
           status

@@ -1,9 +1,10 @@
 import React from "react";
+import Moment from "react-moment";
 import { USER_GROUPS } from "../../../utils/constants";
 
-const History = ({ user, phase }) => {
-  const phaseNumber = phase?.phase.number;
-  const userGroup = user?.user.group;
+const History = ({ user, phase, tracks }) => {
+  const phaseNumber = phase?.number;
+  const userGroup = user?.group;
 
   const actionsVisible =
     phaseNumber === 3 ||
@@ -17,87 +18,82 @@ const History = ({ user, phase }) => {
 
       <div className="shadow sm:hidden">
         <ul className="mt-2 divide-y divide-gray-200 overflow-hidden shadow sm:hidden">
-          <li>
-            <span className="block px-4 py-4 bg-white">
-              <span className="flex items-center space-x-4">
-                <span className="flex-1 flex space-x-2 truncate">
-                  <span className="flex flex-col text-gray-500 text-sm truncate">
-                    <span># 2</span>
-                    {phaseNumber !== 1 && (
-                      <span>
-                        <span className="text-gray-900 font-medium">3589</span>
+          {tracks.map((track, i) => {
+            return (
+              <li key={`track-${i}`}>
+                <span className="block px-4 py-4 bg-white">
+                  <span className="flex items-center space-x-4">
+                    <span className="flex-1 flex space-x-2 truncate">
+                      <span className="flex flex-col text-gray-500 text-sm truncate">
+                        <span># {tracks.length - i}</span>
+                        {phaseNumber !== 1 && (
+                          <span>
+                            <span className="text-gray-900 font-medium">
+                              {track.score}
+                            </span>
+                          </span>
+                        )}
+                        <span>
+                          {track.scoreDistance.toFixed(2)} km /{" "}
+                          {track.totalDistance.toFixed(2)} km
+                        </span>
+                        <span>{(track.duration / 60).toFixed(2)}</span>
+                        <span>
+                          <Moment date={track.date} format="DD. MM. YYYY" />
+                        </span>
                       </span>
-                    )}
-                    <span>34 km</span>
-                    <span>20 min.</span>
-                    <span>12. 12. 2020</span>
-                  </span>
-                </span>
+                    </span>
 
-                {actionsVisible && (
-                  <button
-                    type="button"
-                    className="flex-shrink-0 text-gray-400 p-1 border border-transparent rounded-full shadow-sm bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                  >
-                    <svg
-                      className="h-5 w-5 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
-                      ></path>
-                    </svg>
-                  </button>
-                )}
-              </span>
-            </span>
-          </li>
-          <li>
-            <span className="block px-4 py-4 bg-white">
-              <span className="flex items-center space-x-4">
-                <span className="flex-1 flex space-x-2 truncate">
-                  <span className="flex flex-col text-gray-500 text-sm truncate">
-                    <span># 1</span>
-                    {phaseNumber !== 1 && (
-                      <span>
-                        <span className="text-gray-900 font-medium">3589</span>
-                      </span>
+                    {actionsVisible && (
+                      <>
+                        {track.converted ? (
+                          <button
+                            type="button"
+                            className="flex-shrink-0 text-gray-400 p-1 border border-transparent rounded-full shadow-sm bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              className="h-5 w-5 text-white"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z"
+                              />
+                            </svg>
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            className="flex-shrink-0 text-gray-400 p-1 border border-transparent rounded-full shadow-sm bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                          >
+                            <svg
+                              className="h-5 w-5 text-white"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
+                              ></path>
+                            </svg>
+                          </button>
+                        )}
+                      </>
                     )}
-                    <span>34 km</span>
-                    <span>20 min.</span>
-                    <span>12. 12. 2020</span>
                   </span>
                 </span>
-                {actionsVisible && (
-                  <button
-                    type="button"
-                    className="flex-shrink-0 text-gray-400 p-1 border border-transparent rounded-full shadow-sm bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                  >
-                    <svg
-                      className="w-5 h-5 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"
-                      ></path>
-                    </svg>
-                  </button>
-                )}
-              </span>
-            </span>
-          </li>
+              </li>
+            );
+          })}
         </ul>
       </div>
 
@@ -133,90 +129,77 @@ const History = ({ user, phase }) => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  <tr className="bg-white">
-                    <td className="px-6 py-4 text-left whitespace-nowrap text-sm text-gray-500">
-                      2
-                    </td>
-                    <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
-                      34,5 km
-                    </td>
-                    <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
-                      20 min.
-                    </td>
-                    <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
-                      14. 12. 2020
-                    </td>
-                    {phaseNumber !== 1 && (
-                      <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
-                        <span className="text-gray-900 font-medium">3589</span>
-                      </td>
-                    )}
-                    {actionsVisible && (
-                      <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500 flex items-center justify-end">
-                        <button
-                          type="button"
-                          className="inline-flex items-center p-1 border border-transparent rounded-full shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                        >
-                          <svg
-                            className="h-5 w-5"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
-                            ></path>
-                          </svg>
-                        </button>
-                      </td>
-                    )}
-                  </tr>
-                  <tr className="bg-white">
-                    <td className="px-6 py-4 text-left whitespace-nowrap text-sm text-gray-500">
-                      1
-                    </td>
-                    <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
-                      34 km
-                    </td>
-                    <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
-                      25 min.
-                    </td>
-                    <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
-                      12. 12. 2020
-                    </td>
-                    {phaseNumber !== 1 && (
-                      <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
-                        <span className="text-gray-900 font-medium">3589</span>
-                      </td>
-                    )}
-                    {actionsVisible && (
-                      <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500 flex items-center justify-end">
-                        <button
-                          type="button"
-                          className="inline-flex items-center p-1 border border-transparent rounded-full shadow-sm text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                        >
-                          <svg
-                            className="w-5 h-5"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"
-                            />
-                          </svg>
-                        </button>
-                      </td>
-                    )}
-                  </tr>
+                  {tracks.map((track, i) => {
+                    return (
+                      <tr className="bg-white" key={`track-${i}-small`}>
+                        <td className="px-6 py-4 text-left whitespace-nowrap text-sm text-gray-500">
+                          {tracks.length - i}
+                        </td>
+                        <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
+                          {track.scoreDistance.toFixed(2)} km /{" "}
+                          {track.totalDistance.toFixed(2)} km
+                        </td>
+                        <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
+                          {(track.duration / 60).toFixed(2)} min.
+                        </td>
+                        <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
+                          <Moment date={track.date} format="DD. MM. YYYY" />
+                        </td>
+                        {phaseNumber !== 1 && (
+                          <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
+                            <span className="text-gray-900 font-medium">
+                              {track.score}
+                            </span>
+                          </td>
+                        )}
+                        {actionsVisible && (
+                          <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500 flex items-center justify-end">
+                            {track.converted ? (
+                              <button
+                                type="button"
+                                className="flex-shrink-0 text-gray-400 p-1 border border-transparent rounded-full shadow-sm bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                  className="h-5 w-5 text-white"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z"
+                                  />
+                                </svg>
+                              </button>
+                            ) : (
+                              <button
+                                type="button"
+                                className="flex-shrink-0 text-gray-400 p-1 border border-transparent rounded-full shadow-sm bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                              >
+                                <svg
+                                  className="h-5 w-5 text-white"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
+                                  ></path>
+                                </svg>
+                              </button>
+                            )}
+                          </td>
+                        )}
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>

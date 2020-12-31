@@ -2,14 +2,14 @@ import { gql } from "@apollo/client";
 
 const UsersAPI = {
   bySession: gql`
-    query bySession($userId: ID!) {
+    query userBySession($userId: ID!) {
       user(id: $userId) {
         group
       }
     }
   `,
-  setupUpdate: gql`
-    mutation setupUpdate(
+  updateCredentials: gql`
+    mutation updateUserCredentials(
       $userId: ID!
       $username: String!
       $envirocar: String!
@@ -26,8 +26,8 @@ const UsersAPI = {
       }
     }
   `,
-  setupCompleted: gql`
-    mutation setupCompleted($userId: ID!) {
+  updateSetup: gql`
+    mutation updateUserSetup($userId: ID!) {
       updateUser(
         input: { where: { id: $userId }, data: { setupCompleted: true } }
       ) {

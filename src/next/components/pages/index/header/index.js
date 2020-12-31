@@ -44,7 +44,7 @@ const Header = ({ user, phase, onSyncClick: handleClick, syncing }) => {
                         clipRule="evenodd"
                       />
                     </svg>
-                    Nachádzate sa vo fáze č. {phase?.phase.number}
+                    Nachádzate sa vo fáze č. {phase?.number}
                   </dd>
                   <dt className="sr-only">Termín trvania aktuálnej fázy</dt>
                   <dd className="mt-3 flex items-center text-sm text-gray-500 font-medium sm:mt-0 sm:mr-6">
@@ -63,17 +63,11 @@ const Header = ({ user, phase, onSyncClick: handleClick, syncing }) => {
                       />
                     </svg>
                     {phase && (
-                      <Moment
-                        date={phase.phase.startDate}
-                        format="DD. MM. YYYY"
-                      />
+                      <Moment date={phase.startDate} format="DD. MM. YYYY" />
                     )}
                     <span className="px-1">-</span>
                     {phase && (
-                      <Moment
-                        date={phase.phase.endDate}
-                        format="DD. MM. YYYY"
-                      />
+                      <Moment date={phase.endDate} format="DD. MM. YYYY" />
                     )}
                   </dd>
                 </dl>

@@ -5,8 +5,8 @@ import Rewards from "./Rewards";
 import { USER_GROUPS } from "../../../../utils/constants";
 
 const Strategies = ({ phase, user, recommendation }) => {
-  const phaseNumber = phase?.phase.number;
-  const userGroup = user?.user.group;
+  const phaseNumber = phase?.number;
+  const userGroup = user?.group;
 
   if (phaseNumber === 1) return null;
 

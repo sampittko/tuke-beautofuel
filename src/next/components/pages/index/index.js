@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useQuery } from "@apollo/client";
+import { NetworkStatus, useQuery } from "@apollo/client";
 import Navigation from "../../common/Navigation";
 import { useSession } from "next-auth/client";
 import PhaseAPI from "../../../lib/api/phase";
@@ -13,6 +13,7 @@ import History from "./History";
 import SyncSlideOver from "./SyncSlideOver";
 import SyncNotification from "./SyncNotification";
 import Skeleton from "./Skeleton";
+import TracksAPI from "../../../lib/api/tracks";
 
 const IndexPageComponent = () => {
   const [session] = useSession();
@@ -21,9 +22,11 @@ const IndexPageComponent = () => {
   const [syncNotificationVisible, setSyncNotificationVisible] = useState(false);
   const [syncError, setSyncError] = useState(false);
 
-  const { loading: phaseLoading, error: phaseError, data: phase } = useQuery(
-    PhaseAPI.only
-  );
+  const {
+    loading: phaseLoading,
+    error: phaseError,
+    data: phaseData,
+  } = useQuery(PhaseAPI.only);
 
   const {
     loading: recommendationLoading,
@@ -31,19 +34,23 @@ const IndexPageComponent = () => {
     data: recommendation,
   } = useQuery(RecommendationsAPI.random);
 
-  const { loading: userLoading, error: userError, data: user } = useQuery(
+  const { loading: userLoading, error: userError, data: userData } = useQuery(
     UsersAPI.bySession,
     {
       variables: { userId: session.id },
     }
   );
 
-  // const { loading: setupLoading, error: setupError, data: setup } = useQuery(
-  //   SetupsAPI.bySession,
-  //   {
-  //     variables: { setupId: user?.user.setup.id },
-  //   }
-  // );
+  const {
+    loading: tracksLoading,
+    error: tracksError,
+    data: tracksData,
+    refetch: tracksRefetch,
+    networkStatus: tracksNetworkStatus,
+  } = useQuery(TracksAPI.bySession, {
+    variables: { userId: session.id },
+    notifyOnNetworkStatusChange: true,
+  });
 
   const handleSlideOverOpen = () => {
     setSyncSlideOverOpen(true);
@@ -53,11 +60,14 @@ const IndexPageComponent = () => {
     setSyncSlideOverOpen(false);
   };
 
+  console.log(tracksNetworkStatus === NetworkStatus.refetch);
+
   const handleSyncToggle = (loading, mutationSuccessful) => {
     if (loading) {
       setSyncing(true);
       setTimeout(() => {
         setSyncing(false);
+        tracksRefetch();
         setSyncNotificationVisible(true);
         setTimeout(() => {
           setSyncNotificationVisible(false);
@@ -75,27 +85,36 @@ const IndexPageComponent = () => {
 
   return (
     <Spinner
-      dependencies={[phaseLoading, recommendationLoading, userLoading]}
-      errors={[phaseError, recommendationError, userError]}
+      dependencies={[
+        phaseLoading,
+        recommendationLoading,
+        userLoading,
+        tracksLoading,
+      ]}
+      errors={[phaseError, recommendationError, userError, tracksError]}
     >
       <div className="h-screen flex overflow-hidden bg-gray-100 z-0">
         <div className="flex-1 overflow-auto focus:outline-none" tabIndex="0">
           <Navigation />
           <main className="flex-1 relative pb-8 z-0 overflow-y-auto">
             <Header
-              phase={phase}
+              phase={phaseData?.phase}
               user={session.user}
               onSyncClick={handleSlideOverOpen}
               syncing={syncing}
             />
             <Skeleton visible={syncing}>
               <Strategies
-                user={user}
-                phase={phase}
+                user={userData?.user}
+                phase={phaseData?.phase}
                 recommendation={recommendation}
               />
-              <Stats />
-              <History user={user} phase={phase} />
+              <Stats tracks={tracksData?.tracks} />
+              <History
+                user={userData?.user}
+                phase={phaseData?.phase}
+                tracks={tracksData?.tracks}
+              />
             </Skeleton>
           </main>
         </div>

@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 const SetupsAPI = {
   bySession: gql`
-    query bySession($setupId: ID!) {
+    query setupBySession($setupId: ID!) {
       setup(id: $setupId) {
         id
         step1

@@ -9,7 +9,7 @@ const WithGraphQL = ({ session, children }) => {
     credentials: "same-origin",
     cache: new InMemoryCache(),
     headers: {
-      authorization: `Bearer ${token}`,
+      authorization: token ? `Bearer ${token}` : "",
     },
   });
 
