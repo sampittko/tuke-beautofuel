@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NetworkStatus, useQuery } from "@apollo/client";
 import Navigation from "../../common/Navigation";
 import { useSession } from "next-auth/client";
@@ -14,13 +14,15 @@ import SyncSlideOver from "./SyncSlideOver";
 import SyncNotification from "./SyncNotification";
 import Skeleton from "./Skeleton";
 import TracksAPI from "../../../lib/api/tracks";
+import SynchronizationsAPI from "../../../lib/api/synchronizations";
+import { SYNCHRONIZATION_STATUSES } from "../../../utils/constants";
 
 const IndexPageComponent = () => {
   const [session] = useSession();
-  const [syncing, setSyncing] = useState(false);
+  const [pollingSyncId, setPollingSyncId] = useState(false);
   const [syncSlideOverOpen, setSyncSlideOverOpen] = useState(false);
   const [syncNotificationVisible, setSyncNotificationVisible] = useState(false);
-  const [syncError, setSyncError] = useState(false);
+  const [syncPasswordError, setSyncPasswordError] = useState(false);
 
   const {
     loading: phaseLoading,
@@ -46,42 +48,56 @@ const IndexPageComponent = () => {
     error: tracksError,
     data: tracksData,
     refetch: tracksRefetch,
-    networkStatus: tracksNetworkStatus,
   } = useQuery(TracksAPI.bySession, {
     variables: { userId: session.id },
     notifyOnNetworkStatusChange: true,
   });
 
-  const handleSlideOverOpen = () => {
-    setSyncSlideOverOpen(true);
+  const { error: synchronizationError, data: synchronizationData } = useQuery(
+    SynchronizationsAPI.byId,
+    {
+      variables: { id: pollingSyncId },
+      skip: !pollingSyncId,
+      pollInterval: 3000,
+    }
+  );
+
+  const handleSyncCreated = (syncId) => {
+    setPollingSyncId(syncId);
   };
 
-  const handleSlideOverClose = () => {
-    setSyncSlideOverOpen(false);
+  const handleSyncError = () => {
+    setSyncPasswordError(true);
+    showNotification();
   };
 
-  console.log(tracksNetworkStatus === NetworkStatus.refetch);
+  const showNotification = () => {
+    setSyncNotificationVisible(true);
+    setTimeout(() => {
+      if (syncPasswordError) {
+        setSyncPasswordError(false);
+      }
+      setSyncNotificationVisible(false);
+    }, 3000);
+  };
 
-  const handleSyncToggle = (loading, mutationSuccessful) => {
-    if (loading) {
-      setSyncing(true);
-      setTimeout(() => {
-        setSyncing(false);
+  useEffect(() => {
+    const synchronization = synchronizationData?.synchronization;
+    if (synchronization) {
+      if (synchronization.status === SYNCHRONIZATION_STATUSES.success) {
+        setPollingSyncId(null);
         tracksRefetch();
-        setSyncNotificationVisible(true);
-        setTimeout(() => {
-          setSyncNotificationVisible(false);
-          setTimeout(() => {
-            setSyncError(false);
-          }, 100);
-        }, 4000);
-      }, 3000);
-    } else {
-      if (!mutationSuccessful) {
-        setSyncError(true);
+        showNotification();
+      } else {
+        if (synchronizationError) {
+          showNotification();
+        }
       }
     }
-  };
+  }, [synchronizationData, synchronizationError]);
+
+  console.log(synchronizationData);
+  console.log(synchronizationError);
 
   return (
     <Spinner
@@ -100,10 +116,10 @@ const IndexPageComponent = () => {
             <Header
               phase={phaseData?.phase}
               user={session.user}
-              onSyncClick={handleSlideOverOpen}
-              syncing={syncing}
+              onSyncClick={() => setSyncSlideOverOpen(true)}
+              syncing={pollingSyncId}
             />
-            <Skeleton visible={syncing}>
+            <Skeleton visible={pollingSyncId}>
               <Strategies
                 user={userData?.user}
                 phase={phaseData?.phase}
@@ -121,10 +137,14 @@ const IndexPageComponent = () => {
       </div>
       <SyncSlideOver
         open={syncSlideOverOpen}
-        onClose={handleSlideOverClose}
-        onSyncToggle={handleSyncToggle}
+        onClose={() => setSyncSlideOverOpen(false)}
+        onSyncCreated={handleSyncCreated}
+        onSyncError={handleSyncError}
       />
-      <SyncNotification show={syncNotificationVisible} error={syncError} />
+      <SyncNotification
+        show={syncNotificationVisible}
+        error={synchronizationError || syncPasswordError}
+      />
     </Spinner>
   );
 };

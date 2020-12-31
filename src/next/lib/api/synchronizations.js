@@ -5,8 +5,15 @@ const SynchronizationsAPI = {
     mutation createSynchronization {
       createSynchronization {
         synchronization {
-          status
+          id
         }
+      }
+    }
+  `,
+  byId: gql`
+    query getSynchronizationById($id: ID!) {
+      synchronization(id: $id) {
+        status
       }
     }
   `,

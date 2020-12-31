@@ -1,21 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Stats = ({ tracks }) => {
-  const [totalDistance] = useState(() => {
+  const [totalDistance, setTotalDistance] = useState(0);
+  const [totalDuration, setTotalDuration] = useState(0);
+
+  const countTotal = (prop) => {
     let sum = 0;
     tracks.forEach((track) => {
-      sum += track.totalDistance;
+      sum += track[prop];
     });
     return sum.toFixed(2);
-  });
+  };
 
-  const [totalDuration] = useState(() => {
-    let sum = 0;
-    tracks.forEach((track) => {
-      sum += track.duration;
-    });
-    return (sum / 60).toFixed(2);
-  });
+  useEffect(() => {
+    setTotalDistance(countTotal("totalDistance"));
+    setTotalDuration(countTotal("duration"));
+  }, [tracks]);
 
   return (
     <div className="mt-8">
@@ -85,7 +85,7 @@ const Stats = ({ tracks }) => {
                     </dt>
                     <dd>
                       <div className="text-lg font-medium text-green-900">
-                        {totalDuration} min.
+                        {(totalDuration / 60).toFixed(2)} min.
                       </div>
                     </dd>
                   </dl>

@@ -2,13 +2,12 @@ import { useMutation } from "@apollo/client";
 import { useSession } from "next-auth/client";
 import SynchronizationsAPI from "../../../lib/api/synchronizations";
 import React, { useEffect, useState } from "react";
-import { SYNCHRONIZATION_STATUSES } from "../../../utils/constants";
-import TracksAPI from "../../../lib/api/tracks";
 
 const SyncSlideOver = ({
   open,
   onClose: handleClose,
-  onSyncToggle: handleSyncToggle,
+  onSyncCreated: handleSyncCreated,
+  onSyncError: handleSyncError,
 }) => {
   const [session] = useSession();
   const [syncToken, setSyncToken] = useState("");
@@ -22,26 +21,15 @@ const SyncSlideOver = ({
           "X-Token": syncToken,
         },
       },
-      refetchQueries: [
-        {
-          query: TracksAPI.bySession,
-          variables: {
-            userId: session.id,
-          },
-        },
-      ],
+      onError: handleSyncError,
     }
   );
 
   useEffect(() => {
-    let mutationSuccessful = true;
     if (data) {
-      mutationSuccessful =
-        data.createSynchronization.synchronization.status ===
-        SYNCHRONIZATION_STATUSES.pending;
+      handleSyncCreated(data.createSynchronization.synchronization.id);
     }
-    handleSyncToggle(loading, mutationSuccessful);
-  }, [loading]);
+  }, [data]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
