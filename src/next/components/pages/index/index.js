@@ -74,10 +74,10 @@ const IndexPageComponent = () => {
   const showNotification = () => {
     setSyncNotificationVisible(true);
     setTimeout(() => {
+      setSyncNotificationVisible(false);
       if (syncPasswordError) {
         setSyncPasswordError(false);
       }
-      setSyncNotificationVisible(false);
     }, 3000);
   };
 
@@ -95,9 +95,6 @@ const IndexPageComponent = () => {
       }
     }
   }, [synchronizationData, synchronizationError]);
-
-  console.log(synchronizationData);
-  console.log(synchronizationError);
 
   return (
     <Spinner

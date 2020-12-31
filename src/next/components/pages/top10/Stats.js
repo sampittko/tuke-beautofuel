@@ -1,8 +1,16 @@
 import { useSession } from "next-auth/client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-const Stats = ({ phaseNumber }) => {
+const Stats = ({ phaseNumber, tracks, drivers }) => {
   const [session] = useSession();
+
+  const [totalDistance, setTotalDistance] = useState(0);
+  const [totalDuration, setTotalDuration] = useState(0);
+
+  useEffect(() => {
+    setTotalDuration(_.sumBy(drivers, "duration"));
+    setTotalDistance(_.sumBy(drivers, "distance"));
+  }, [tracks]);
 
   return (
     <div className="mt-16">
@@ -28,7 +36,7 @@ const Stats = ({ phaseNumber }) => {
                     Spolu najazdené
                   </dt>
                   <dd className="order-1 text-5xl font-extrabold text-green-600">
-                    512 km
+                    {totalDistance} km
                   </dd>
                 </div>
                 <div className="flex flex-col border-t border-b border-gray-100 p-6 text-center sm:border-0 sm:border-l sm:border-r">
@@ -36,7 +44,7 @@ const Stats = ({ phaseNumber }) => {
                     Celkový čas za volantom
                   </dt>
                   <dd className="order-1 text-5xl font-extrabold text-green-600">
-                    24 hod.
+                    {(totalDuration / 60).toFixed(2)} min
                   </dd>
                 </div>
                 <div className="flex flex-col border-t border-gray-100 p-6 text-center sm:border-0 sm:border-l">
@@ -44,7 +52,7 @@ const Stats = ({ phaseNumber }) => {
                     Počet zapojených šoférov
                   </dt>
                   <dd className="order-1 text-5xl font-extrabold text-green-600">
-                    16
+                    {drivers.length}
                   </dd>
                 </div>
               </dl>

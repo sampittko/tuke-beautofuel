@@ -1,20 +1,13 @@
 import React, { useEffect, useState } from "react";
+import _ from "lodash";
 
 const Stats = ({ tracks }) => {
   const [totalDistance, setTotalDistance] = useState(0);
   const [totalDuration, setTotalDuration] = useState(0);
 
-  const countTotal = (prop) => {
-    let sum = 0;
-    tracks.forEach((track) => {
-      sum += track[prop];
-    });
-    return sum.toFixed(2);
-  };
-
   useEffect(() => {
-    setTotalDistance(countTotal("totalDistance"));
-    setTotalDuration(countTotal("duration"));
+    setTotalDistance(_.sumBy(tracks, "totalDistance"));
+    setTotalDuration(_.sumBy(tracks, "duration"));
   }, [tracks]);
 
   return (

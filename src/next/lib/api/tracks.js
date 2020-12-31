@@ -13,6 +13,18 @@ const TracksAPI = {
       }
     }
   `,
+  top10: gql`
+    query top10Tracks {
+      tracks {
+        user {
+          username
+        }
+        duration
+        score
+        totalDistance
+      }
+    }
+  `,
 };
 
 export default TracksAPI;
