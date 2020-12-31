@@ -18,9 +18,11 @@ const TracksAPI = {
       tracks {
         user {
           username
+          wallet {
+            credits
+          }
         }
         duration
-        score
         totalDistance
       }
     }

@@ -2,12 +2,7 @@ import React, { useEffect, useState } from "react";
 import _ from "lodash";
 
 const Table = ({ drivers }) => {
-  const [top10, setTop10] = useState([]);
-
-  useEffect(() => {
-    const newTop10 = _.sortBy(drivers, ["score"], ["asc"]);
-    setTop10(newTop10);
-  }, [drivers]);
+  const [top10] = useState(_.sortBy(drivers, ["score"], ["asc"]));
 
   return (
     <div className="flex flex-col">

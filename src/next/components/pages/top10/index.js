@@ -28,7 +28,7 @@ const Top10PageComponent = () => {
         .groupBy("user.username")
         .map((value, key) => ({
           username: key,
-          score: _.sumBy(value, "score"),
+          score: value[0].user.wallet.credits,
           duration: _.sumBy(value, "duration"),
           distance: _.sumBy(value, "totalDistance"),
         }))
@@ -62,16 +62,6 @@ const Top10PageComponent = () => {
             <Stats phaseNumber={phase?.phase.number} drivers={drivers} />
           </div>
         </main>
-
-        <footer>
-          <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 md:flex md:items-center md:justify-between lg:px-8">
-            <div className="mt-8 md:mt-0 md:order-1">
-              <p className="text-center text-base text-gray-400">
-                &copy; 2021 Samuel Pitoňák. Všetky práva vyhradené.
-              </p>
-            </div>
-          </div>
-        </footer>
       </div>
     </Spinner>
   );
