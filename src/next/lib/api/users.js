@@ -8,8 +8,8 @@ const UsersAPI = {
       }
     }
   `,
-  updateCredentials: gql`
-    mutation updateUserCredentials(
+  updateUsernameAndEnvirocar: gql`
+    mutation updateUserUsernameAndEnvirocar(
       $userId: ID!
       $username: String!
       $envirocar: String!
@@ -26,14 +26,24 @@ const UsersAPI = {
       }
     }
   `,
-  updateSetup: gql`
-    mutation updateUserSetup($userId: ID!) {
+  completeSetup: gql`
+    mutation completeSetup($userId: ID!) {
       updateUser(
         input: { where: { id: $userId }, data: { setupCompleted: true } }
       ) {
         user {
           setupCompleted
         }
+      }
+    }
+  `,
+  allUsernamesByStrategy: gql`
+    query allUsernamesByStrategy {
+      gamificationUsernames: users(where: { group: "gamification" }) {
+        username
+      }
+      rewardsUsernames: users(where: { group: "rewards" }) {
+        username
       }
     }
   `,

@@ -133,7 +133,7 @@ const StepTwo = ({
                   name="username"
                   id="username"
                   autoComplete="username"
-                  className="py-3 px-4 block w-full shadow-sm border-gray-300 rounded-md"
+                  className="py-3 px-4 block w-full shadow-sm border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
                 />
               </div>
             </div>
@@ -157,7 +157,7 @@ const StepTwo = ({
                   name="password"
                   id="password"
                   autoComplete="password"
-                  className="py-3 px-4 block w-full shadow-sm border-gray-300 rounded-md"
+                  className="py-3 px-4 block w-full shadow-sm border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
                 />
               </div>
             </div>

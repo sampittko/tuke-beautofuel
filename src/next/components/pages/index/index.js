@@ -49,8 +49,9 @@ const IndexPageComponent = () => {
     data: tracksData,
     refetch: tracksRefetch,
   } = useQuery(TracksAPI.bySession, {
-    variables: { userId: session.id },
+    variables: { userId: session.id, phaseNumber: phaseData?.phase.number },
     notifyOnNetworkStatusChange: true,
+    skip: !phaseData,
   });
 
   const { error: synchronizationError, data: synchronizationData } = useQuery(

@@ -69,7 +69,7 @@ def seconds_between(d1, d2):
     return abs((d2 - d1).seconds)
 
 
-async def update_strapi_tracks(newTracks, user, synchronization):
+async def update_strapi_tracks(newTracks, user, synchronization, phaseNumber):
     for newTrack in newTracks:
         requests.post(
             f'{STRAPI_URL}/tracks',
@@ -81,7 +81,8 @@ async def update_strapi_tracks(newTracks, user, synchronization):
                 'totalDistance': newTrack['length'],
                 'scoreDistance': 0,
                 'user': user,
-                'synchronization': synchronization
+                'synchronization': synchronization,
+                'phaseNumber': phaseNumber
             },
             params={
                 'token': STRAPI_TOKEN
@@ -104,7 +105,7 @@ async def post_new_tracks(data: PostNewTracks, x_user: str = Header(None), x_tok
     if newTracksLen == 0:
         return {'statusCode': 200, 'message': 'There are no new track records'}
 
-    await update_strapi_tracks(newTracks, data.user, data.synchronization)
+    await update_strapi_tracks(newTracks, data.user, data.synchronization, data.phaseNumber)
 
     return {'statusCode': 200, 'message': f'There are {newTracksLen} tracks that were potentially processed'}
 

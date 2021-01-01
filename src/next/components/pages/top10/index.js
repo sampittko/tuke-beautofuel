@@ -9,22 +9,35 @@ import { useQuery } from "@apollo/client";
 import PhaseAPI from "../../../lib/api/phase";
 import TracksAPI from "../../../lib/api/tracks";
 import _ from "lodash";
+import UsersAPI from "../../../lib/api/users";
 
 const Top10PageComponent = () => {
   const [session] = useSession();
   const [drivers, setDrivers] = useState([]);
 
-  const { loading: phaseLoading, error: phaseError, data: phase } = useQuery(
-    PhaseAPI.only
-  );
+  const {
+    loading: phaseLoading,
+    error: phaseError,
+    data: phaseData,
+  } = useQuery(PhaseAPI.only);
 
-  const { loading: tracksLoading, error: tracksError, data: tracks } = useQuery(
-    TracksAPI.top10
-  );
+  const {
+    loading: tracksLoading,
+    error: tracksError,
+    data: tracksData,
+  } = useQuery(TracksAPI.top10, {
+    variables: {
+      phaseNumber: phaseData?.phase.number,
+    },
+    skip: !phaseData,
+  });
+
+  const { data: usersData } = useQuery(UsersAPI.allUsernamesByStrategy);
 
   useEffect(() => {
-    if (tracks) {
-      const newDrivers = _.chain(tracks.tracks)
+    if (tracksData && usersData) {
+      const allUsernamesByStrategy = usersData;
+      const driversWithTracksObject = _.chain(tracksData.tracks)
         .groupBy("user.username")
         .map((value, key) => ({
           username: key,
@@ -32,10 +45,34 @@ const Top10PageComponent = () => {
           duration: _.sumBy(value, "duration"),
           distance: _.sumBy(value, "totalDistance"),
         }))
+        .keyBy("username")
         .value();
+
+      const allUsernames = [
+        ...allUsernamesByStrategy.gamificationUsernames,
+        ...allUsernamesByStrategy.rewardsUsernames,
+      ];
+
+      allUsernames.forEach((driver) => {
+        if (!driversWithTracksObject[`${driver.username}`]) {
+          driversWithTracksObject[`${driver.username}`] = {
+            username: driver.username,
+            score: 0,
+            distance: 0,
+            duration: 0,
+          };
+        }
+      });
+
+      const newDrivers = [];
+
+      _.forOwn(driversWithTracksObject, (value) => {
+        newDrivers.push(value);
+      });
+
       setDrivers(newDrivers);
     }
-  }, [tracks]);
+  }, [tracksData, usersData]);
 
   return (
     <Spinner
@@ -59,7 +96,7 @@ const Top10PageComponent = () => {
           <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
             <Table drivers={drivers} />
             {session && <Share />}
-            <Stats phaseNumber={phase?.phase.number} drivers={drivers} />
+            <Stats phaseNumber={phaseData?.phase.number} drivers={drivers} />
           </div>
         </main>
       </div>

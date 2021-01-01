@@ -522,7 +522,8 @@
           "score",
           "totalDistance",
           "scoreDistance",
-          "envirocar"
+          "envirocar",
+          "phaseNumber"
         ],
         "properties": {
           "id": {
@@ -662,6 +663,9 @@
           "converted": {
             "type": "boolean",
             "default": false
+          },
+          "phaseNumber": {
+            "type": "integer"
           }
         }
       },
@@ -672,7 +676,8 @@
           "score",
           "totalDistance",
           "scoreDistance",
-          "envirocar"
+          "envirocar",
+          "phaseNumber"
         ],
         "properties": {
           "duration": {
@@ -703,6 +708,9 @@
           "converted": {
             "type": "boolean",
             "default": false
+          },
+          "phaseNumber": {
+            "type": "integer"
           },
           "created_by": {
             "type": "string"

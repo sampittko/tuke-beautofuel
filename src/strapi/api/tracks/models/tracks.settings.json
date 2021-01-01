@@ -20,9 +20,9 @@
       "required": true
     },
     "user": {
-      "via": "tracks",
       "plugin": "users-permissions",
-      "model": "user"
+      "model": "user",
+      "via": "tracks"
     },
     "score": {
       "type": "integer",
@@ -48,6 +48,10 @@
     "converted": {
       "type": "boolean",
       "default": false
+    },
+    "phaseNumber": {
+      "type": "integer",
+      "required": true
     }
   }
 }

@@ -2,8 +2,11 @@ import { gql } from "@apollo/client";
 
 const TracksAPI = {
   bySession: gql`
-    query tracksBySession($userId: ID!) {
-      tracks(where: { user: $userId }, sort: "createdAt") {
+    query tracksBySession($userId: ID!, $phaseNumber: Int!) {
+      tracks(
+        where: { user: $userId, phaseNumber: $phaseNumber }
+        sort: "createdAt"
+      ) {
         duration
         score
         scoreDistance
@@ -14,8 +17,8 @@ const TracksAPI = {
     }
   `,
   top10: gql`
-    query top10Tracks {
-      tracks {
+    query top10Tracks($phaseNumber: Int!) {
+      tracks(where: { phaseNumber: $phaseNumber }) {
         user {
           username
           wallet {

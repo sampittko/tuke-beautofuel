@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import _ from "lodash";
 
 const Table = ({ drivers }) => {
@@ -59,7 +59,7 @@ const Table = ({ drivers }) => {
                   return (
                     <tr className={`bg-${color}`} key={`driver-${i}`}>
                       <td className="font-medium px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {rank}
+                        {driver.score === 0 ? "-" : rank}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm font-medium text-gray-900">

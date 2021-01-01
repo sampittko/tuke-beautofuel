@@ -1332,7 +1332,8 @@
                 "score",
                 "totalDistance",
                 "scoreDistance",
-                "envirocar"
+                "envirocar",
+                "phaseNumber"
               ],
               "properties": {
                 "id": {
@@ -1364,6 +1365,9 @@
                 },
                 "converted": {
                   "type": "boolean"
+                },
+                "phaseNumber": {
+                  "type": "integer"
                 },
                 "created_by": {
                   "type": "string"

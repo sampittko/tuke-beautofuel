@@ -68,8 +68,8 @@
       "via": "user"
     },
     "tracks": {
-      "collection": "tracks",
-      "via": "user"
+      "via": "user",
+      "collection": "tracks"
     },
     "group": {
       "type": "enumeration",
@@ -83,7 +83,7 @@
     },
     "envirocar": {
       "type": "string",
-      "unique": true,
+      "unique": false,
       "required": false
     },
     "apiToken": {
