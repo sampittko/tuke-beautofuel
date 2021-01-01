@@ -1,6 +1,7 @@
 import { useSession } from "next-auth/client";
 import React, { useEffect, useState } from "react";
 import { formatDistance, formatDuration } from "../../../utils/functions";
+// import Moment from "react-moment";
 
 const Stats = ({ phaseNumber, tracks, drivers }) => {
   const [session] = useSession();
@@ -45,6 +46,7 @@ const Stats = ({ phaseNumber, tracks, drivers }) => {
                     Celkový čas za volantom
                   </dt>
                   <dd className="order-1 text-5xl font-extrabold text-green-600">
+                    {/* <Moment format="HH:mm">{totalDuration}</Moment> hod. */}
                     {formatDuration(totalDuration)}
                   </dd>
                 </div>
