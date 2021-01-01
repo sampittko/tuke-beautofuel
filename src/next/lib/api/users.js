@@ -51,6 +51,18 @@ const UsersAPI = {
       }
     }
   `,
+  allUsersWithWallets: gql`
+    query allUsers {
+      users {
+        id
+        wallet {
+          credits2
+          credits3
+        }
+        group
+      }
+    }
+  `,
 };
 
 export default UsersAPI;

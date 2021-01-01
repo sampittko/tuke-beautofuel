@@ -35,7 +35,7 @@ const IndexPageComponent = () => {
   const {
     loading: recommendationLoading,
     error: recommendationError,
-    data: recommendation,
+    data: recommendationData,
   } = useQuery(RecommendationsAPI.random, {
     pollInterval: 10000,
   });
@@ -48,6 +48,13 @@ const IndexPageComponent = () => {
   } = useQuery(UsersAPI.bySession, {
     variables: { userId: session.id },
   });
+
+  const {
+    loading: allUsersLoading,
+    error: allUsersError,
+    data: allUsersData,
+    refetch: allUsersRefetch,
+  } = useQuery(UsersAPI.allUsersWithWallets);
 
   const {
     loading: tracksLoading,
@@ -94,6 +101,7 @@ const IndexPageComponent = () => {
         setPollingSyncId(null);
         tracksRefetch();
         userRefetch();
+        allUsersRefetch();
         showNotification();
       } else {
         if (synchronizationError) {
@@ -110,8 +118,15 @@ const IndexPageComponent = () => {
         recommendationLoading,
         userLoading,
         tracksLoading,
+        allUsersLoading,
       ]}
-      errors={[phaseError, recommendationError, userError, tracksError]}
+      errors={[
+        phaseError,
+        recommendationError,
+        userError,
+        tracksError,
+        allUsersError,
+      ]}
     >
       <div className="h-screen flex overflow-hidden bg-gray-100 z-0">
         <div className="flex-1 overflow-auto focus:outline-none" tabIndex="0">
@@ -127,7 +142,8 @@ const IndexPageComponent = () => {
               <Strategies
                 user={userData?.user}
                 phase={phaseData?.phase}
-                recommendation={recommendation}
+                recommendation={recommendationData?.recommendation}
+                allUsers={allUsersData?.users}
               />
               <Stats tracks={tracksData?.tracks} />
               <History
