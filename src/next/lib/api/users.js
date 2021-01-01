@@ -5,6 +5,9 @@ const UsersAPI = {
     query userBySession($userId: ID!) {
       user(id: $userId) {
         group
+        wallet {
+          credits
+        }
       }
     }
   `,

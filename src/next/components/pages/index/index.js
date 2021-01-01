@@ -34,14 +34,18 @@ const IndexPageComponent = () => {
     loading: recommendationLoading,
     error: recommendationError,
     data: recommendation,
-  } = useQuery(RecommendationsAPI.random);
+  } = useQuery(RecommendationsAPI.random, {
+    pollInterval: 10000,
+  });
 
-  const { loading: userLoading, error: userError, data: userData } = useQuery(
-    UsersAPI.bySession,
-    {
-      variables: { userId: session.id },
-    }
-  );
+  const {
+    loading: userLoading,
+    error: userError,
+    data: userData,
+    refetch: userRefetch,
+  } = useQuery(UsersAPI.bySession, {
+    variables: { userId: session.id },
+  });
 
   const {
     loading: tracksLoading,
@@ -50,7 +54,6 @@ const IndexPageComponent = () => {
     refetch: tracksRefetch,
   } = useQuery(TracksAPI.bySession, {
     variables: { userId: session.id, phaseNumber: phaseData?.phase.number },
-    notifyOnNetworkStatusChange: true,
     skip: !phaseData,
   });
 
@@ -88,6 +91,7 @@ const IndexPageComponent = () => {
       if (synchronization.status === SYNCHRONIZATION_STATUSES.success) {
         setPollingSyncId(null);
         tracksRefetch();
+        userRefetch();
         showNotification();
       } else {
         if (synchronizationError) {
