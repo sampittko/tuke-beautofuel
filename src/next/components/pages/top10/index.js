@@ -10,6 +10,7 @@ import PhaseAPI from "../../../lib/api/phase";
 import TracksAPI from "../../../lib/api/tracks";
 import _ from "lodash";
 import UsersAPI from "../../../lib/api/users";
+import Redirects from "../../common/Redirects";
 
 const Top10PageComponent = () => {
   const [session] = useSession();
@@ -30,6 +31,7 @@ const Top10PageComponent = () => {
       phaseNumber: phaseData?.phase.number,
     },
     skip: !phaseData,
+    pollInterval: 30000,
   });
 
   const { data: usersData } = useQuery(UsersAPI.allUsernamesByStrategy);
@@ -39,11 +41,12 @@ const Top10PageComponent = () => {
       const allUsernamesByStrategy = usersData;
       const driversWithTracksObject = _.chain(tracksData.tracks)
         .groupBy("user.username")
-        .map((value, key) => ({
+        .map((track, key) => ({
           username: key,
-          score: value[0].user.wallet[`credits${phaseData.phase.number}`],
-          duration: _.sumBy(value, "duration"),
-          distance: _.sumBy(value, "totalDistance"),
+          id: track[0].user.id,
+          score: track[0].user.wallet[`credits${phaseData.phase.number}`],
+          duration: _.sumBy(track, "duration"),
+          distance: _.sumBy(track, "totalDistance"),
         }))
         .keyBy("username")
         .value();
@@ -56,6 +59,7 @@ const Top10PageComponent = () => {
       allUsernames.forEach((driver) => {
         if (!driversWithTracksObject[`${driver.username}`]) {
           driversWithTracksObject[`${driver.username}`] = {
+            id: driver.id,
             username: driver.username,
             score: 0,
             distance: 0,
@@ -74,6 +78,10 @@ const Top10PageComponent = () => {
     }
   }, [tracksData, usersData]);
 
+  if (phaseData && phaseData.phase.number === 1) {
+    return <Redirects toDashboard replace />;
+  }
+
   return (
     <Spinner
       dependencies={[phaseLoading, tracksLoading]}
@@ -81,23 +89,10 @@ const Top10PageComponent = () => {
     >
       <div className="min-h-screen bg-gray-100">
         <Navigation />
-
-        <div className="bg-green-600 pb-32">
-          <header className="py-10">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <h1 className="text-center uppercase text-3xl font-bold text-white">
-                Sieň slávy
-              </h1>
-            </div>
-          </header>
-        </div>
-
-        <main className="-mt-32">
-          <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
-            <Table drivers={drivers} />
-            {session && <Share />}
-            <Stats phaseNumber={phaseData?.phase.number} drivers={drivers} />
-          </div>
+        <main>
+          <Table drivers={drivers} />
+          {session && <Share />}
+          <Stats phaseNumber={phaseData?.phase.number} drivers={drivers} />
         </main>
       </div>
     </Spinner>

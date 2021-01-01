@@ -4,6 +4,7 @@ const UsersAPI = {
   bySession: gql`
     query userBySession($userId: ID!) {
       user(id: $userId) {
+        username
         group
         wallet {
           credits2
@@ -72,9 +73,11 @@ const UsersAPI = {
   allUsernamesByStrategy: gql`
     query allUsernamesByStrategy {
       gamificationUsernames: users(where: { group: "gamification" }) {
+        id
         username
       }
       rewardsUsernames: users(where: { group: "rewards" }) {
+        id
         username
       }
     }

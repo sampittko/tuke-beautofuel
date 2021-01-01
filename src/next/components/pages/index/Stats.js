@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
+import { formatDistance, formatDuration } from "../../../utils/functions";
 
 const Stats = ({ tracks }) => {
   const [totalDistance, setTotalDistance] = useState(0);
@@ -43,7 +44,7 @@ const Stats = ({ tracks }) => {
                     </dt>
                     <dd>
                       <div className="text-lg font-medium text-green-900">
-                        {totalDistance} km
+                        {formatDistance(totalDistance)}
                       </div>
                     </dd>
                   </dl>
@@ -78,7 +79,7 @@ const Stats = ({ tracks }) => {
                     </dt>
                     <dd>
                       <div className="text-lg font-medium text-green-900">
-                        {(totalDuration / 60).toFixed(2)} min.
+                        {formatDuration(totalDuration)}
                       </div>
                     </dd>
                   </dl>

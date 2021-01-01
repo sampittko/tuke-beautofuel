@@ -5,7 +5,7 @@ import UsersAPI from "../../../lib/api/users";
 
 const PhaseBanner = ({ phaseNumber, user }) => {
   const [session] = useSession();
-  const [visible, setVisible] = useState(!user[`notified${phaseNumber}`]);
+  const [visible, setVisible] = useState(!user?.[`notified${phaseNumber}`]);
 
   const [notified] = useMutation(UsersAPI.notified, {
     variables: {
@@ -54,9 +54,9 @@ const PhaseBanner = ({ phaseNumber, user }) => {
                   {phaseNumber === 1 &&
                     "Experiment už prebieha vo fáze č. 1. Môžete začať so synchronizáciou svojich jázd!"}
                   {phaseNumber === 2 &&
-                    "Začala fáza experimentu č. 2 a na tejto obrazovke nájdete nové funkcie!"}
+                    "Začala sa fáza experimentu č. 2 a na tejto obrazovke nájdete nové funkcie!"}
                   {phaseNumber === 3 &&
-                    "Začala fáza experimentu č. 3 a na tejto obrazovke nájdete ďalšie nové funkcie!"}
+                    "Začala sa fáza experimentu č. 3 a na tejto obrazovke nájdete ďalšie nové funkcie!"}
                 </span>
               </p>
             </div>
@@ -65,7 +65,7 @@ const PhaseBanner = ({ phaseNumber, user }) => {
                 href="/prehlad-experimentu"
                 className="flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-green-600 bg-white hover:bg-green-50"
               >
-                Zistiť viac
+                Zistite viac
               </a>
             </div>
             <div className="order-2 flex-shrink-0 sm:order-3 sm:ml-2">

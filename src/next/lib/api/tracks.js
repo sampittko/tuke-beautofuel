@@ -20,6 +20,7 @@ const TracksAPI = {
     query top10Tracks($phaseNumber: Int!) {
       tracks(where: { phaseNumber: $phaseNumber }) {
         user {
+          id
           username
           wallet {
             credits2

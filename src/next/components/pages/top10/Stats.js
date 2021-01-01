@@ -1,5 +1,6 @@
 import { useSession } from "next-auth/client";
 import React, { useEffect, useState } from "react";
+import { formatDistance, formatDuration } from "../../../utils/functions";
 
 const Stats = ({ phaseNumber, tracks, drivers }) => {
   const [session] = useSession();
@@ -13,7 +14,7 @@ const Stats = ({ phaseNumber, tracks, drivers }) => {
   }, [tracks]);
 
   return (
-    <div className="mt-16">
+    <div className="py-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
@@ -26,7 +27,7 @@ const Stats = ({ phaseNumber, tracks, drivers }) => {
           </p>
         </div>
       </div>
-      <div className="mt-10 pb-12 sm:pb-16">
+      <div className="mt-10">
         <div className="relative">
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
@@ -36,7 +37,7 @@ const Stats = ({ phaseNumber, tracks, drivers }) => {
                     Spolu najazdené
                   </dt>
                   <dd className="order-1 text-5xl font-extrabold text-green-600">
-                    {totalDistance} km
+                    {formatDistance(totalDistance)}
                   </dd>
                 </div>
                 <div className="flex flex-col border-t border-b border-gray-100 p-6 text-center sm:border-0 sm:border-l sm:border-r">
@@ -44,7 +45,7 @@ const Stats = ({ phaseNumber, tracks, drivers }) => {
                     Celkový čas za volantom
                   </dt>
                   <dd className="order-1 text-5xl font-extrabold text-green-600">
-                    {(totalDuration / 60).toFixed(2)} min
+                    {formatDuration(totalDuration)}
                   </dd>
                 </div>
                 <div className="flex flex-col border-t border-gray-100 p-6 text-center sm:border-0 sm:border-l">
