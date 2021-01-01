@@ -16,6 +16,7 @@ import Skeleton from "./Skeleton";
 import TracksAPI from "../../../lib/api/tracks";
 import SynchronizationsAPI from "../../../lib/api/synchronizations";
 import { SYNCHRONIZATION_STATUSES } from "../../../utils/constants";
+import PhaseBanner from "./PhaseBanner";
 
 const IndexPageComponent = () => {
   const [session] = useSession();
@@ -164,6 +165,10 @@ const IndexPageComponent = () => {
       <SyncNotification
         show={syncNotificationVisible}
         error={synchronizationError || syncPasswordError}
+      />
+      <PhaseBanner
+        user={userData?.user}
+        phaseNumber={phaseData?.phase.number}
       />
     </Spinner>
   );

@@ -12,9 +12,9 @@
   },
   "attributes": {
     "user": {
+      "via": "wallet",
       "plugin": "users-permissions",
-      "model": "user",
-      "via": "wallet"
+      "model": "user"
     },
     "transactions": {
       "via": "wallet",

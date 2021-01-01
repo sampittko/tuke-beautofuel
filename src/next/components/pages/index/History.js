@@ -28,18 +28,18 @@ const History = ({ user, phase, tracks }) => {
                         <span className="flex flex-col text-gray-500 text-sm truncate">
                           <span># {tracks.length - i}</span>
                           {phaseNumber !== 1 && (
-                            <span>
-                              <span className="text-gray-900 font-medium">
-                                {track.score}
-                              </span>
+                            <span className="mt-2 rounded-lg inline-flex px-2.5 py-0.5 text-xs font-medium bg-green-100 text-green-800">
+                              {track.score}
                             </span>
                           )}
-                          <span>
+                          <span className="mt-1 inline-flex px-2.5 py-0.5 text-xs font-medium">
                             {track.scoreDistance.toFixed(2)} km /{" "}
                             {track.totalDistance.toFixed(2)} km
                           </span>
-                          <span>{(track.duration / 60).toFixed(2)}</span>
-                          <span>
+                          <span className="mt-1 inline-flex px-2.5 py-0.5 text-xs font-medium">
+                            {(track.duration / 60).toFixed(2)} min.
+                          </span>
+                          <span className="mt-1 inline-flex px-2.5 py-0.5 text-xs font-medium">
                             <Moment date={track.date} format="DD. MM. YYYY" />
                           </span>
                         </span>

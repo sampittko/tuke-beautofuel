@@ -46,7 +46,7 @@ const EcoScore = ({ recommendation, score }) => {
           </div>
         </div>
       </div>
-      <div className="bg-gray-50 bg-opacity-20 px-5 py-1.5">
+      <div className="bg-gray-50 bg-opacity-20 px-5 py-1.5 h-full">
         <div className="text-sm">
           <span href="#" className="font-medium text-gray-100">
             <div className="min-w-0 flex-1 py-0">

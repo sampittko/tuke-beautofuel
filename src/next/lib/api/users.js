@@ -9,6 +9,9 @@ const UsersAPI = {
           credits2
           credits3
         }
+        notified1
+        notified2
+        notified3
       }
     }
   `,
@@ -37,6 +40,31 @@ const UsersAPI = {
       ) {
         user {
           setupCompleted
+        }
+      }
+    }
+  `,
+  notified: gql`
+    mutation phaseNotified(
+      $userId: ID!
+      $notified1: Boolean!
+      $notified2: Boolean!
+      $notified3: Boolean!
+    ) {
+      updateUser(
+        input: {
+          where: { id: $userId }
+          data: {
+            notified1: $notified1
+            notified2: $notified2
+            notified3: $notified3
+          }
+        }
+      ) {
+        user {
+          notified1
+          notified2
+          notified3
         }
       }
     }

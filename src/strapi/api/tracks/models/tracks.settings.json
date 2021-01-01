@@ -20,9 +20,9 @@
       "required": true
     },
     "user": {
+      "via": "tracks",
       "plugin": "users-permissions",
-      "model": "user",
-      "via": "tracks"
+      "model": "user"
     },
     "score": {
       "type": "integer",

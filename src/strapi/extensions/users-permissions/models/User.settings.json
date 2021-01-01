@@ -60,16 +60,16 @@
       "configurable": false
     },
     "wallet": {
-      "via": "user",
-      "model": "wallets"
+      "model": "wallets",
+      "via": "user"
     },
     "synchronizations": {
-      "via": "user",
-      "collection": "synchronizations"
+      "collection": "synchronizations",
+      "via": "user"
     },
     "tracks": {
-      "via": "user",
-      "collection": "tracks"
+      "collection": "tracks",
+      "via": "user"
     },
     "group": {
       "type": "enumeration",
@@ -91,6 +91,18 @@
       "via": "user"
     },
     "setupCompleted": {
+      "type": "boolean",
+      "default": false
+    },
+    "notified1": {
+      "type": "boolean",
+      "default": false
+    },
+    "notified2": {
+      "type": "boolean",
+      "default": false
+    },
+    "notified3": {
       "type": "boolean",
       "default": false
     }

@@ -1423,6 +1423,18 @@
           "setupCompleted": {
             "type": "boolean",
             "default": false
+          },
+          "notified1": {
+            "type": "boolean",
+            "default": false
+          },
+          "notified2": {
+            "type": "boolean",
+            "default": false
+          },
+          "notified3": {
+            "type": "boolean",
+            "default": false
           }
         }
       },
@@ -1496,6 +1508,18 @@
             "type": "string"
           },
           "setupCompleted": {
+            "type": "boolean",
+            "default": false
+          },
+          "notified1": {
+            "type": "boolean",
+            "default": false
+          },
+          "notified2": {
+            "type": "boolean",
+            "default": false
+          },
+          "notified3": {
             "type": "boolean",
             "default": false
           },
