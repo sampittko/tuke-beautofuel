@@ -1259,9 +1259,6 @@
               "id": {
                 "type": "string"
               },
-              "credits": {
-                "type": "integer"
-              },
               "user": {
                 "type": "string"
               },
@@ -1270,6 +1267,12 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "credits2": {
+                "type": "integer"
+              },
+              "credits3": {
+                "type": "integer"
               },
               "created_by": {
                 "type": "string"
@@ -1283,7 +1286,8 @@
             "type": "array",
             "items": {
               "required": [
-                "id"
+                "id",
+                "phaseNumber"
               ],
               "properties": {
                 "id": {
@@ -1312,6 +1316,9 @@
                 },
                 "message": {
                   "type": "string"
+                },
+                "phaseNumber": {
+                  "type": "integer"
                 },
                 "created_by": {
                   "type": "string"

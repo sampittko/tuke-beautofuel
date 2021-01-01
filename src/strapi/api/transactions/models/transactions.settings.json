@@ -34,6 +34,10 @@
     "synchronization": {
       "model": "synchronizations",
       "via": "transactions"
+    },
+    "phaseNumber": {
+      "type": "integer",
+      "required": true
     }
   }
 }

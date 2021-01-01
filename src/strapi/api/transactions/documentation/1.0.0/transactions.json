@@ -518,7 +518,8 @@
         "required": [
           "id",
           "type",
-          "value"
+          "value",
+          "phaseNumber"
         ],
         "properties": {
           "id": {
@@ -528,7 +529,8 @@
             "required": [
               "id",
               "quantity",
-              "unitPrice"
+              "unitPrice",
+              "phaseNumber"
             ],
             "properties": {
               "id": {
@@ -545,6 +547,9 @@
               },
               "transaction": {
                 "type": "string"
+              },
+              "phaseNumber": {
+                "type": "integer"
               },
               "created_by": {
                 "type": "string"
@@ -572,9 +577,6 @@
               "id": {
                 "type": "string"
               },
-              "credits": {
-                "type": "integer"
-              },
               "user": {
                 "type": "string"
               },
@@ -583,6 +585,12 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "credits2": {
+                "type": "integer"
+              },
+              "credits3": {
+                "type": "integer"
               },
               "created_by": {
                 "type": "string"
@@ -594,7 +602,8 @@
           },
           "synchronization": {
             "required": [
-              "id"
+              "id",
+              "phaseNumber"
             ],
             "properties": {
               "id": {
@@ -624,6 +633,9 @@
               "message": {
                 "type": "string"
               },
+              "phaseNumber": {
+                "type": "integer"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -631,13 +643,17 @@
                 "type": "string"
               }
             }
+          },
+          "phaseNumber": {
+            "type": "integer"
           }
         }
       },
       "NewTransactions": {
         "required": [
           "type",
-          "value"
+          "value",
+          "phaseNumber"
         ],
         "properties": {
           "purchase": {
@@ -658,6 +674,9 @@
           },
           "synchronization": {
             "type": "string"
+          },
+          "phaseNumber": {
+            "type": "integer"
           },
           "created_by": {
             "type": "string"

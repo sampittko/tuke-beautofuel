@@ -60,12 +60,12 @@
       "configurable": false
     },
     "wallet": {
-      "model": "wallets",
-      "via": "user"
+      "via": "user",
+      "model": "wallets"
     },
     "synchronizations": {
-      "collection": "synchronizations",
-      "via": "user"
+      "via": "user",
+      "collection": "synchronizations"
     },
     "tracks": {
       "via": "user",

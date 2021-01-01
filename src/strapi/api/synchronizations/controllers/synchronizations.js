@@ -58,11 +58,12 @@ module.exports = {
       return ctx.badRequest("Invalid enviroCar password");
     }
 
+    const { number: phaseNumber } = await strapi.query("phase").findOne();
+
     const entity = await strapi.services.synchronizations.create({
       user,
+      phaseNumber,
     });
-
-    const { number: phaseNumber } = await strapi.query("phase").findOne();
 
     axios
       .post(

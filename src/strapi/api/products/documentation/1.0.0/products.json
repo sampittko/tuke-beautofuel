@@ -540,7 +540,8 @@
               "required": [
                 "id",
                 "quantity",
-                "unitPrice"
+                "unitPrice",
+                "phaseNumber"
               ],
               "properties": {
                 "id": {
@@ -557,6 +558,9 @@
                 },
                 "transaction": {
                   "type": "string"
+                },
+                "phaseNumber": {
+                  "type": "integer"
                 },
                 "created_by": {
                   "type": "string"

@@ -613,7 +613,8 @@
           },
           "synchronization": {
             "required": [
-              "id"
+              "id",
+              "phaseNumber"
             ],
             "properties": {
               "id": {
@@ -642,6 +643,9 @@
               },
               "message": {
                 "type": "string"
+              },
+              "phaseNumber": {
+                "type": "integer"
               },
               "created_by": {
                 "type": "string"

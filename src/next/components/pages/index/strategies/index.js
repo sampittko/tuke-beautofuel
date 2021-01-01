@@ -16,7 +16,7 @@ const Strategies = ({ phase, user, recommendation }) => {
         <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           <EcoScore
             recommendation={recommendation?.recommendation.text}
-            score={user.wallet.credits}
+            score={user.wallet[`credits${phaseNumber}`]}
           />
 
           {phaseNumber === 2 && userGroup === USER_GROUPS.rewards && (

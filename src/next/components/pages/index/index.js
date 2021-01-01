@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NetworkStatus, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import Navigation from "../../common/Navigation";
 import { useSession } from "next-auth/client";
 import PhaseAPI from "../../../lib/api/phase";
@@ -28,7 +28,9 @@ const IndexPageComponent = () => {
     loading: phaseLoading,
     error: phaseError,
     data: phaseData,
-  } = useQuery(PhaseAPI.only);
+  } = useQuery(PhaseAPI.only, {
+    pollInterval: 300000,
+  });
 
   const {
     loading: recommendationLoading,

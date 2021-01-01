@@ -522,10 +522,6 @@
           "id": {
             "type": "string"
           },
-          "credits": {
-            "type": "integer",
-            "default": 0
-          },
           "user": {
             "required": [
               "id",
@@ -604,7 +600,8 @@
               "required": [
                 "id",
                 "type",
-                "value"
+                "value",
+                "phaseNumber"
               ],
               "properties": {
                 "id": {
@@ -625,6 +622,9 @@
                 "synchronization": {
                   "type": "string"
                 },
+                "phaseNumber": {
+                  "type": "integer"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -633,15 +633,19 @@
                 }
               }
             }
+          },
+          "credits2": {
+            "type": "integer",
+            "default": 0
+          },
+          "credits3": {
+            "type": "integer",
+            "default": 0
           }
         }
       },
       "NewWallets": {
         "properties": {
-          "credits": {
-            "type": "integer",
-            "default": 0
-          },
           "user": {
             "type": "string"
           },
@@ -650,6 +654,14 @@
             "items": {
               "type": "string"
             }
+          },
+          "credits2": {
+            "type": "integer",
+            "default": 0
+          },
+          "credits3": {
+            "type": "integer",
+            "default": 0
           },
           "created_by": {
             "type": "string"

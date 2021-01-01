@@ -22,13 +22,13 @@
       "default": "pending"
     },
     "user": {
-      "via": "synchronizations",
       "plugin": "users-permissions",
-      "model": "user"
+      "model": "user",
+      "via": "synchronizations"
     },
     "tracks": {
-      "via": "synchronization",
-      "collection": "tracks"
+      "collection": "tracks",
+      "via": "synchronization"
     },
     "transactions": {
       "via": "synchronization",
@@ -39,6 +39,10 @@
     },
     "message": {
       "type": "string"
+    },
+    "phaseNumber": {
+      "type": "integer",
+      "required": true
     }
   }
 }

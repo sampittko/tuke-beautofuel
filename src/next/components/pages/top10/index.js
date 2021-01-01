@@ -41,7 +41,7 @@ const Top10PageComponent = () => {
         .groupBy("user.username")
         .map((value, key) => ({
           username: key,
-          score: value[0].user.wallet.credits,
+          score: value[0].user.wallet[`credits${phaseData.phase.number}`],
           duration: _.sumBy(value, "duration"),
           distance: _.sumBy(value, "totalDistance"),
         }))

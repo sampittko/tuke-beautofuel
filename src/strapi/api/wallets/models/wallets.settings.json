@@ -11,19 +11,22 @@
     "draftAndPublish": false
   },
   "attributes": {
-    "credits": {
-      "type": "integer",
-      "required": false,
-      "default": 0
-    },
     "user": {
-      "via": "wallet",
       "plugin": "users-permissions",
-      "model": "user"
+      "model": "user",
+      "via": "wallet"
     },
     "transactions": {
       "via": "wallet",
       "collection": "transactions"
+    },
+    "credits2": {
+      "default": 0,
+      "type": "integer"
+    },
+    "credits3": {
+      "type": "integer",
+      "default": 0
     }
   }
 }

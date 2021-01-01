@@ -516,7 +516,8 @@
     "schemas": {
       "Synchronizations": {
         "required": [
-          "id"
+          "id",
+          "phaseNumber"
         ],
         "properties": {
           "id": {
@@ -665,7 +666,8 @@
               "required": [
                 "id",
                 "type",
-                "value"
+                "value",
+                "phaseNumber"
               ],
               "properties": {
                 "id": {
@@ -686,6 +688,9 @@
                 "synchronization": {
                   "type": "string"
                 },
+                "phaseNumber": {
+                  "type": "integer"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -700,10 +705,16 @@
           },
           "message": {
             "type": "string"
+          },
+          "phaseNumber": {
+            "type": "integer"
           }
         }
       },
       "NewSynchronizations": {
+        "required": [
+          "phaseNumber"
+        ],
         "properties": {
           "status": {
             "type": "string",
@@ -734,6 +745,9 @@
           },
           "message": {
             "type": "string"
+          },
+          "phaseNumber": {
+            "type": "integer"
           },
           "created_by": {
             "type": "string"

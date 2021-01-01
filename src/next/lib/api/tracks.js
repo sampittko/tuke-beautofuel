@@ -22,7 +22,8 @@ const TracksAPI = {
         user {
           username
           wallet {
-            credits
+            credits2
+            credits3
           }
         }
         duration

@@ -49,6 +49,7 @@ module.exports = {
             value: Math.abs(data.score),
             synchronization: data.synchronization,
             wallet: wallet.id,
+            phaseNumber,
           },
         },
       });

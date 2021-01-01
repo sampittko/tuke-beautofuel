@@ -26,6 +26,10 @@
     "transaction": {
       "via": "purchase",
       "model": "transactions"
+    },
+    "phaseNumber": {
+      "type": "integer",
+      "required": true
     }
   }
 }

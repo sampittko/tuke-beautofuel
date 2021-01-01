@@ -6,7 +6,8 @@ const UsersAPI = {
       user(id: $userId) {
         group
         wallet {
-          credits
+          credits2
+          credits3
         }
       }
     }

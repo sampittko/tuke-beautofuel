@@ -29,8 +29,8 @@
       "required": true
     },
     "synchronization": {
-      "model": "synchronizations",
-      "via": "tracks"
+      "via": "tracks",
+      "model": "synchronizations"
     },
     "totalDistance": {
       "type": "decimal",

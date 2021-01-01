@@ -518,7 +518,8 @@
         "required": [
           "id",
           "quantity",
-          "unitPrice"
+          "unitPrice",
+          "phaseNumber"
         ],
         "properties": {
           "id": {
@@ -568,7 +569,8 @@
             "required": [
               "id",
               "type",
-              "value"
+              "value",
+              "phaseNumber"
             ],
             "properties": {
               "id": {
@@ -589,6 +591,9 @@
               "synchronization": {
                 "type": "string"
               },
+              "phaseNumber": {
+                "type": "integer"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -596,13 +601,17 @@
                 "type": "string"
               }
             }
+          },
+          "phaseNumber": {
+            "type": "integer"
           }
         }
       },
       "NewPurchases": {
         "required": [
           "quantity",
-          "unitPrice"
+          "unitPrice",
+          "phaseNumber"
         ],
         "properties": {
           "product": {
@@ -616,6 +625,9 @@
           },
           "transaction": {
             "type": "string"
+          },
+          "phaseNumber": {
+            "type": "integer"
           },
           "created_by": {
             "type": "string"

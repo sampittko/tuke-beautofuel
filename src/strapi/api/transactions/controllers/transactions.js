@@ -23,15 +23,28 @@ module.exports = {
       id: data.wallet,
     });
 
-    const substractedCredits =
-      data.type === TRANSACTION_TYPES.substraction ? -data.value : 0;
-    const addedCredits =
-      data.type === TRANSACTION_TYPES.addition ? data.value : 0;
+    let substractedCredits2 = 0;
+    let substractedCredits3 = 0;
+    let addedCredits2 = 0;
+    let addedCredits3 = 0;
+
+    const { number: phaseNumber } = await strapi.query("phase").findOne();
+
+    if (phaseNumber === 2) {
+      substractedCredits2 =
+        data.type === TRANSACTION_TYPES.substraction ? -data.value : 0;
+      addedCredits2 = data.type === TRANSACTION_TYPES.addition ? data.value : 0;
+    } else if (phaseNumber === 3) {
+      substractedCredits3 =
+        data.type === TRANSACTION_TYPES.substraction ? -data.value : 0;
+      addedCredits3 = data.type === TRANSACTION_TYPES.addition ? data.value : 0;
+    }
 
     await strapi.query("wallets").update(
       { id: data.wallet },
       {
-        credits: wallet.credits + substractedCredits + addedCredits,
+        credits2: wallet.credits2 + substractedCredits2 + addedCredits2,
+        credits3: wallet.credits3 + substractedCredits3 + addedCredits3,
       }
     );
 

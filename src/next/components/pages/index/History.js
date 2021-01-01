@@ -18,82 +18,83 @@ const History = ({ user, phase, tracks }) => {
 
       <div className="shadow sm:hidden">
         <ul className="mt-2 divide-y divide-gray-200 overflow-hidden shadow sm:hidden">
-          {tracks.map((track, i) => {
-            return (
-              <li key={`track-${i}`}>
-                <span className="block px-4 py-4 bg-white">
-                  <span className="flex items-center space-x-4">
-                    <span className="flex-1 flex space-x-2 truncate">
-                      <span className="flex flex-col text-gray-500 text-sm truncate">
-                        <span># {tracks.length - i}</span>
-                        {phaseNumber !== 1 && (
-                          <span>
-                            <span className="text-gray-900 font-medium">
-                              {track.score}
+          {tracks &&
+            tracks.map((track, i) => {
+              return (
+                <li key={`track-${i}`}>
+                  <span className="block px-4 py-4 bg-white">
+                    <span className="flex items-center space-x-4">
+                      <span className="flex-1 flex space-x-2 truncate">
+                        <span className="flex flex-col text-gray-500 text-sm truncate">
+                          <span># {tracks.length - i}</span>
+                          {phaseNumber !== 1 && (
+                            <span>
+                              <span className="text-gray-900 font-medium">
+                                {track.score}
+                              </span>
                             </span>
+                          )}
+                          <span>
+                            {track.scoreDistance.toFixed(2)} km /{" "}
+                            {track.totalDistance.toFixed(2)} km
                           </span>
-                        )}
-                        <span>
-                          {track.scoreDistance.toFixed(2)} km /{" "}
-                          {track.totalDistance.toFixed(2)} km
-                        </span>
-                        <span>{(track.duration / 60).toFixed(2)}</span>
-                        <span>
-                          <Moment date={track.date} format="DD. MM. YYYY" />
+                          <span>{(track.duration / 60).toFixed(2)}</span>
+                          <span>
+                            <Moment date={track.date} format="DD. MM. YYYY" />
+                          </span>
                         </span>
                       </span>
-                    </span>
 
-                    {actionsVisible && (
-                      <>
-                        {track.converted ? (
-                          <button
-                            type="button"
-                            className="flex-shrink-0 text-gray-400 p-1 border border-transparent rounded-full shadow-sm bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                              className="h-5 w-5 text-white"
+                      {actionsVisible && (
+                        <>
+                          {track.converted ? (
+                            <button
+                              type="button"
+                              className="flex-shrink-0 text-gray-400 p-1 border border-transparent rounded-full shadow-sm bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                             >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z"
-                              />
-                            </svg>
-                          </button>
-                        ) : (
-                          <button
-                            type="button"
-                            className="flex-shrink-0 text-gray-400 p-1 border border-transparent rounded-full shadow-sm bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                          >
-                            <svg
-                              className="h-5 w-5 text-white"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              xmlns="http://www.w3.org/2000/svg"
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                className="h-5 w-5 text-white"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z"
+                                />
+                              </svg>
+                            </button>
+                          ) : (
+                            <button
+                              type="button"
+                              className="flex-shrink-0 text-gray-400 p-1 border border-transparent rounded-full shadow-sm bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                             >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
-                              ></path>
-                            </svg>
-                          </button>
-                        )}
-                      </>
-                    )}
+                              <svg
+                                className="h-5 w-5 text-white"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
+                                ></path>
+                              </svg>
+                            </button>
+                          )}
+                        </>
+                      )}
+                    </span>
                   </span>
-                </span>
-              </li>
-            );
-          })}
+                </li>
+              );
+            })}
         </ul>
       </div>
 
@@ -129,77 +130,78 @@ const History = ({ user, phase, tracks }) => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {tracks.map((track, i) => {
-                    return (
-                      <tr className="bg-white" key={`track-${i}-small`}>
-                        <td className="px-6 py-4 text-left whitespace-nowrap text-sm text-gray-500">
-                          {tracks.length - i}
-                        </td>
-                        <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
-                          {track.scoreDistance.toFixed(2)} km /{" "}
-                          {track.totalDistance.toFixed(2)} km
-                        </td>
-                        <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
-                          {(track.duration / 60).toFixed(2)} min.
-                        </td>
-                        <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
-                          <Moment date={track.date} format="DD. MM. YYYY" />
-                        </td>
-                        {phaseNumber !== 1 && (
+                  {tracks &&
+                    tracks.map((track, i) => {
+                      return (
+                        <tr className="bg-white" key={`track-${i}-small`}>
+                          <td className="px-6 py-4 text-left whitespace-nowrap text-sm text-gray-500">
+                            {tracks.length - i}
+                          </td>
                           <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
-                            <span className="text-gray-900 font-medium">
-                              {track.score}
-                            </span>
+                            {track.scoreDistance.toFixed(2)} km /{" "}
+                            {track.totalDistance.toFixed(2)} km
                           </td>
-                        )}
-                        {actionsVisible && (
-                          <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500 flex items-center justify-end">
-                            {track.converted ? (
-                              <button
-                                type="button"
-                                className="flex-shrink-0 text-gray-400 p-1 border border-transparent rounded-full shadow-sm bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke="currentColor"
-                                  className="h-5 w-5 text-white"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z"
-                                  />
-                                </svg>
-                              </button>
-                            ) : (
-                              <button
-                                type="button"
-                                className="flex-shrink-0 text-gray-400 p-1 border border-transparent rounded-full shadow-sm bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                              >
-                                <svg
-                                  className="h-5 w-5 text-white"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
-                                  ></path>
-                                </svg>
-                              </button>
-                            )}
+                          <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
+                            {(track.duration / 60).toFixed(2)} min.
                           </td>
-                        )}
-                      </tr>
-                    );
-                  })}
+                          <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
+                            <Moment date={track.date} format="DD. MM. YYYY" />
+                          </td>
+                          {phaseNumber !== 1 && (
+                            <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
+                              <span className="text-gray-900 font-medium">
+                                {track.score}
+                              </span>
+                            </td>
+                          )}
+                          {actionsVisible && (
+                            <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500 flex items-center justify-end">
+                              {track.converted ? (
+                                <button
+                                  type="button"
+                                  className="flex-shrink-0 text-gray-400 p-1 border border-transparent rounded-full shadow-sm bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    className="h-5 w-5 text-white"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z"
+                                    />
+                                  </svg>
+                                </button>
+                              ) : (
+                                <button
+                                  type="button"
+                                  className="flex-shrink-0 text-gray-400 p-1 border border-transparent rounded-full shadow-sm bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                                >
+                                  <svg
+                                    className="h-5 w-5 text-white"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth="2"
+                                      d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
+                                    ></path>
+                                  </svg>
+                                </button>
+                              )}
+                            </td>
+                          )}
+                        </tr>
+                      );
+                    })}
                 </tbody>
               </table>
             </div>
