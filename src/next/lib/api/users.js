@@ -93,6 +93,7 @@ const UsersAPI = {
           credits3
         }
         group
+        username
       }
     }
   `,

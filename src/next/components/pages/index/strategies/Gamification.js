@@ -19,10 +19,10 @@ const Gamification = ({ allUsers, phaseNumber }) => {
         return user.group !== USER_GROUPS.unassigned && phaseFilter;
       });
 
-      const sortedUsers = _.sortBy(
+      const sortedUsers = _.orderBy(
         filteredUsers,
-        `wallet.credits${phaseNumber}`,
-        ["desc"]
+        [`wallet.credits${phaseNumber}`, "username"],
+        ["desc", "asc"]
       );
 
       const newRank =
