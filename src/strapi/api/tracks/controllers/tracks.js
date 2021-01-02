@@ -9,6 +9,7 @@ const { sanitizeEntity } = require("strapi-utils");
 const {
   TRANSACTION_TYPES,
   PRODUCT_NAMES,
+  USER_GROUPS,
 } = require("../../../utils/constants");
 
 module.exports = {
@@ -42,14 +43,20 @@ module.exports = {
         name: PRODUCT_NAMES.krovka,
       });
 
-      await strapi.query("purchases").create({
-        track: entity.id,
-        product: product.id,
-        user: data.user,
-        quantity: data.score <= 0 ? 0 : Math.floor(data.score / product.price),
-        unitPrice: product.price,
-        phaseNumber,
-      });
+      if (
+        phaseNumber === 3 ||
+        (phaseNumber === 2 && data.userGroup === USER_GROUPS.rewards)
+      ) {
+        await strapi.query("purchases").create({
+          track: entity.id,
+          product: product.id,
+          user: data.user,
+          quantity:
+            data.score <= 0 ? 0 : Math.floor(data.score / product.price),
+          unitPrice: product.price,
+          phaseNumber,
+        });
+      }
 
       const wallet = await strapi.query("wallets").findOne({
         user: data.user,

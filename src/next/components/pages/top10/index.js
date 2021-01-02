@@ -79,7 +79,10 @@ const Top10PageComponent = () => {
       const newDrivers = [];
 
       _.forOwn(driversWithTracksObject, (value) => {
-        if (value.group !== USER_GROUPS.rewards) {
+        if (
+          phaseData.phase.number === 3 ||
+          value.group !== USER_GROUPS.rewards
+        ) {
           newDrivers.push(value);
         }
       });

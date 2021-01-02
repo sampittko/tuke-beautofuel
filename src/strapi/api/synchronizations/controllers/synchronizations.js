@@ -71,6 +71,7 @@ module.exports = {
         JSON.stringify({
           synchronization: entity.id,
           user,
+          userGroup: ctx.state.user.group,
           phaseNumber,
         }),
         {
