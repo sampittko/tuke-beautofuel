@@ -28,6 +28,10 @@ module.exports = {
       return ctx.badRequest("ID from enviroCar is not set for the user");
     }
 
+    if (!ctx.state.user.setupCompleted) {
+      return ctx.badRequest("Complete setup first");
+    }
+
     const user = ctx.state.user.id;
 
     const pendingSynchronization = await strapi

@@ -6,7 +6,7 @@
  */
 
 const { sanitizeEntity } = require("strapi-utils");
-const { TRANSACTION_TYPES } = require("../../../utils/constants");
+const { TRANSACTION_TYPES, USER_GROUPS } = require("../../../utils/constants");
 
 module.exports = {
   /**
@@ -18,12 +18,19 @@ module.exports = {
   async update(ctx) {
     const { id } = ctx.params;
 
+    const { number: phaseNumber } = await strapi.query("phase").findOne();
+
+    if (
+      phaseNumber === 2 &&
+      ctx.state.user.group === USER_GROUPS.gamification
+    ) {
+      return ctx.badRequest("You dont have rights to perform this action");
+    }
+
     const entity = await strapi.services.purchases.update(
       { id },
       ctx.request.body
     );
-
-    const { number: phaseNumber } = await strapi.query("phase").findOne();
 
     const wallet = await strapi.query("wallets").findOne({
       user: ctx.state.user.id,
