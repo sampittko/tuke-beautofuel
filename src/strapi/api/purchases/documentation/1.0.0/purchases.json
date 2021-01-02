@@ -528,28 +528,28 @@
           "product": {
             "required": [
               "id",
-              "name",
               "stock",
-              "price"
+              "price",
+              "name"
             ],
             "properties": {
               "id": {
-                "type": "string"
-              },
-              "name": {
                 "type": "string"
               },
               "stock": {
                 "type": "integer"
               },
               "price": {
-                "type": "number"
+                "type": "integer"
               },
               "purchases": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
+              },
+              "name": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -565,34 +565,96 @@
           "unitPrice": {
             "type": "number"
           },
-          "transaction": {
+          "transactions": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "type",
+                "value",
+                "phaseNumber"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "integer"
+                },
+                "wallet": {
+                  "type": "string"
+                },
+                "synchronization": {
+                  "type": "string"
+                },
+                "phaseNumber": {
+                  "type": "integer"
+                },
+                "purchase": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "phaseNumber": {
+            "type": "integer"
+          },
+          "track": {
             "required": [
               "id",
-              "type",
-              "value",
+              "duration",
+              "date",
+              "score",
+              "totalDistance",
+              "scoreDistance",
+              "envirocar",
               "phaseNumber"
             ],
             "properties": {
               "id": {
                 "type": "string"
               },
-              "purchase": {
-                "type": "string"
-              },
-              "type": {
-                "type": "string"
-              },
-              "value": {
+              "duration": {
                 "type": "integer"
               },
-              "wallet": {
+              "date": {
                 "type": "string"
+              },
+              "user": {
+                "type": "string"
+              },
+              "score": {
+                "type": "integer"
               },
               "synchronization": {
                 "type": "string"
               },
+              "totalDistance": {
+                "type": "number"
+              },
+              "scoreDistance": {
+                "type": "number"
+              },
+              "envirocar": {
+                "type": "string"
+              },
+              "converted": {
+                "type": "boolean"
+              },
               "phaseNumber": {
                 "type": "integer"
+              },
+              "purchase": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -602,8 +664,92 @@
               }
             }
           },
-          "phaseNumber": {
-            "type": "integer"
+          "user": {
+            "required": [
+              "id",
+              "username",
+              "email"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "username": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "provider": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "resetPasswordToken": {
+                "type": "string"
+              },
+              "confirmationToken": {
+                "type": "string"
+              },
+              "confirmed": {
+                "type": "boolean"
+              },
+              "blocked": {
+                "type": "boolean"
+              },
+              "role": {
+                "type": "string"
+              },
+              "wallet": {
+                "type": "string"
+              },
+              "synchronizations": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "tracks": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "group": {
+                "type": "string"
+              },
+              "envirocar": {
+                "type": "string"
+              },
+              "apiToken": {
+                "type": "string"
+              },
+              "setupCompleted": {
+                "type": "boolean"
+              },
+              "notified1": {
+                "type": "boolean"
+              },
+              "notified2": {
+                "type": "boolean"
+              },
+              "notified3": {
+                "type": "boolean"
+              },
+              "purchases": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           }
         }
       },
@@ -623,11 +769,20 @@
           "unitPrice": {
             "type": "number"
           },
-          "transaction": {
-            "type": "string"
+          "transactions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "phaseNumber": {
             "type": "integer"
+          },
+          "track": {
+            "type": "string"
+          },
+          "user": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

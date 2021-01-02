@@ -525,40 +525,6 @@
           "id": {
             "type": "string"
           },
-          "purchase": {
-            "required": [
-              "id",
-              "quantity",
-              "unitPrice",
-              "phaseNumber"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "product": {
-                "type": "string"
-              },
-              "quantity": {
-                "type": "integer"
-              },
-              "unitPrice": {
-                "type": "number"
-              },
-              "transaction": {
-                "type": "string"
-              },
-              "phaseNumber": {
-                "type": "integer"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
           "type": {
             "type": "string",
             "enum": [
@@ -646,6 +612,49 @@
           },
           "phaseNumber": {
             "type": "integer"
+          },
+          "purchase": {
+            "required": [
+              "id",
+              "quantity",
+              "unitPrice",
+              "phaseNumber"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "product": {
+                "type": "string"
+              },
+              "quantity": {
+                "type": "integer"
+              },
+              "unitPrice": {
+                "type": "number"
+              },
+              "transactions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "phaseNumber": {
+                "type": "integer"
+              },
+              "track": {
+                "type": "string"
+              },
+              "user": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           }
         }
       },
@@ -656,9 +665,6 @@
           "phaseNumber"
         ],
         "properties": {
-          "purchase": {
-            "type": "string"
-          },
           "type": {
             "type": "string",
             "enum": [
@@ -677,6 +683,9 @@
           },
           "phaseNumber": {
             "type": "integer"
+          },
+          "purchase": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

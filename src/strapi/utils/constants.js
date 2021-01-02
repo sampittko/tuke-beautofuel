@@ -14,3 +14,7 @@ exports.TRANSACTION_TYPES = {
   addition: "addition",
   substraction: "substraction",
 };
+
+exports.PRODUCT_NAMES = {
+  krovka: "krovka",
+};

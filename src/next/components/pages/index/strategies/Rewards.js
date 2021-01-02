@@ -23,7 +23,7 @@ const Rewards = () => (
         <div className="ml-5 w-0 flex-1">
           <dl>
             <dt className="text-sm font-medium text-gray-500 truncate uppercase">
-              Získané krowky
+              Získané krovky
             </dt>
             <dd>
               <div className="text-lg font-medium text-green-900">

@@ -12,8 +12,8 @@
   },
   "attributes": {
     "product": {
-      "model": "products",
-      "via": "purchases"
+      "via": "purchases",
+      "model": "products"
     },
     "quantity": {
       "type": "integer",
@@ -23,13 +23,22 @@
       "type": "decimal",
       "required": true
     },
-    "transaction": {
-      "via": "purchase",
-      "model": "transactions"
+    "transactions": {
+      "collection": "transactions",
+      "via": "purchase"
     },
     "phaseNumber": {
       "type": "integer",
       "required": true
+    },
+    "track": {
+      "model": "tracks",
+      "via": "purchase"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "purchases"
     }
   }
 }

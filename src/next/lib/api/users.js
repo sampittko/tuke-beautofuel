@@ -75,10 +75,12 @@ const UsersAPI = {
       gamificationUsernames: users(where: { group: "gamification" }) {
         id
         username
+        group
       }
       rewardsUsernames: users(where: { group: "rewards" }) {
         id
         username
+        group
       }
     }
   `,

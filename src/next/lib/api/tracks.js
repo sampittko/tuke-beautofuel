@@ -13,6 +13,9 @@ const TracksAPI = {
         totalDistance
         date
         converted
+        purchase {
+          quantity
+        }
       }
     }
   `,
@@ -26,6 +29,7 @@ const TracksAPI = {
             credits2
             credits3
           }
+          group
         }
         duration
         totalDistance

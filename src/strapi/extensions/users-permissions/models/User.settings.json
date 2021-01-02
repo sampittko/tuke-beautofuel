@@ -105,6 +105,10 @@
     "notified3": {
       "type": "boolean",
       "default": false
+    },
+    "purchases": {
+      "via": "user",
+      "collection": "purchases"
     }
   }
 }

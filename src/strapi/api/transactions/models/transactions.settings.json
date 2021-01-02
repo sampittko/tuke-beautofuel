@@ -11,10 +11,6 @@
     "draftAndPublish": false
   },
   "attributes": {
-    "purchase": {
-      "model": "purchases",
-      "via": "transaction"
-    },
     "type": {
       "type": "enumeration",
       "enum": [
@@ -38,6 +34,10 @@
     "phaseNumber": {
       "type": "integer",
       "required": true
+    },
+    "purchase": {
+      "via": "transactions",
+      "model": "purchases"
     }
   }
 }

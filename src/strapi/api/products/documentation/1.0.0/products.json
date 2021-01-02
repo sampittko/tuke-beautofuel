@@ -517,22 +517,19 @@
       "Products": {
         "required": [
           "id",
-          "name",
           "stock",
-          "price"
+          "price",
+          "name"
         ],
         "properties": {
           "id": {
-            "type": "string"
-          },
-          "name": {
             "type": "string"
           },
           "stock": {
             "type": "integer"
           },
           "price": {
-            "type": "number"
+            "type": "integer"
           },
           "purchases": {
             "type": "array",
@@ -556,11 +553,20 @@
                 "unitPrice": {
                   "type": "number"
                 },
-                "transaction": {
-                  "type": "string"
+                "transactions": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "phaseNumber": {
                   "type": "integer"
+                },
+                "track": {
+                  "type": "string"
+                },
+                "user": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -570,30 +576,39 @@
                 }
               }
             }
+          },
+          "name": {
+            "type": "string",
+            "enum": [
+              "krovka"
+            ]
           }
         }
       },
       "NewProducts": {
         "required": [
-          "name",
           "stock",
-          "price"
+          "price",
+          "name"
         ],
         "properties": {
-          "name": {
-            "type": "string"
-          },
           "stock": {
             "type": "integer"
           },
           "price": {
-            "type": "number"
+            "type": "integer"
           },
           "purchases": {
             "type": "array",
             "items": {
               "type": "string"
             }
+          },
+          "name": {
+            "type": "string",
+            "enum": [
+              "krovka"
+            ]
           },
           "created_by": {
             "type": "string"

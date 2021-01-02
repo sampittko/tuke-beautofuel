@@ -6,7 +6,10 @@
  */
 
 const { sanitizeEntity } = require("strapi-utils");
-const { TRANSACTION_TYPES } = require("../../../utils/constants");
+const {
+  TRANSACTION_TYPES,
+  PRODUCT_NAMES,
+} = require("../../../utils/constants");
 
 module.exports = {
   /**
@@ -35,6 +38,19 @@ module.exports = {
     const { number: phaseNumber } = await strapi.query("phase").findOne();
 
     if (phaseNumber !== 1) {
+      const product = await strapi.query("products").findOne({
+        name: PRODUCT_NAMES.krovka,
+      });
+
+      await strapi.query("purchases").create({
+        track: entity.id,
+        product: product.id,
+        user: data.user,
+        quantity: data.score <= 0 ? 0 : Math.floor(data.score / product.price),
+        unitPrice: product.price,
+        phaseNumber,
+      });
+
       const wallet = await strapi.query("wallets").findOne({
         user: data.user,
       });

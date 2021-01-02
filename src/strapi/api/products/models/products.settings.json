@@ -11,22 +11,24 @@
     "draftAndPublish": false
   },
   "attributes": {
-    "name": {
-      "type": "string",
-      "required": true,
-      "unique": true
-    },
     "stock": {
       "type": "integer",
       "required": true
     },
     "price": {
-      "type": "decimal",
+      "type": "integer",
       "required": true
     },
     "purchases": {
-      "via": "product",
-      "collection": "purchases"
+      "collection": "purchases",
+      "via": "product"
+    },
+    "name": {
+      "type": "enumeration",
+      "enum": [
+        "krovka"
+      ],
+      "required": true
     }
   }
 }

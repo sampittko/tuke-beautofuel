@@ -1,7 +1,9 @@
 import React from "react";
 import Moment from "react-moment";
-import { USER_GROUPS } from "../../../utils/constants";
-import { formatDistance, formatDuration } from "../../../utils/functions";
+import { USER_GROUPS } from "../../../../utils/constants";
+import { formatDistance, formatDuration } from "../../../../utils/functions";
+import Convert from "./actions/Convert";
+import Revert from "./actions/Revert";
 
 const History = ({ user, phase, tracks }) => {
   const phaseNumber = phase?.number;
@@ -47,49 +49,7 @@ const History = ({ user, phase, tracks }) => {
                       </span>
 
                       {actionsVisible && (
-                        <>
-                          {track.converted ? (
-                            <button
-                              type="button"
-                              className="flex-shrink-0 text-gray-400 p-1 border border-transparent rounded-full shadow-sm bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                className="h-5 w-5 text-white"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z"
-                                />
-                              </svg>
-                            </button>
-                          ) : (
-                            <button
-                              type="button"
-                              className="flex-shrink-0 text-gray-400 p-1 border border-transparent rounded-full shadow-sm bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                            >
-                              <svg
-                                className="h-5 w-5 text-white"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth="2"
-                                  d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
-                                ></path>
-                              </svg>
-                            </button>
-                          )}
-                        </>
+                        <>{track.converted ? <Revert /> : <Convert />}</>
                       )}
                     </span>
                   </span>
@@ -250,46 +210,10 @@ const History = ({ user, phase, tracks }) => {
                           )}
                           {actionsVisible && (
                             <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500 flex items-center justify-end">
-                              {track.converted ? (
-                                <button
-                                  type="button"
-                                  className="flex-shrink-0 text-gray-400 p-1 border border-transparent rounded-full shadow-sm bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-                                >
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                    className="h-5 w-5 text-white"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      strokeWidth={2}
-                                      d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z"
-                                    />
-                                  </svg>
-                                </button>
-                              ) : (
-                                <button
-                                  type="button"
-                                  className="flex-shrink-0 text-gray-400 p-1 border border-transparent rounded-full shadow-sm bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                                >
-                                  <svg
-                                    className="h-5 w-5 text-white"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      strokeWidth="2"
-                                      d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
-                                    ></path>
-                                  </svg>
-                                </button>
+                              {actionsVisible && (
+                                <>
+                                  {track.converted ? <Revert /> : <Convert />}
+                                </>
                               )}
                             </td>
                           )}

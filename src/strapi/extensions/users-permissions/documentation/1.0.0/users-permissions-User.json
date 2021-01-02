@@ -1376,6 +1376,9 @@
                 "phaseNumber": {
                   "type": "integer"
                 },
+                "purchase": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -1435,6 +1438,52 @@
           "notified3": {
             "type": "boolean",
             "default": false
+          },
+          "purchases": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "quantity",
+                "unitPrice",
+                "phaseNumber"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "product": {
+                  "type": "string"
+                },
+                "quantity": {
+                  "type": "integer"
+                },
+                "unitPrice": {
+                  "type": "number"
+                },
+                "transactions": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "phaseNumber": {
+                  "type": "integer"
+                },
+                "track": {
+                  "type": "string"
+                },
+                "user": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       },
@@ -1522,6 +1571,12 @@
           "notified3": {
             "type": "boolean",
             "default": false
+          },
+          "purchases": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "created_by": {
             "type": "string"

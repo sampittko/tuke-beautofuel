@@ -11,6 +11,7 @@ import TracksAPI from "../../../lib/api/tracks";
 import _ from "lodash";
 import UsersAPI from "../../../lib/api/users";
 import Redirects from "../../common/Redirects";
+import { USER_GROUPS } from "../../../utils/constants";
 
 const Top10PageComponent = () => {
   const [session] = useSession();
@@ -47,6 +48,7 @@ const Top10PageComponent = () => {
           score: track[0].user.wallet[`credits${phaseData.phase.number}`],
           duration: _.sumBy(track, "duration"),
           distance: _.sumBy(track, "totalDistance"),
+          group: track[0].user.group,
         }))
         .keyBy("username")
         .value();
@@ -64,6 +66,7 @@ const Top10PageComponent = () => {
             score: 0,
             distance: 0,
             duration: 0,
+            group: driver.group,
           };
         }
       });
@@ -71,7 +74,9 @@ const Top10PageComponent = () => {
       const newDrivers = [];
 
       _.forOwn(driversWithTracksObject, (value) => {
-        newDrivers.push(value);
+        if (value.group !== USER_GROUPS.rewards) {
+          newDrivers.push(value);
+        }
       });
 
       setDrivers(newDrivers);

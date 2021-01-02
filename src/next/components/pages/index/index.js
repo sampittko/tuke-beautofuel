@@ -9,13 +9,16 @@ import UsersAPI from "../../../lib/api/users";
 import Strategies from "./strategies/";
 import Header from "./header/";
 import Stats from "./Stats";
-import History from "./History";
+import History from "./history/";
 import SyncSlideOver from "./SyncSlideOver";
 import SyncNotification from "./SyncNotification";
 import Skeleton from "./Skeleton";
 import TracksAPI from "../../../lib/api/tracks";
 import SynchronizationsAPI from "../../../lib/api/synchronizations";
-import { SYNCHRONIZATION_STATUSES } from "../../../utils/constants";
+import {
+  SYNCHRONIZATION_STATUSES,
+  USER_GROUPS,
+} from "../../../utils/constants";
 import PhaseBanner from "./PhaseBanner";
 
 const IndexPageComponent = () => {
@@ -39,6 +42,7 @@ const IndexPageComponent = () => {
     data: recommendationData,
   } = useQuery(RecommendationsAPI.random, {
     pollInterval: 10000,
+    skip: phaseData?.phase.number === 1,
   });
 
   const {
@@ -55,7 +59,12 @@ const IndexPageComponent = () => {
     error: allUsersError,
     data: allUsersData,
     refetch: allUsersRefetch,
-  } = useQuery(UsersAPI.allUsersWithWallets);
+  } = useQuery(UsersAPI.allUsersWithWallets, {
+    skip:
+      phaseData?.phase.number === 1 ||
+      (phaseData?.phase.number === 2 &&
+        userData?.user.group === USER_GROUPS.rewards),
+  });
 
   const {
     loading: tracksLoading,

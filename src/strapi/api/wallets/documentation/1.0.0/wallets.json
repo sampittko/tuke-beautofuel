@@ -595,6 +595,12 @@
               "notified3": {
                 "type": "boolean"
               },
+              "purchases": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "created_by": {
                 "type": "string"
               },
@@ -616,9 +622,6 @@
                 "id": {
                   "type": "string"
                 },
-                "purchase": {
-                  "type": "string"
-                },
                 "type": {
                   "type": "string"
                 },
@@ -633,6 +636,9 @@
                 },
                 "phaseNumber": {
                   "type": "integer"
+                },
+                "purchase": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
