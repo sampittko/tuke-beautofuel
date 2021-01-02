@@ -35,6 +35,11 @@ const Top10PageComponent = () => {
     pollInterval: 30000,
   });
 
+  const { data: userData } = useQuery(UsersAPI.bySession, {
+    skip: !session,
+    variables: { userId: session.id },
+  });
+
   const { data: usersData } = useQuery(UsersAPI.allUsernamesByStrategy);
 
   useEffect(() => {
@@ -83,7 +88,11 @@ const Top10PageComponent = () => {
     }
   }, [tracksData, usersData]);
 
-  if (phaseData && phaseData.phase.number === 1) {
+  if (
+    phaseData?.phase.number === 1 ||
+    (phaseData?.phase.number === 2 &&
+      userData?.user.group === USER_GROUPS.rewards)
+  ) {
     return <Redirects toDashboard replace />;
   }
 
