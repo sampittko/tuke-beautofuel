@@ -163,6 +163,7 @@ const IndexPageComponent = () => {
                 tracks={tracksData?.tracks}
                 tracksRefetch={tracksRefetch}
                 userRefetch={userRefetch}
+                allUsersRefetch={allUsersRefetch}
               />
             </Skeleton>
           </main>

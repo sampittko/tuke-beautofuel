@@ -3,10 +3,7 @@ import { gql } from "@apollo/client";
 const TracksAPI = {
   bySession: gql`
     query tracksBySession($userId: ID!, $phaseNumber: Int!) {
-      tracks(
-        where: { user: $userId, phaseNumber: $phaseNumber }
-        sort: "createdAt"
-      ) {
+      tracks(where: { user: $userId, phaseNumber: $phaseNumber }) {
         duration
         score
         scoreDistance

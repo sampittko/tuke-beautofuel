@@ -1,17 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Moment from "react-moment";
 import { USER_GROUPS } from "../../../../utils/constants";
 import { formatDistance, formatDuration } from "../../../../utils/functions";
 import Convert from "./actions/Convert";
 import Revert from "./actions/Revert";
+import _ from "lodash";
 
-const History = ({ user, phase, tracks, tracksRefetch, userRefetch }) => {
+const History = ({
+  user,
+  phase,
+  tracks,
+  tracksRefetch,
+  userRefetch,
+  allUsersRefetch,
+}) => {
+  const [sortedTracks, setSortedTracks] = useState([]);
+
   const phaseNumber = phase?.number;
   const userGroup = user?.group;
 
   const actionsVisible =
     phaseNumber === 3 ||
     (phaseNumber === 2 && userGroup === USER_GROUPS.rewards);
+
+  useEffect(() => {
+    if (tracks) {
+      const newSortedTracks = _.orderBy(tracks, ["date"], ["desc"]);
+      setSortedTracks(newSortedTracks);
+    }
+  }, [tracks]);
 
   return (
     <>
@@ -21,55 +38,56 @@ const History = ({ user, phase, tracks, tracksRefetch, userRefetch }) => {
 
       <div className="shadow sm:hidden">
         <ul className="mt-2 divide-y divide-gray-200 overflow-hidden shadow sm:hidden">
-          {tracks &&
-            tracks.map((track, i) => {
-              return (
-                <li key={`track-${i}`}>
-                  <span className="block px-4 py-4 bg-white">
-                    <span className="flex items-center space-x-4">
-                      <span className="flex-1 flex space-x-2 truncate">
-                        <span className="flex flex-col text-gray-500 text-sm truncate">
-                          <span># {tracks.length - i}</span>
-                          {phaseNumber !== 1 && (
-                            <span className="mt-2 rounded-lg inline-flex px-2.5 py-0.5 text-xs font-medium bg-green-100 text-green-800">
-                              {track.score}
-                            </span>
-                          )}
-                          <span className="mt-1 inline-flex px-2.5 py-0.5 text-xs font-medium">
-                            {formatDistance(track.scoreDistance)} /{" "}
-                            {formatDistance(track.totalDistance)}
+          {sortedTracks.map((track, i) => {
+            return (
+              <li key={`track-${i}`}>
+                <span className="block px-4 py-4 bg-white">
+                  <span className="flex items-center space-x-4">
+                    <span className="flex-1 flex space-x-2 truncate">
+                      <span className="flex flex-col text-gray-500 text-sm truncate">
+                        <span># {tracks.length - i}</span>
+                        {phaseNumber !== 1 && (
+                          <span className="mt-2 rounded-lg inline-flex px-2.5 py-0.5 text-xs font-medium bg-green-100 text-green-800">
+                            {track.score}
                           </span>
-                          <span className="mt-1 inline-flex px-2.5 py-0.5 text-xs font-medium">
-                            {(track.duration / 60).toFixed(2)} min.
-                          </span>
-                          <span className="mt-1 inline-flex px-2.5 py-0.5 text-xs font-medium">
-                            <Moment date={track.date} format="DD. MM. YYYY" />
-                          </span>
+                        )}
+                        <span className="mt-1 inline-flex px-2.5 py-0.5 text-xs font-medium">
+                          {formatDistance(track.scoreDistance)} /{" "}
+                          {formatDistance(track.totalDistance)}
+                        </span>
+                        <span className="mt-1 inline-flex px-2.5 py-0.5 text-xs font-medium">
+                          {(track.duration / 60).toFixed(2)} min.
+                        </span>
+                        <span className="mt-1 inline-flex px-2.5 py-0.5 text-xs font-medium">
+                          <Moment date={track.date} format="DD. MM. YYYY" />
                         </span>
                       </span>
-
-                      {actionsVisible && (
-                        <>
-                          {track.purchase.made ? (
-                            <Revert
-                              tracksRefetch={tracksRefetch}
-                              userRefetch={userRefetch}
-                              track={track}
-                            />
-                          ) : (
-                            <Convert
-                              tracksRefetch={tracksRefetch}
-                              userRefetch={userRefetch}
-                              track={track}
-                            />
-                          )}
-                        </>
-                      )}
                     </span>
+
+                    {actionsVisible && (
+                      <>
+                        {track.purchase.made ? (
+                          <Revert
+                            tracksRefetch={tracksRefetch}
+                            userRefetch={userRefetch}
+                            allUsersRefetch={allUsersRefetch}
+                            track={track}
+                          />
+                        ) : (
+                          <Convert
+                            tracksRefetch={tracksRefetch}
+                            userRefetch={userRefetch}
+                            allUsersRefetch={allUsersRefetch}
+                            track={track}
+                          />
+                        )}
+                      </>
+                    )}
                   </span>
-                </li>
-              );
-            })}
+                </span>
+              </li>
+            );
+          })}
         </ul>
       </div>
 
@@ -198,54 +216,55 @@ const History = ({ user, phase, tracks, tracksRefetch, userRefetch }) => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {tracks &&
-                    tracks.map((track, i) => {
-                      return (
-                        <tr className="bg-white" key={`track-${i}-small`}>
-                          <td className="px-6 py-4 text-left whitespace-nowrap text-sm text-gray-500">
-                            {tracks.length - i}
+                  {sortedTracks.map((track, i) => {
+                    return (
+                      <tr className="bg-white" key={`track-${i}-small`}>
+                        <td className="px-6 py-4 text-left whitespace-nowrap text-sm text-gray-500">
+                          {tracks.length - i}
+                        </td>
+                        <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
+                          {formatDistance(track.scoreDistance)} /{" "}
+                          {formatDistance(track.totalDistance)}
+                        </td>
+                        <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
+                          {formatDuration(track.duration)}
+                        </td>
+                        <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
+                          <Moment date={track.date} format="DD. MM. YYYY" />
+                        </td>
+                        {phaseNumber !== 1 && (
+                          <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500 bg-green-100">
+                            <span className="text-gray-900 font-medium">
+                              {track.score}
+                            </span>
                           </td>
-                          <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
-                            {formatDistance(track.scoreDistance)} /{" "}
-                            {formatDistance(track.totalDistance)}
+                        )}
+                        {actionsVisible && (
+                          <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500 flex items-center justify-end">
+                            {actionsVisible && (
+                              <>
+                                {track.purchase.made ? (
+                                  <Revert
+                                    allUsersRefetch={allUsersRefetch}
+                                    tracksRefetch={tracksRefetch}
+                                    userRefetch={userRefetch}
+                                    track={track}
+                                  />
+                                ) : (
+                                  <Convert
+                                    allUsersRefetch={allUsersRefetch}
+                                    tracksRefetch={tracksRefetch}
+                                    userRefetch={userRefetch}
+                                    track={track}
+                                  />
+                                )}
+                              </>
+                            )}
                           </td>
-                          <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
-                            {formatDuration(track.duration)}
-                          </td>
-                          <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
-                            <Moment date={track.date} format="DD. MM. YYYY" />
-                          </td>
-                          {phaseNumber !== 1 && (
-                            <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500 bg-green-100">
-                              <span className="text-gray-900 font-medium">
-                                {track.score}
-                              </span>
-                            </td>
-                          )}
-                          {actionsVisible && (
-                            <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500 flex items-center justify-end">
-                              {actionsVisible && (
-                                <>
-                                  {track.purchase.made ? (
-                                    <Revert
-                                      tracksRefetch={tracksRefetch}
-                                      userRefetch={userRefetch}
-                                      track={track}
-                                    />
-                                  ) : (
-                                    <Convert
-                                      tracksRefetch={tracksRefetch}
-                                      userRefetch={userRefetch}
-                                      track={track}
-                                    />
-                                  )}
-                                </>
-                              )}
-                            </td>
-                          )}
-                        </tr>
-                      );
-                    })}
+                        )}
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
