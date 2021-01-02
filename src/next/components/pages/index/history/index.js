@@ -5,7 +5,7 @@ import { formatDistance, formatDuration } from "../../../../utils/functions";
 import Convert from "./actions/Convert";
 import Revert from "./actions/Revert";
 
-const History = ({ user, phase, tracks }) => {
+const History = ({ user, phase, tracks, tracksRefetch, userRefetch }) => {
   const phaseNumber = phase?.number;
   const userGroup = user?.group;
 
@@ -49,7 +49,21 @@ const History = ({ user, phase, tracks }) => {
                       </span>
 
                       {actionsVisible && (
-                        <>{track.converted ? <Revert /> : <Convert />}</>
+                        <>
+                          {track.purchase.made ? (
+                            <Revert
+                              tracksRefetch={tracksRefetch}
+                              userRefetch={userRefetch}
+                              track={track}
+                            />
+                          ) : (
+                            <Convert
+                              tracksRefetch={tracksRefetch}
+                              userRefetch={userRefetch}
+                              track={track}
+                            />
+                          )}
+                        </>
                       )}
                     </span>
                   </span>
@@ -212,7 +226,19 @@ const History = ({ user, phase, tracks }) => {
                             <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500 flex items-center justify-end">
                               {actionsVisible && (
                                 <>
-                                  {track.converted ? <Revert /> : <Convert />}
+                                  {track.purchase.made ? (
+                                    <Revert
+                                      tracksRefetch={tracksRefetch}
+                                      userRefetch={userRefetch}
+                                      track={track}
+                                    />
+                                  ) : (
+                                    <Convert
+                                      tracksRefetch={tracksRefetch}
+                                      userRefetch={userRefetch}
+                                      track={track}
+                                    />
+                                  )}
                                 </>
                               )}
                             </td>

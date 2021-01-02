@@ -12,8 +12,8 @@
   },
   "attributes": {
     "product": {
-      "via": "purchases",
-      "model": "products"
+      "model": "products",
+      "via": "purchases"
     },
     "quantity": {
       "type": "integer",
@@ -32,13 +32,17 @@
       "required": true
     },
     "track": {
-      "model": "tracks",
-      "via": "purchase"
+      "via": "purchase",
+      "model": "tracks"
     },
     "user": {
       "plugin": "users-permissions",
       "model": "user",
       "via": "purchases"
+    },
+    "made": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

@@ -568,6 +568,9 @@
                 "user": {
                   "type": "string"
                 },
+                "made": {
+                  "type": "boolean"
+                },
                 "created_by": {
                   "type": "string"
                 },

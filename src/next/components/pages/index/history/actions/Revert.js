@@ -1,8 +1,24 @@
-import React from "react";
+import { useMutation } from "@apollo/client";
+import React, { useEffect } from "react";
+import PurchasesAPI from "../../../../../lib/api/purchases";
 
-const Revert = () => {
+const Revert = ({ tracksRefetch, userRefetch, track }) => {
+  const [revertPurchase, { data, error }] = useMutation(PurchasesAPI.revert, {
+    variables: {
+      purchaseId: track.purchase.id,
+    },
+  });
+
+  useEffect(() => {
+    if (data && !error) {
+      tracksRefetch();
+      userRefetch();
+    }
+  }, [data]);
+
   return (
     <button
+      onClick={revertPurchase}
       type="button"
       className="flex-shrink-0 text-gray-400 p-1 border border-transparent rounded-full shadow-sm bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
     >

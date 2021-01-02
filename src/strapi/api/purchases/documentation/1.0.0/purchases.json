@@ -647,9 +647,6 @@
               "envirocar": {
                 "type": "string"
               },
-              "converted": {
-                "type": "boolean"
-              },
               "phaseNumber": {
                 "type": "integer"
               },
@@ -750,6 +747,10 @@
                 "type": "string"
               }
             }
+          },
+          "made": {
+            "type": "boolean",
+            "default": false
           }
         }
       },
@@ -783,6 +784,10 @@
           },
           "user": {
             "type": "string"
+          },
+          "made": {
+            "type": "boolean",
+            "default": false
           },
           "created_by": {
             "type": "string"

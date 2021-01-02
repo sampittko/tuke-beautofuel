@@ -146,20 +146,23 @@ const IndexPageComponent = () => {
               phase={phaseData?.phase}
               user={session.user}
               onSyncClick={() => setSyncSlideOverOpen(true)}
-              syncing={pollingSyncId}
+              syncing={!!pollingSyncId}
             />
-            <Skeleton visible={pollingSyncId}>
+            <Skeleton visible={!!pollingSyncId}>
               <Strategies
                 user={userData?.user}
                 phase={phaseData?.phase}
                 recommendation={recommendationData?.recommendation}
                 allUsers={allUsersData?.users}
+                tracks={tracksData?.tracks}
               />
               <Stats tracks={tracksData?.tracks} />
               <History
                 user={userData?.user}
                 phase={phaseData?.phase}
                 tracks={tracksData?.tracks}
+                tracksRefetch={tracksRefetch}
+                userRefetch={userRefetch}
               />
             </Skeleton>
           </main>

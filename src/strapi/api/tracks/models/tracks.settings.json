@@ -20,17 +20,17 @@
       "required": true
     },
     "user": {
-      "via": "tracks",
       "plugin": "users-permissions",
-      "model": "user"
+      "model": "user",
+      "via": "tracks"
     },
     "score": {
       "type": "integer",
       "required": true
     },
     "synchronization": {
-      "via": "tracks",
-      "model": "synchronizations"
+      "model": "synchronizations",
+      "via": "tracks"
     },
     "totalDistance": {
       "type": "decimal",
@@ -45,17 +45,13 @@
       "required": true,
       "unique": true
     },
-    "converted": {
-      "type": "boolean",
-      "default": false
-    },
     "phaseNumber": {
       "type": "integer",
       "required": true
     },
     "purchase": {
-      "via": "track",
-      "model": "purchases"
+      "model": "purchases",
+      "via": "track"
     }
   }
 }

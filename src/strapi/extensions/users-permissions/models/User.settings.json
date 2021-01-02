@@ -68,8 +68,8 @@
       "via": "user"
     },
     "tracks": {
-      "collection": "tracks",
-      "via": "user"
+      "via": "user",
+      "collection": "tracks"
     },
     "group": {
       "type": "enumeration",

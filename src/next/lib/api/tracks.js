@@ -12,9 +12,10 @@ const TracksAPI = {
         scoreDistance
         totalDistance
         date
-        converted
         purchase {
+          id
           quantity
+          made
         }
       }
     }

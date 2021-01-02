@@ -20,8 +20,8 @@
       "required": true
     },
     "purchases": {
-      "collection": "purchases",
-      "via": "product"
+      "via": "product",
+      "collection": "purchases"
     },
     "name": {
       "type": "enumeration",

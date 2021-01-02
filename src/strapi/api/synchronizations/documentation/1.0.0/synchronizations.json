@@ -660,9 +660,6 @@
                 "envirocar": {
                   "type": "string"
                 },
-                "converted": {
-                  "type": "boolean"
-                },
                 "phaseNumber": {
                   "type": "integer"
                 },
