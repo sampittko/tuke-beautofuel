@@ -28,50 +28,50 @@ const StepThree = ({
   const submitDisabled = !accepted || setupCompletedLoading;
 
   return (
-    <div className="bg-white py-16 px-4 overflow-hidden sm:px-6 lg:px-8 lg:py-24">
+    <div className="px-4 py-16 overflow-hidden bg-white sm:px-6 lg:px-8 lg:py-24">
       <div className="relative max-w-xl mx-auto">
         <div className="text-center">
           <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
             Zber dát
           </h2>
-          <p className="text-left mt-4 text-lg leading-6 text-gray-500">
+          <p className="mt-4 text-lg leading-6 text-left text-gray-500">
             Vykonanie synchronizácie dát spôsobí, že dáta, ktoré ste poskytli
             cez mobilnú aplikáciu enviroCar budú spracované týmto systémom a
             uložené do jeho databázy.
           </p>
-          <p className="text-left mt-4 text-lg leading-6 text-gray-500">
+          <p className="mt-4 text-lg leading-6 text-left text-gray-500">
             Dáta sú použité výhradne na účely vyhodnotenia diplomovej práce. Po
             vyhodnotení budú všetky zozbierané dáta odstránené.
           </p>
-          <p className="text-left mt-4 text-lg leading-6 text-gray-500">
+          <p className="mt-4 text-lg leading-6 text-left text-gray-500">
             Autor experimentu si vyhradzuje právo nedodať akékoľvek výhody,
             ktoré mohli byť nadobudnuté počas experimentu. Tieto odmeny majú
             pôsobiť len motivačne.
           </p>
-          <p className="text-left mt-4 text-lg leading-6 text-gray-500">
+          <p className="mt-4 text-lg leading-6 text-left text-gray-500">
             Vykonanie synchronizácie dát spôsobí, že dáta, ktoré ste poskytli
             cez mobilnú aplikáciu enviroCar budú spracované týmto systémom a
             uložené do jeho databázy.
           </p>
-          <p className="text-left mt-4 text-lg leading-6 text-gray-500">
+          <p className="mt-4 text-lg leading-6 text-left text-gray-500">
             Dáta sú použité výhradne na účely vyhodnotenia diplomovej práce. Po
             vyhodnotení budú všetky zozbierané dáta odstránené.
           </p>
-          <p className="text-left mt-4 text-lg leading-6 text-gray-500">
+          <p className="mt-4 text-lg leading-6 text-left text-gray-500">
             Autor experimentu si vyhradzuje právo nedodať akékoľvek výhody,
             ktoré mohli byť nadobudnuté počas experimentu. Tieto odmeny majú
             pôsobiť len motivačne.
           </p>
-          <p className="text-left mt-4 text-lg leading-6 text-gray-500">
+          <p className="mt-4 text-lg leading-6 text-left text-gray-500">
             Vykonanie synchronizácie dát spôsobí, že dáta, ktoré ste poskytli
             cez mobilnú aplikáciu enviroCar budú spracované týmto systémom a
             uložené do jeho databázy.
           </p>
-          <p className="text-left mt-4 text-lg leading-6 text-gray-500">
+          <p className="mt-4 text-lg leading-6 text-left text-gray-500">
             Dáta sú použité výhradne na účely vyhodnotenia diplomovej práce. Po
             vyhodnotení budú všetky zozbierané dáta odstránené.
           </p>
-          <p className="text-left mt-4 text-lg leading-6 text-gray-500">
+          <p className="mt-4 text-lg leading-6 text-left text-gray-500">
             Autor experimentu si vyhradzuje právo nedodať akékoľvek výhody,
             ktoré mohli byť nadobudnuté počas experimentu. Tieto odmeny majú
             pôsobiť len motivačne.
@@ -129,7 +129,7 @@ const StepThree = ({
               >
                 Dokončiť
               </button>
-              <div className="mt-2 text-center w-full">
+              <div className="w-full mt-2 text-center">
                 {status && (
                   <span className="text-xs text-gray-500">{status}</span>
                 )}

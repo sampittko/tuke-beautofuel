@@ -62,7 +62,7 @@ const StepTwo = ({
   const submitDisabled = !verified || setupUpdateLoading || setupUpdateError;
 
   return (
-    <div className="bg-white py-16 px-4 overflow-hidden sm:px-6 lg:px-8 lg:py-24">
+    <div className="px-4 py-16 overflow-hidden bg-white sm:px-6 lg:px-8 lg:py-24">
       <div className="relative max-w-xl mx-auto">
         <div className="text-center">
           <a href="https://envirocar.org" target="_blank">
@@ -79,16 +79,16 @@ const StepTwo = ({
               </svg>
             </h2>
           </a>
-          <p className="text-left mt-4 text-lg leading-6 text-gray-500">
+          <p className="mt-4 text-lg leading-6 text-left text-gray-500">
             V experimente sa používa mobilná aplikácia služby enviroCar za
             účelom zberu dát z jazdy automobilom.
           </p>
-          <p className="text-left mt-4 text-lg leading-6 text-gray-500">
+          <p className="mt-4 text-lg leading-6 text-left text-gray-500">
             Po kliknutí na{" "}
             <a
               href="https://envirocar.org"
               target="_blank"
-              className="text-green-600 underline hover:no-underline font-semibold"
+              className="font-semibold text-green-600 underline hover:no-underline"
             >
               tento odkaz
             </a>{" "}
@@ -98,7 +98,7 @@ const StepTwo = ({
             enviroCar účtu. Po úspešnom zadaní údajov môžete pokračovať na ďalší
             krok.
           </p>
-          <p className="text-left mt-4 text-lg leading-6 text-gray-500">
+          <p className="mt-4 text-lg leading-6 text-left text-gray-500">
             V systéme sa uloží <span className="font-semibold">len</span> Vaše
             enviroCar <span className="underline">prihlasovacie meno</span>.
             Heslo je potrebné zadávať manuálne pri každej synchronizácii dát a
@@ -133,7 +133,7 @@ const StepTwo = ({
                   name="username"
                   id="username"
                   autoComplete="username"
-                  className="py-3 px-4 block w-full shadow-sm border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  className="block w-full px-4 py-3 border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500"
                 />
               </div>
             </div>
@@ -157,7 +157,7 @@ const StepTwo = ({
                   name="password"
                   id="password"
                   autoComplete="password"
-                  className="py-3 px-4 block w-full shadow-sm border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  className="block w-full px-4 py-3 border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500"
                 />
               </div>
             </div>
@@ -187,10 +187,10 @@ const StepTwo = ({
                     : "hover:cursor-default opacity-60"
                 }`}
               >
-                Uložiť <span className="underline px-1">enviroCar meno </span> a
+                Uložiť <span className="px-1 underline">enviroCar meno </span> a
                 prejsť na ďalší krok
               </button>
-              <div className="mt-2 text-center w-full">
+              <div className="w-full mt-2 text-center">
                 {status && (
                   <span className="text-xs text-gray-500">{status}</span>
                 )}

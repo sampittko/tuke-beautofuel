@@ -46,7 +46,7 @@ const StepOne = ({
   };
 
   return (
-    <div className="bg-white py-16 px-4 overflow-hidden sm:px-6 lg:px-8 lg:py-24">
+    <div className="px-4 py-16 overflow-hidden bg-white sm:px-6 lg:px-8 lg:py-24">
       <div className="relative max-w-xl mx-auto">
         <div className="text-center">
           <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
@@ -76,7 +76,7 @@ const StepOne = ({
                   name="first_name"
                   id="first_name"
                   autoComplete="given-name"
-                  className="py-3 px-4 block w-full shadow-sm border-gray-300 rounded-md"
+                  className="block w-full px-4 py-3 border-gray-300 rounded-md shadow-sm"
                 />
               </div>
             </div>
@@ -98,7 +98,7 @@ const StepOne = ({
                   name="last_name"
                   id="last_name"
                   autoComplete="family-name"
-                  className="py-3 px-4 block w-full shadow-sm border-gray-300 rounded-md"
+                  className="block w-full px-4 py-3 border-gray-300 rounded-md shadow-sm"
                 />
               </div>
             </div>
@@ -120,7 +120,7 @@ const StepOne = ({
                   name="email"
                   type="email"
                   autoComplete="email"
-                  className="py-3 px-4 block w-full shadow-sm border-gray-300 rounded-md"
+                  className="block w-full px-4 py-3 border-gray-300 rounded-md shadow-sm"
                 />
               </div>
             </div>
@@ -144,7 +144,7 @@ const StepOne = ({
                   name="username"
                   type="text"
                   autoComplete="username"
-                  className="py-3 px-4 block w-full shadow-sm focus:ring-green-500 focus:border-green-500 border-gray-300 rounded-md"
+                  className="block w-full px-4 py-3 border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500"
                 />
               </div>
               <div className="mt-1">

@@ -34,6 +34,13 @@ const UsersAPI = {
       }
     }
   `,
+  setupCompleted: gql`
+    query setupCompleted($userId: ID!) {
+      user(id: $userId) {
+        setupCompleted
+      }
+    }
+  `,
   completeSetup: gql`
     mutation completeSetup($userId: ID!) {
       updateUser(
