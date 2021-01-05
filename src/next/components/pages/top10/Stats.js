@@ -46,7 +46,6 @@ const Stats = ({ phaseNumber, tracks, drivers }) => {
                     Celkový čas za volantom
                   </dt>
                   <dd className="order-1 text-5xl font-extrabold text-green-600">
-                    {/* <Moment format="HH:mm">{totalDuration}</Moment> hod. */}
                     {formatDuration(totalDuration)}
                   </dd>
                 </div>
