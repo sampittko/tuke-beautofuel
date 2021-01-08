@@ -2,6 +2,7 @@ import { useMutation } from "@apollo/client";
 import { useSession } from "next-auth/client";
 import React, { useState } from "react";
 import UsersAPI from "../../../lib/api/users";
+import { getExperimentOverviewLink } from "../../../utils/functions";
 
 const PhaseBanner = ({ phaseNumber, user }) => {
   const [session] = useSession();
@@ -24,14 +25,14 @@ const PhaseBanner = ({ phaseNumber, user }) => {
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-0 inset-x-0 pb-2 sm:pb-5">
-      <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-        <div className="p-2 rounded-lg bg-green-600 shadow-lg sm:p-3">
-          <div className="flex items-center justify-between flex-wrap">
-            <div className="w-0 flex-1 flex items-center">
-              <span className="flex p-2 rounded-lg bg-green-800">
+    <div className="fixed inset-x-0 bottom-0 pb-2 sm:pb-5">
+      <div className="px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div className="p-2 bg-green-600 rounded-lg shadow-lg sm:p-3">
+          <div className="flex flex-wrap items-center justify-between">
+            <div className="flex items-center flex-1 w-0">
+              <span className="flex p-2 bg-green-800 rounded-lg">
                 <svg
-                  className="h-6 w-6 text-white"
+                  className="w-6 h-6 text-white"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -60,23 +61,24 @@ const PhaseBanner = ({ phaseNumber, user }) => {
                 </span>
               </p>
             </div>
-            <div className="order-3 mt-2 flex-shrink-0 w-full sm:order-2 sm:mt-0 sm:w-auto">
+            <div className="flex-shrink-0 order-3 w-full mt-2 sm:order-2 sm:mt-0 sm:w-auto">
               <a
-                href="/prehlad-experimentu"
-                className="flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-green-600 bg-white hover:bg-green-50"
+                target="_blank"
+                href={getExperimentOverviewLink(user?.group, phaseNumber)}
+                className="flex items-center justify-center px-4 py-2 text-sm font-medium text-green-600 bg-white border border-transparent rounded-md shadow-sm hover:bg-green-50"
               >
                 Zistite viac
               </a>
             </div>
-            <div className="order-2 flex-shrink-0 sm:order-3 sm:ml-2">
+            <div className="flex-shrink-0 order-2 sm:order-3 sm:ml-2">
               <button
                 onClick={handleClick}
                 type="button"
-                className="-mr-1 flex p-2 rounded-md hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-white"
+                className="flex p-2 -mr-1 rounded-md hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-white"
               >
                 <span className="sr-only">Rozumiem</span>
                 <svg
-                  className="h-6 w-6 text-white"
+                  className="w-6 h-6 text-white"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"

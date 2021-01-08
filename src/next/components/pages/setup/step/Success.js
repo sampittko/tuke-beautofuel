@@ -9,7 +9,8 @@ const Success = () => (
       <div className="flex justify-center mt-8">
         <div className="inline-flex rounded-md shadow">
           <a
-            href="/prehlad-experimentu"
+            target="_blank"
+            href="https://docs.google.com/document/d/1kpCLRQ3O1odZIP_doRgF57LRM0_YAiDj9XHl2ub7BV4/edit"
             className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-white bg-green-600 border border-transparent rounded-md hover:bg-green-700"
           >
             Detaily o experimente

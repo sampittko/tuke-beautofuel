@@ -1,4 +1,4 @@
-import moment from "moment";
+import { EXPERIMENT_OVERVIEW_LINKS, USER_GROUPS } from "./constants";
 
 export const getApiUrl = (serverSide) => {
   if (serverSide) {
@@ -27,3 +27,23 @@ export const formatDuration = (secs) => {
 
 export const formatDistance = (distance) =>
   `${distance.toFixed(2).replace(".", ",")} km`;
+
+// DO NOT DO THIS FOR SECURITY REASONS
+// BUT I CAN SINCE THIS IS MY DIPLOMA THESIS
+export const getExperimentOverviewLink = (userGroup, phaseNumber) => {
+  switch (phaseNumber) {
+    case 1:
+      return EXPERIMENT_OVERVIEW_LINKS.phase1;
+    case 2:
+      if (userGroup === USER_GROUPS.gamification) {
+        return EXPERIMENT_OVERVIEW_LINKS["phase2-gamification"];
+      } else if (userGroup === USER_GROUPS.rewards) {
+        return EXPERIMENT_OVERVIEW_LINKS["phase2-rewards"];
+      }
+      throw new Error("Incorrect user group");
+    case 3:
+      return EXPERIMENT_OVERVIEW_LINKS.phase3;
+    default:
+      return "#";
+  }
+};

@@ -20,6 +20,7 @@ import {
   USER_GROUPS,
 } from "../../../utils/constants";
 import PhaseBanner from "./PhaseBanner";
+import ExperimentOverviewLink from "./ExperimentOverviewLink";
 
 const IndexPageComponent = () => {
   const [session] = useSession();
@@ -138,10 +139,10 @@ const IndexPageComponent = () => {
         allUsersError,
       ]}
     >
-      <div className="h-screen flex overflow-hidden bg-gray-100 z-0">
+      <div className="z-0 flex h-screen overflow-hidden bg-gray-100">
         <div className="flex-1 overflow-auto focus:outline-none" tabIndex="0">
           <Navigation />
-          <main className="flex-1 relative pb-8 z-0 overflow-y-auto">
+          <main className="relative z-0 flex-1 pb-8 overflow-y-auto">
             <Header
               phase={phaseData?.phase}
               user={session.user}
@@ -181,6 +182,10 @@ const IndexPageComponent = () => {
       />
       <PhaseBanner
         user={userData?.user}
+        phaseNumber={phaseData?.phase.number}
+      />
+      <ExperimentOverviewLink
+        userGroup={userData?.user.group}
         phaseNumber={phaseData?.phase.number}
       />
     </Spinner>
