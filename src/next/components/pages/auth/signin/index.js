@@ -9,14 +9,14 @@ const SignInPageComponent = ({ providers }) => {
   };
 
   return (
-    <div className="min-h-screen bg-white flex">
-      <div className="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
-        <div className="mx-auto w-full max-w-sm lg:w-96">
+    <div className="flex min-h-screen bg-white">
+      <div className="flex flex-col justify-center flex-1 px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
+        <div className="w-full max-w-sm mx-auto lg:w-96">
           <Image
-            src="/images/favicon.ico"
+            src="/images/beautofuel_logo.png"
             layout="fixed"
-            width={50}
-            height={50}
+            width={76}
+            height={40}
           />
           <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
             Prihlásenie do účtu
@@ -29,18 +29,18 @@ const SignInPageComponent = ({ providers }) => {
                   Prihlásenie prostredníctvom
                 </p>
 
-                <div className="mt-1 grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-3 gap-3 mt-1">
                   {Object.values(providers).map((provider) => (
                     <button
                       key={provider.id}
                       onClick={(event) => handleClick(event, provider)}
-                      className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                      className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50"
                     >
                       <span className="sr-only">
                         Sign in with {provider.name}
                       </span>
                       <svg
-                        className="h-5 w-5"
+                        className="w-5 h-5"
                         enableBackground="new 0 0 512 512"
                         height="512"
                         viewBox="0 0 512 512"
@@ -100,9 +100,9 @@ const SignInPageComponent = ({ providers }) => {
           </div>
         </div>
       </div>
-      <div className="hidden lg:block relative w-0 flex-1">
+      <div className="relative flex-1 hidden w-0 lg:block">
         <img
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 object-cover w-full h-full"
           src="https://images.unsplash.com/photo-1602853175733-5ad62dc6a2c8?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1923&q=80"
           alt=""
         />

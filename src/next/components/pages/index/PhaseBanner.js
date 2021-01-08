@@ -1,10 +1,10 @@
 import { useMutation } from "@apollo/client";
 import { useSession } from "next-auth/client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UsersAPI from "../../../lib/api/users";
 import { getExperimentOverviewLink } from "../../../utils/functions";
 
-const PhaseBanner = ({ phaseNumber, user }) => {
+const PhaseBanner = ({ phaseNumber, user, onNotified }) => {
   const [session] = useSession();
   const [visible, setVisible] = useState(!user?.[`notified${phaseNumber}`]);
 
@@ -21,6 +21,12 @@ const PhaseBanner = ({ phaseNumber, user }) => {
     notified();
     setVisible(false);
   };
+
+  useEffect(() => {
+    if (!visible) {
+      onNotified();
+    }
+  }, [visible]);
 
   if (!visible) return null;
 

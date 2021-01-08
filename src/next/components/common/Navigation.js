@@ -10,12 +10,12 @@ const Navigation = () => {
   const profileImage = session ? `${session.user.image}?field=image` : null;
 
   const Logo = React.forwardRef(({ href }, ref) => (
-    <a href={href} ref={ref}>
+    <a href={href} ref={ref} className="pt-2">
       <Image
-        width={32}
-        height={25}
+        width={60}
+        height={32}
         className="block w-auto h-8 lg:p-2"
-        src="/images/envirocar_logo.png"
+        src="/images/beautofuel_logo.png"
         alt="enviroCar logo"
       />
     </a>

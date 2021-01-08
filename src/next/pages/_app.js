@@ -5,7 +5,7 @@ import "tailwindcss/tailwind.css";
 const App = ({ Component: Page, pageProps }) => (
   <>
     <Head>
-      <link rel="icon" href="/images/favicon.ico" />
+      <link rel="icon" href="/images/beautofuel_favicon.ico" />
     </Head>
     <NextAuthProvider session={pageProps.session}>
       <Page {...pageProps} />

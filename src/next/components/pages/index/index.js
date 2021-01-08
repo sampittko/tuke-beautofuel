@@ -28,6 +28,10 @@ const IndexPageComponent = () => {
   const [syncSlideOverOpen, setSyncSlideOverOpen] = useState(false);
   const [syncNotificationVisible, setSyncNotificationVisible] = useState(false);
   const [syncPasswordError, setSyncPasswordError] = useState(false);
+  const [
+    experimentOverviewLinkVisible,
+    setExperimentOverviewLinkVisible,
+  ] = useState(false);
 
   const {
     loading: phaseLoading,
@@ -183,11 +187,14 @@ const IndexPageComponent = () => {
       <PhaseBanner
         user={userData?.user}
         phaseNumber={phaseData?.phase.number}
+        onNotified={() => setExperimentOverviewLinkVisible(true)}
       />
-      <ExperimentOverviewLink
-        userGroup={userData?.user.group}
-        phaseNumber={phaseData?.phase.number}
-      />
+      {experimentOverviewLinkVisible && (
+        <ExperimentOverviewLink
+          userGroup={userData?.user.group}
+          phaseNumber={phaseData?.phase.number}
+        />
+      )}
     </Spinner>
   );
 };
