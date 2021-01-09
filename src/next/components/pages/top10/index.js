@@ -37,7 +37,7 @@ const Top10PageComponent = () => {
 
   const { data: userData } = useQuery(UsersAPI.bySession, {
     skip: !session,
-    variables: { userId: session.id },
+    variables: { userId: session?.id },
   });
 
   const { data: usersData } = useQuery(UsersAPI.allUsernamesByStrategy);
