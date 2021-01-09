@@ -9,26 +9,20 @@ const Navigation = () => {
   const profileName = session?.user.name;
   const profileImage = session ? `${session.user.image}?field=image` : null;
 
-  const Logo = React.forwardRef(({ href }, ref) => (
-    <a href={href} ref={ref} className="pt-2">
-      <Image
-        width={60}
-        height={32}
-        className="block w-auto h-8 lg:p-2"
-        src="/images/beautofuel_logo.png"
-        alt="enviroCar logo"
-      />
-    </a>
-  ));
-
   return (
     <div className="relative z-10 flex flex-shrink-0 h-16 bg-white border-b border-gray-200 lg:border-none">
       <div className="flex justify-between flex-1 px-4 sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">
         <div className="flex">
           <div className="flex items-center flex-shrink-0">
-            <Link href="/" passHref>
-              <Logo />
-            </Link>
+            <a href="/" className="pt-2">
+              <Image
+                width={60}
+                height={32}
+                className="block w-auto h-8 lg:p-2"
+                src="/images/beautofuel_logo.png"
+                alt="enviroCar logo"
+              />
+            </a>
           </div>
         </div>
         {session && (
