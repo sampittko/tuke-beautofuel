@@ -84,9 +84,10 @@ src/strapi/extensions/documentation
 ############################
 src/updater/app/.ipynb_checkpoints
 src/updater/app/__pycache__
-src/updater/app/envirocar/__pycache__
-src/updater/app/envirocar/client/__pycache__
-src/updater/app/envirocar/client/api/__pycache__
+src/updater/app/packages/eda_quality/__pycache__
+src/updater/app/packages/envirocar/__pycache__
+src/updater/app/packages/envirocar/client/__pycache__
+src/updater/app/packages/envirocar/client/api/__pycache__
 
 ############################
 # next
