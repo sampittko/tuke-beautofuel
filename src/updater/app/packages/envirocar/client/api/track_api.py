@@ -13,11 +13,11 @@ class TrackAPI():
     TRACK_ENDPOINT = "tracks/{}"
     USERTRACKS_ENDPOINT = "users/{}/tracks"
 
-    def __init__(self):
-        self.api_client = DownloadClient()
-        self.config = ECConfig()
+    def __init__(self, config=None):
+        self.api_client = DownloadClient(config=config)
+        self.config = config or ECConfig()
 
-    def get_tracks(self, num_results=100, page_limit=100):
+    def get_tracks(self, bbox: BboxSelector = None, time_interval: TimeSelector = None, num_results=100, page_limit=100):
         path = self._get_path(username=self.config.ec_username)
 
         # creating download_requests
@@ -29,6 +29,12 @@ class TrackAPI():
                 'limit': page_limit,
                 'page': current_page
             }
+
+            if bbox:
+                request_params.update(bbox.param)
+
+            if time_interval:
+                request_params.update(time_interval.param)
 
             request = RequestParam(path=path, params=request_params)
             download_requests.append(request)
