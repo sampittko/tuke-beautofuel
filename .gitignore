@@ -82,7 +82,11 @@ src/strapi/extensions/documentation
 ############################
 # updater
 ############################
+src/updater/app/.ipynb_checkpoints
 src/updater/app/__pycache__
+src/updater/app/envirocar/__pycache__
+src/updater/app/envirocar/client/__pycache__
+src/updater/app/envirocar/client/api/__pycache__
 
 ############################
 # next

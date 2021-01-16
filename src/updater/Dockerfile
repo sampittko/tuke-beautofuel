@@ -1,6 +1,6 @@
 FROM python:3.8.6
 
-RUN pip3 install fastapi uvicorn requests pydantic
+RUN pip3 install fastapi uvicorn requests pydantic geopandas pandas
 
 EXPOSE 1338
 

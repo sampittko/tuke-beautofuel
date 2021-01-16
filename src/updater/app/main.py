@@ -4,6 +4,8 @@ import requests
 import os
 from datetime import datetime
 
+STRAPI_TOKEN = os.getenv("STRAPI_TOKEN", 'umwukySdOA2huk7Rnjc74NBs7x57z2sU')
+STRAPI_URL = os.getenv("STRAPI_URL", 'http://localhost:1337')
 
 class PostNewTracks(BaseModel):
     synchronization: str
@@ -11,20 +13,7 @@ class PostNewTracks(BaseModel):
     userGroup: str
     phaseNumber: int
 
-
-STRAPI_TOKEN = os.getenv("STRAPI_TOKEN", 'umwukySdOA2huk7Rnjc74NBs7x57z2sU')
-STRAPI_URL = os.getenv("STRAPI_URL", 'http://localhost:1337')
-
-
-SYNCHRONIZATION_STATUSES = {
-    'pending': 'pending',
-    'success': 'success',
-    'failure': 'failure'
-}
-
-
 app = FastAPI()
-
 
 async def get_envirocar_tracks(user, token):
     envirocarTracksRes = requests.get(
@@ -35,7 +24,6 @@ async def get_envirocar_tracks(user, token):
         }
     )
     return envirocarTracksRes.json()['tracks']
-
 
 async def get_strapi_tracks(user):
     strapiTracksRes = requests.get(
@@ -48,7 +36,6 @@ async def get_strapi_tracks(user):
         }
     )
     return strapiTracksRes.json()
-
 
 def filter_tracks(allTracks, existingTracks):
     existingTracksIds = []
@@ -63,12 +50,10 @@ def filter_tracks(allTracks, existingTracks):
 
     return newTracks
 
-
 def seconds_between(d1, d2):
     d1 = datetime.strptime(d1, "%Y-%m-%dT%H:%M:%SZ")
     d2 = datetime.strptime(d2, "%Y-%m-%dT%H:%M:%SZ")
     return abs((d2 - d1).seconds)
-
 
 async def update_strapi_tracks(newTracks, user, synchronization, phaseNumber, userGroup):
     for newTrack in newTracks:
@@ -90,7 +75,6 @@ async def update_strapi_tracks(newTracks, user, synchronization, phaseNumber, us
                 'token': STRAPI_TOKEN
             })
 
-
 @app.post("/newTracks")
 async def post_new_tracks(data: PostNewTracks, x_user: str = Header(None), x_token: str = Header(None)):
     allTracks = await get_envirocar_tracks(x_user, x_token)
@@ -110,7 +94,6 @@ async def post_new_tracks(data: PostNewTracks, x_user: str = Header(None), x_tok
     await update_strapi_tracks(newTracks, data.user, data.synchronization, data.phaseNumber, data.userGroup)
 
     return {'statusCode': 200, 'message': f'There are {newTracksLen} tracks that were potentially processed'}
-
 
 @app.get("/userCredentialsValid")
 async def get_user_exists(x_user: str = Header(None), x_token: str = Header(None)):

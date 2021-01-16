@@ -103,9 +103,7 @@ const IndexPageComponent = () => {
     setSyncNotificationVisible(true);
     setTimeout(() => {
       setSyncNotificationVisible(false);
-      if (syncPasswordError) {
-        setSyncPasswordError(false);
-      }
+      setSyncPasswordError(false);
     }, 3000);
   };
 
