@@ -10,8 +10,9 @@ import scipy as sc
 
 # class Manipulation():
 #     def __init__(self):
-#         print("Initializing class 'Manipulation'")  
- 
+#         print("Initializing class 'Manipulation'")
+
+
 def drop_unit_columns(df):
     units = df.filter(like='.unit').columns
     units.tolist()
@@ -33,7 +34,7 @@ def calculateAcceleration(points_df):
     """
 
     points_df['t'] = pd.to_datetime(
-         points_df['time'], format='%Y-%m-%dT%H:%M:%S')
+        points_df['time'], format='%Y-%m-%dT%H:%M:%S')
 
     dict_of_tracks = dict(iter(points_df.groupby('track.id')))
 
@@ -67,54 +68,64 @@ def add_column_datetime(df):
     df['datetime'] = pd.to_datetime(df['time'])
     return df
 
+
 def add_coordinate_columns(df):
     df['lat'] = df['geometry'].apply(lambda coord: coord.y)
     df['lng'] = df['geometry'].apply(lambda coord: coord.x)
     return df
 
+
 def normalize(df):
-    columnList=df.select_dtypes(['float64']).columns.tolist()
+    columnList = df.select_dtypes(['float64']).columns.tolist()
     for variable in columnList:
-        df[variable]=df.groupby('track.id')[variable].transform(lambda x:(x-x.min())/(x.max()-x.min()))
+        df[variable] = df.groupby('track.id')[variable].transform(
+            lambda x: (x-x.min())/(x.max()-x.min()))
     return df
 
+
 def standardize(df):
-    columnList=df.select_dtypes(['float64']).columns.tolist()
+    columnList = df.select_dtypes(['float64']).columns.tolist()
     for variable in columnList:
-        df[variable]=df.groupby('track.id')[variable].transform(lambda x:(x - x.mean()) / x.std())
+        df[variable] = df.groupby('track.id')[variable].transform(
+            lambda x: (x - x.mean()) / x.std())
     return df
+
 
 def get_dummies_sensor(df):
     sensor = df.filter(like='sensor.', axis=1).columns.copy()
     sensorList = sensor.tolist()
     newDF = pd.get_dummies(df, columns=sensorList)
     return newDF
-    
+
+
 def interpolate_nearest(df):
-    columnList=df.select_dtypes(['float64']).columns.tolist()
+    columnList = df.select_dtypes(['float64']).columns.tolist()
     for variable in columnList:
-        variableName=variable
+        variableName = variable
         # TODO!!! .groupby('track.id')--> not provided for groups in Geopandas
-        df[variableName]=df[variable]\
-        .interpolate(method='nearest', limit_direction="both", axis=0)\
-        .ffill()\
-        .bfill()
+        df[variableName] = df[variable]\
+            .interpolate(method='nearest', limit_direction="both", axis=0)\
+            .ffill()\
+            .bfill()
     return df
 
+
 def get_numerical(df):
-    numericalDF=df.select_dtypes(['float64']).copy()
+    numericalDF = df.select_dtypes(['float64']).copy()
     return numericalDF
-    
+
+
 def squareRoot_transformation(df, column):
-    squareRoot=df[column]**(.5)
+    squareRoot = df[column]**(.5)
     print(squareRoot.describe())
     return squareRoot
 
-    
+
 def reciprocal_transformation(df, column):
-    reciprocal=1/(df[column]+1)
+    reciprocal = 1/(df[column]+1)
     print(reciprocal.describe())
     return reciprocal
+
 
 def log_transformation(df, column):
     log = np.log(df[column]+1)
@@ -153,11 +164,11 @@ def split_by_time(points_df, seconds_start, seconds_end):
                 start_time)
 
         beginning = dict_of_tracks[track_id][(dict_of_tracks[track_id]
-                                             ['Seconds since start']
-                                             < seconds_end) &
+                                              ['Seconds since start']
+                                              < seconds_end) &
                                              (dict_of_tracks[track_id]
-                                             ['Seconds since start']
-                                             > seconds_start)]
+                                              ['Seconds since start']
+                                              > seconds_start)]
         beginnings.append(beginning)
 
     combined_again = pd.concat(beginnings)
@@ -178,7 +189,8 @@ def interpolate(points, step_type="meters", step_pr=10):
     """
 
     def date_to_seconds(x):
-        date_time_obj = datetime.datetime.strptime(x, '%Y-%m-%dT%H:%M:%S+00:00')
+        date_time_obj = datetime.datetime.strptime(
+            x, '%Y-%m-%dT%H:%M:%S+00:00')
         seconds = (date_time_obj-datetime.datetime(1970, 1, 1)
                    ).total_seconds()
         return int(seconds)
@@ -194,7 +206,7 @@ def interpolate(points, step_type="meters", step_pr=10):
         # interpolations_methods = ['slinear', 'quadratic', 'cubic']
         points = np.array(input_array).T
         interpolator = sc.interpolate.interp1d(x, points, kind='slinear',
-                                            axis=0)
+                                               axis=0)
         ynew = interpolator(step)
         transposed = ynew.T
         return_values = [np.array(transposed[0]), np.array(transposed[1])]
@@ -245,7 +257,7 @@ def interpolate(points, step_type="meters", step_pr=10):
                              not in names_extra]
 
         time_seconds_array = points_df_cleaned[
-                'time_seconds'].to_numpy()
+            'time_seconds'].to_numpy()
 
         passed_time = [(time_seconds_array[i+1]-time_seconds_array[i])
                        for i in range(len(time_seconds_array)-1)]
@@ -253,7 +265,7 @@ def interpolate(points, step_type="meters", step_pr=10):
         # to interpolate for every meter or every 10 meters
         if (step_pr != 1):
             step_pr = 10
-        dist = (points_df_cleaned['Speed.value']/3.6 * passed_time)/step_pr
+        dist = (points_df_cleaned['GPS Speed.value']/3.6 * passed_time)/step_pr
         dist_between = [sum(dist[:i+1]) for i in range(len(dist))]
         dist_between = list(map(int, dist_between))
         # print(dist_between)
@@ -316,7 +328,7 @@ def interpolate(points, step_type="meters", step_pr=10):
 
         # these should all be the same for one ride, so just replicating
         columns_replicate = [np.repeat(points_df_cleaned[column].iloc[0],
-                             len(step_interp)) for column
+                                       len(step_interp)) for column
                              in names_replicatate]
 
         replicated_transposed = np.transpose(columns_replicate)
