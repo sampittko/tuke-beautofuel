@@ -6,3 +6,5 @@
 - `/eda_quality`
   - enviroCar data cleaning / preprocessing
   - https://github.com/imkeines/eda_quality
+- `/vehicle_eco_balance`
+  - https://github.com/MartinPontius/vehicle-eco-balance

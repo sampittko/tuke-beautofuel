@@ -3,6 +3,7 @@ app/__pycache__
 app/.ipynb_checkpoints
 app/*.ipynb
 app/packages/eda_quality/__pycache__
+app/packages/vehicle_eco_balance/__pycache__
 app/packages/envirocar/__pycache__
 app/packages/envirocar/client/__pycache__
 app/packages/envirocar/client/api/__pycache__

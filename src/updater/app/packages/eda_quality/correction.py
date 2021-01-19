@@ -172,7 +172,7 @@ def below_five_min(df, flag=True):
     return df, cleanDF, df_five
 
 
-def implausible_Max_Speed(df, flag=True):
+def implausible_max_speed(df, flag=True):
     '''
         Aim:
             Check if there are tracks with speeds > 250km/h
@@ -301,27 +301,14 @@ def flag_implausible_negative_values(df, setToNan=False, dropFlag=False):
     return df
 
 
-# def drop_dublicates(complete_track_df, keep='last'):
-#     beforeDel=complete_track_df.shape[0]
-#     complete_track_df.drop_duplicates(subset=['geometry', 'Engine Load.value', 'Calculated MAF.value',
-#            'Speed.value', 'CO2.value', 'Intake Pressure.value', 'Rpm.value',
-#            'Intake Temperature.value', 'Consumption (GPS-based).value',
-#            'GPS Altitude.value', 'Throttle Position.value', 'GPS Bearing.value',
-#            'Consumption.value', 'GPS Accuracy.value',
-#            'CO2 Emission (GPS-based).value', 'GPS Speed.value',
-#            'track.length', 'track.begin', 'track.end', 'sensor.type',
-#            'sensor.engineDisplacement', 'sensor.model', 'sensor.id',
-#            'sensor.fuelType', 'sensor.constructionYear', 'sensor.manufacturer'],keep='last', inplace=True)
-#     afterDel=complete_track_df.shape[0]
-#     deleted=beforeDel-afterDel
-#     print('Deleted rows: ', deleted)
-#     return complete_track_df
-
-
-def drop_dublicates(complete_track_df, keep='last'):
+def drop_duplicates(complete_track_df, keep='last'):
     beforeDel = complete_track_df.shape[0]
-    complete_track_df.drop_duplicates(subset=['geometry', 'Consumption (GPS-based).value',
-                                              'GPS Altitude.value', 'CO2 Emission (GPS-based).value', 'GPS Speed.value',
+    complete_track_df.drop_duplicates(subset=['geometry', 'Engine Load.value', 'Calculated MAF.value',
+                                              'Speed.value', 'CO2.value', 'Intake Pressure.value', 'Rpm.value',
+                                              'Intake Temperature.value', 'Consumption (GPS-based).value',
+                                              'GPS Altitude.value', 'Throttle Position.value', 'GPS Bearing.value',
+                                              'Consumption.value', 'GPS Accuracy.value',
+                                              'CO2 Emission (GPS-based).value', 'GPS Speed.value',
                                               'track.length', 'track.begin', 'track.end', 'sensor.type',
                                               'sensor.engineDisplacement', 'sensor.model', 'sensor.id',
                                               'sensor.fuelType', 'sensor.constructionYear', 'sensor.manufacturer'], keep='last', inplace=True)
@@ -329,6 +316,19 @@ def drop_dublicates(complete_track_df, keep='last'):
     deleted = beforeDel-afterDel
     print('Deleted rows: ', deleted)
     return complete_track_df
+
+
+# def drop_duplicates(complete_track_df, keep='last'):
+#     beforeDel = complete_track_df.shape[0]
+#     complete_track_df.drop_duplicates(subset=['geometry', 'Consumption (GPS-based).value',
+#                                               'GPS Altitude.value', 'CO2 Emission (GPS-based).value', 'GPS Speed.value',
+#                                               'track.length', 'track.begin', 'track.end', 'sensor.type',
+#                                               'sensor.engineDisplacement', 'sensor.model', 'sensor.id',
+#                                               'sensor.fuelType', 'sensor.constructionYear', 'sensor.manufacturer'], keep='last', inplace=True)
+#     afterDel = complete_track_df.shape[0]
+#     deleted = beforeDel-afterDel
+#     print('Deleted rows: ', deleted)
+#     return complete_track_df
 
 
 def flag_outlier_in_sample(df, dropOutlierColumn=False, setOutlierToNan=False, dropFlag=False):

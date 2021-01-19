@@ -86,6 +86,7 @@ src/updater/app/.ipynb_checkpoints
 src/updater/app/__pycache__
 src/updater/app/cache
 src/updater/app/packages/eda_quality/__pycache__
+src/updater/app/packages/vehicle_eco_balance/__pycache__
 src/updater/app/packages/envirocar/__pycache__
 src/updater/app/packages/envirocar/client/__pycache__
 src/updater/app/packages/envirocar/client/api/__pycache__
