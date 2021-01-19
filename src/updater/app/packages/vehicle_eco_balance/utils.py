@@ -17,7 +17,8 @@ def get_interval_time(time1, time2):
         absolute time difference in seconds
     """
 
-    return abs(time1 - time2).total_seconds()
+    return abs(datetime.strptime(time1, '%Y-%m-%dT%H:%M:%S+00:00') -
+               datetime.strptime(time2, '%Y-%m-%dT%H:%M:%S+00:00')).total_seconds()
 
 
 def calc_efficiency(res, res_min, res_max, eff_min, eff_max):

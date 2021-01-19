@@ -114,17 +114,17 @@ def exceed_eight_hours(df, flag=True):
     return df, cleanDF, df_eight
 
 
-def below_five_min(df, flag=True):
+def below_x_min(df, x=5, flag=True):
     '''
         Aim:
-            Check if there are tracks with a duration < 5 min
-            Delete tracks with duration < 5 min
-            Optional: Flag all timestamps of tracks with duration < 5 min
+            Check if there are tracks with a duration < x min
+            Delete tracks with duration < x min
+            Optional: Flag all timestamps of tracks with duration < x min
         Input:
             Geopandas Dataframe,
         Output:
-            Geopandas DF with added column which flags all time stamps belonging to tracks falling below 5 min time duration with 1
-            Geopandas DF containing only tracks which are longer than 5 min
+            Geopandas DF with added column which flags all time stamps belonging to tracks falling below x min time duration with 1
+            Geopandas DF containing only tracks which are longer than x min
             Pandas DF which contains two columns, track.id and track_duration_h
     '''
 
@@ -136,38 +136,38 @@ def below_five_min(df, flag=True):
     track_lengths = df.groupby('track.id')[
         'track_duration_h'].first().to_frame().reset_index()
 
-    # Create a list from tracks which duration < 5 min
+    # Create a list from tracks which duration < x min
     track_lengths['belowFiveMin'] = 0
     track_lengths.loc[track_lengths['track_duration_h'] <= datetime.time(
-        0, 5, 0), 'belowFiveMin'] = track_lengths['track.id']
-    listBelowFiveMin = [
+        0, x, 0), 'belowFiveMin'] = track_lengths['track.id']
+    listBelowXMin = [
         row for row in track_lengths['belowFiveMin'] if row != 0]
 
-    if len(listBelowFiveMin) == 0:
+    if len(listBelowXMin) == 0:
         cleanDF = df
         # For return, create empty DF
         df_five = pd.DataFrame({'track.id': [], 'track_duration_h': []})
         print('no track duration falls below 5 minutes')
     else:
-        # For return, create DF from all tracks which duration falls below 5 min
-        print(len(listBelowFiveMin), 'tracks are shorter than 5 minutes')
+        # For return, create DF from all tracks which duration falls below x min
+        print(len(listBelowXMin), 'tracks are shorter than {} minutes'.format(x))
         df_five = track_lengths[track_lengths['track.id'].isin(
-            listBelowFiveMin)]
+            listBelowXMin)]
         df_five = df_five[['track.id', 'track_duration_h']]
 
-        # For return, create complete DF with tracks which time duration is longer than 5 minutes
+        # For return, create complete DF with tracks which time duration is longer than x minutes
         track_lengths['overFiveMin'] = 0
         track_lengths.loc[track_lengths['track_duration_h'] > datetime.time(
-            0, 5, 0), 'overFiveMin'] = track_lengths['track.id']
+            0, x, 0), 'overFiveMin'] = track_lengths['track.id']
         listOverFiveMin = [
             row for row in track_lengths['overFiveMin'] if row != 0]
         cleanDF = pd.DataFrame(df[df['track.id'].isin(listOverFiveMin)])
 
-    # To flag implausible values in original df, add column which holds boolean value, 1 = track_duration < 5 min
+    # To flag implausible values in original df, add column which holds boolean value, 1 = track_duration < x min
     if flag == True:
         df['track_below_5min'] = 0
         df.loc[df['track_duration_h'] < datetime.time(
-            0, 5, 0), 'track_below_5min'] = 1
+            0, x, 0), 'track_below_5min'] = 1
 
     return df, cleanDF, df_five
 
