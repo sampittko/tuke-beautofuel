@@ -75,7 +75,7 @@ services:
   grafanadb:
     image: influxdb:1.8.3
     restart: unless-stopped
-    env_file: ./../../src/grafana/.env
+    env_file: ./../../src/grafana/.db.env
     networks:
       - monitoring-network
       - updater-network
