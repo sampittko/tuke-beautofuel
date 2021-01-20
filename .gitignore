@@ -11,8 +11,11 @@ Icon
 
 .vps
 .env
-.strapidb.env
-.grafanadb.env
+
+############################
+# grafana
+############################
+src/grafana/.env
 
 ############################
 # strapi
@@ -72,6 +75,7 @@ src/strapi/coverage
 
 # strapi
 src/strapi/.env
+src/strapi/.db.env
 src/strapi/license.txt
 src/strapi/exports
 src/strapi/*.cache

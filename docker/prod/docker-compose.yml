@@ -36,7 +36,7 @@ services:
   strapidb:
     image: mongo:4.4.2
     restart: unless-stopped
-    env_file: ./../../src/.strapidb.env
+    env_file: ./../../src/strapi/.db.env
     networks:
       - core-network
     volumes:

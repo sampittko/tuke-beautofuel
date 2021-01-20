@@ -36,7 +36,7 @@ services:
   strapidb:
     image: mongo:4.4.2
     restart: unless-stopped
-    env_file: ./../../src/.strapidb.env
+    env_file: ./../../src/strapi/.db.env
     networks:
       - core-network
     volumes:
@@ -66,15 +66,16 @@ services:
       - monitoring-network
     volumes:
       - grafana-volume:/var/lib/grafana
+      - ./../../src/grafana/conf/defaults.ini:/var/lib/grafana/conf/defaults.ini
     ports:
-      - 3000:3000
+      - 3001:3001
     depends_on:
       - grafanadb
 
   grafanadb:
     image: influxdb:1.8.3
     restart: unless-stopped
-    env_file: ./../../src/.grafanadb.env
+    env_file: ./../../src/grafana/.env
     networks:
       - monitoring-network
       - updater-network
