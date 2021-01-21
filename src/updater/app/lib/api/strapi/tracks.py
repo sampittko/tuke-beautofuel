@@ -2,6 +2,7 @@ import requests
 from ...utils.functions import seconds_between
 from ...utils.constants import STRAPI_TOKEN, STRAPI_URL
 
+
 async def get_strapi_tracks(user):
     strapiTracksRes = requests.get(
         f'{STRAPI_URL}/tracks',

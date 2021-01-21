@@ -1,6 +1,6 @@
 import requests
 
-from ...utils import ENVIROCAR_API
+from ...utils.constants import ENVIROCAR_API
 
 
 async def get_envirocar_user(user, token):
