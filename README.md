@@ -10,9 +10,8 @@
 
 ##### strapi
 
-`yarn develop`
+`yarn dev`
 
 ##### next
 
 `yarn dev`
-
