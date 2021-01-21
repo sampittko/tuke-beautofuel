@@ -4,6 +4,3 @@ from .utils import get_interval_time, calc_efficiency, error_mean, error_measure
 from .kinematics import calc_acceleration
 from .vehicle import Car
 from .sensitivity import Sensitivity
-
-
-
