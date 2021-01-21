@@ -2,9 +2,8 @@ from fastapi import FastAPI, Header
 from influxdb import InfluxDBClient
 
 from lib.models import PostNewTracks as PostNewTracksModel
-from lib.api.envirocar.tracks import get_envirocar_tracks
-from lib.api.envirocar.users import get_envirocar_user
-from lib.api.strapi.tracks import get_strapi_tracks, update_strapi_tracks
+from lib.api.envirocar import get_envirocar_tracks, get_envirocar_user
+from lib.api.strapi import get_strapi_tracks, update_strapi_tracks
 from lib.utils.functions import seconds_between, filter_tracks
 from lib.utils.constants import INFLUXDB_HOST, INFLUXDB_PORT, INFLUXDB_USER, INFLUXDB_PASSWORD
 
