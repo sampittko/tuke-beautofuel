@@ -66,7 +66,7 @@ services:
       - monitoring-network
     volumes:
       - grafana-volume:/var/lib/grafana
-      - ./../../src/grafana/conf/custom.ini:/var/lib/grafana/conf/custom.ini
+      - ./../../src/grafana/conf/custom.ini:/usr/share/grafana/conf/custom.ini
     ports:
       - 3001:3001
     depends_on:
