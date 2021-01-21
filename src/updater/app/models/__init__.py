@@ -1,1 +1,8 @@
-from .post_new_tracks import PostNewTracks
+from pydantic import BaseModel
+
+
+class PostNewTracks(BaseModel):
+    synchronization: str
+    user: str
+    userGroup: str
+    phaseNumber: int

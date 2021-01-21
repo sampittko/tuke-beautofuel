@@ -1,5 +1,7 @@
 import os
 
+ENVIROCAR_API = "https://envirocar.org/api/stable"
+
 STRAPI_TOKEN = os.getenv("STRAPI_TOKEN", 'umwukySdOA2huk7Rnjc74NBs7x57z2sU')
 STRAPI_URL = os.getenv("STRAPI_URL", 'http://localhost:1337')
 INFLUXDB_HOST = os.getenv("INFLUXDB_HOST", 'influxdb')

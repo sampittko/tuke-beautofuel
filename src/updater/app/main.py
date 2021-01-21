@@ -1,7 +1,12 @@
 from fastapi import FastAPI, Header
-import requests
 from influxdb import InfluxDBClient
 
+from .models import PostNewTracks as PostNewTracksModel
+from .api.envirocar.tracks import get_envirocar_tracks
+from .api.envirocar.users import get_envirocar_user
+from .api.strapi.tracks import get_strapi_tracks, update_strapi_tracks
+from .utils.functions import seconds_between, filter_tracks
+from .utils.constants import INFLUXDB_HOST, INFLUXDB_PORT, INFLUXDB_USER, INFLUXDB_PASSWORD
 
 grafanadb = InfluxDBClient(
     host=INFLUXDB_HOST,
@@ -10,9 +15,10 @@ grafanadb = InfluxDBClient(
     password=INFLUXDB_PASSWORD
 )
 
-app = FastAPI()
+updater = FastAPI()
 
-@app.post("/newTracks")
+
+@updater.post("/newTracks")
 async def post_new_tracks(data: PostNewTracksModel, x_user: str = Header(None), x_token: str = Header(None)):
     allTracks = await get_envirocar_tracks(x_user, x_token)
 
@@ -33,16 +39,7 @@ async def post_new_tracks(data: PostNewTracksModel, x_user: str = Header(None), 
     return {'statusCode': 200, 'message': f'There are {newTracksLen} tracks that were potentially processed'}
 
 
-@app.get("/userCredentialsValid")
+@updater.get("/userCredentialsValid")
 async def get_user_exists(x_user: str = Header(None), x_token: str = Header(None)):
-    res = requests.get(
-        f'https://envirocar.org/api/stable/users/{x_user}',
-        headers={
-            'X-User': x_user,
-            'X-Token': x_token
-        }
-    )
-
-    data = res.json()
-
+    data = get_envirocar_user(x_user, x_token)
     return {'valid': False if 'statusCode' in data else True}
