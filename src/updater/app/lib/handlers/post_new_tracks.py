@@ -83,13 +83,13 @@ def build_track_point(completeNewTrack):
             'id': completeNewTrack['properties']['id'],
             'user': userData['name'],
             'email': userData['mail'],
+            'car': '{} {} {}'.format(
+                carData['manufacturer'], carData['model'], carData['constructionYear']),
+            'carEngineDisplacement': carData['engineDisplacement'],
         },
         'time': completeNewTrack['properties']['created'],
         'fields': {
             'length': completeNewTrack['properties']['length'],
-            'car': '{} {} {}'.format(
-                carData['manufacturer'], carData['model'], carData['constructionYear']),
-            'carEngineDisplacement': carData['engineDisplacement'],
         }
     }
 
