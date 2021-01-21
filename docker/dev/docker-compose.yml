@@ -10,5 +10,34 @@ services:
     ports:
       - 27017:27017
 
+  grafana:
+    image: grafana/grafana:7.3.7
+    restart: unless-stopped
+    networks:
+      - monitoring-network
+    volumes:
+      - grafana-volume:/var/lib/grafana
+      - ./../../src/grafana/grafana.ini:/etc/grafana/grafana.ini
+    ports:
+      - 3001:3001
+    depends_on:
+      - grafanadb
+
+  grafanadb:
+    image: influxdb:1.8.3
+    restart: unless-stopped
+    env_file: ./../../src/grafana/.db.env
+    networks:
+      - monitoring-network
+    volumes:
+      - grafanadb-volume:/var/lib/influxdb
+    ports:
+      - 8086:8086
+
+networks:
+  monitoring-network:
+
 volumes:
   strapidb-dev-volume:
+  grafana-volume:
+  grafanadb-volume:
