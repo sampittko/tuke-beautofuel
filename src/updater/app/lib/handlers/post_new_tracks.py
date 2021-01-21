@@ -31,9 +31,9 @@ async def handler(data, x_user, x_token, influxdb_client):
         print("Data persistence is incomplete")
 
     if data.phaseNumber == 2 or data.phaseNumber == 3:
-        print("Pipeline not yet implemented")
+        print("Eco-score calculation not yet implemented")
 
-    # await update_strapi_tracks(newTracks, data.user, data.synchronization, data.phaseNumber, data.userGroup)
+    await update_strapi_tracks(newTracks, data.user, data.synchronization, data.phaseNumber, data.userGroup)
 
     return {'statusCode': 200, 'message': f'{newTracksCount} tracks were processed'}
 
