@@ -90,6 +90,8 @@ def build_track_point(completeNewTrack):
         'time': completeNewTrack['properties']['created'],
         'fields': {
             'length': completeNewTrack['properties']['length'],
+            'begin': completeNewTrack['properties']['begin'],
+            'end': completeNewTrack['properties']['end'],
         }
     }
 
@@ -98,12 +100,14 @@ def build_track_feature_point(completeNewTrack, feature):
     coordinatesData = feature['geometry']['coordinates']
     phenomenonsData = feature['properties']['phenomenons']
 
-    if not 'Consumption (GPS-based)' in phenomenonsData or not 'GPS Speed' in phenomenonsData:
-        try:
-            raise ValueError()
-        except ValueError as e:
-            e.message = "Track feature point ID {} has missing data inside track ID {}".format(
-                feature['properties']['id'], completeNewTrack['properties']['id'])
+    speed = None
+
+    try:
+        check_phenomenons_data(phenomenonsData, completeNewTrack, feature)
+    except ValueError as e:
+        if 'speed' in e.message:
+            speed = 0
+        else:
             raise
 
     return {
@@ -117,6 +121,29 @@ def build_track_feature_point(completeNewTrack, feature):
             'lat': coordinatesData[1],
             'lng': coordinatesData[0],
             'consumption': phenomenonsData['Consumption (GPS-based)']['value'],
-            'speed': phenomenonsData['GPS Speed']['value'],
+            'emissions': phenomenonsData['CO2 Emission (GPS-based)']['value'],
+            'speed': speed or phenomenonsData['GPS Speed']['value'],
         }
     }
+
+
+def check_phenomenons_data(phenomenonsData, completeNewTrack, feature):
+    if not 'Consumption (GPS-based)' in phenomenonsData:
+        try:
+            raise ValueError()
+        except ValueError as e:
+            e.message = "Track feature point ID {} has missing consumption inside track ID {}".format(
+                feature['properties']['id'], completeNewTrack['properties']['id'])
+            raise
+
+    if not 'GPS Speed' in phenomenonsData:
+        try:
+            raise ValueError()
+        except ValueError as e:
+            e.message = "Track feature point ID {} has missing speed inside track ID {}".format(
+                feature['properties']['id'], completeNewTrack['properties']['id'])
+            raise
+
+    if not 'CO2 Emission (GPS-based)' in phenomenonsData:
+        print("Track feature point ID {} has missing emissions inside track ID {}".format(
+            feature['properties']['id'], completeNewTrack['properties']['id']))

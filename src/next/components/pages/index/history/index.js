@@ -32,19 +32,19 @@ const History = ({
 
   return (
     <>
-      <h2 className="max-w-6xl mx-auto mt-8 px-4 text-lg leading-6 font-medium text-gray-900 sm:px-6 lg:px-8">
+      <h2 className="max-w-6xl px-4 mx-auto mt-8 text-lg font-medium leading-6 text-gray-900 sm:px-6 lg:px-8">
         História jázd
       </h2>
 
       <div className="shadow sm:hidden">
-        <ul className="mt-2 divide-y divide-gray-200 overflow-hidden shadow sm:hidden">
+        <ul className="mt-2 overflow-hidden divide-y divide-gray-200 shadow sm:hidden">
           {sortedTracks.map((track, i) => {
             return (
               <li key={`track-${i}`}>
                 <span className="block px-4 py-4 bg-white">
                   <span className="flex items-center space-x-4">
-                    <span className="flex-1 flex space-x-2 truncate">
-                      <span className="flex flex-col text-gray-500 text-sm truncate">
+                    <span className="flex flex-1 space-x-2 truncate">
+                      <span className="flex flex-col text-sm text-gray-500 truncate">
                         <span># {tracks.length - i}</span>
                         {phaseNumber !== 1 && (
                           <span className="mt-2 rounded-lg inline-flex px-2.5 py-0.5 text-xs font-medium bg-green-100 text-green-800">
@@ -92,13 +92,13 @@ const History = ({
       </div>
 
       <div className="hidden sm:block">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl px-4 mx-auto sm:px-6 lg:px-8">
           <div className="flex flex-col mt-2">
-            <div className="align-middle min-w-full overflow-x-auto shadow overflow-hidden sm:rounded-lg">
+            <div className="min-w-full overflow-hidden overflow-x-auto align-middle shadow sm:rounded-lg">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead>
                   <tr>
-                    <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase bg-gray-50">
                       <svg
                         className="inline w-5 h-5 pb-1 pr-1"
                         xmlns="http://www.w3.org/2000/svg"
@@ -114,7 +114,7 @@ const History = ({
                         />
                       </svg>
                     </th>
-                    <th className="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-xs font-medium tracking-wider text-right text-gray-500 uppercase bg-gray-50">
                       Dĺžka trasy{" "}
                       <svg
                         className="inline w-5 h-5 pb-1"
@@ -135,7 +135,7 @@ const History = ({
                         />
                       </svg>
                     </th>
-                    <th className="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-xs font-medium tracking-wider text-right text-gray-500 uppercase bg-gray-50">
                       Trvanie{" "}
                       <svg
                         className="inline w-5 h-5 pb-1"
@@ -152,7 +152,7 @@ const History = ({
                         />
                       </svg>
                     </th>
-                    <th className="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-xs font-medium tracking-wider text-right text-gray-500 uppercase bg-gray-50">
                       Dátum{" "}
                       <svg
                         className="inline w-5 h-5 pb-1"
@@ -170,7 +170,7 @@ const History = ({
                       </svg>
                     </th>
                     {phaseNumber !== 1 && (
-                      <th className="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-xs font-medium tracking-wider text-right text-gray-500 uppercase bg-gray-50">
                         Eko skóre{" "}
                         <svg
                           className="inline w-5 h-5 pb-1"
@@ -195,7 +195,7 @@ const History = ({
                       </th>
                     )}
                     {actionsVisible && (
-                      <th className="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-xs font-medium tracking-wider text-right text-gray-500 uppercase bg-gray-50">
                         Akcie{" "}
                         <svg
                           className="inline w-5 h-5 pb-1"
@@ -219,28 +219,30 @@ const History = ({
                   {sortedTracks.map((track, i) => {
                     return (
                       <tr className="bg-white" key={`track-${i}-small`}>
-                        <td className="px-6 py-4 text-left whitespace-nowrap text-sm text-gray-500">
+                        <td className="px-6 py-4 text-sm text-left text-gray-500 whitespace-nowrap">
                           {tracks.length - i}
                         </td>
-                        <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
-                          {formatDistance(track.scoreDistance)} /{" "}
+                        <td className="px-6 py-4 text-sm text-right text-gray-500 whitespace-nowrap">
+                          {phaseNumber !== 1 && (
+                            <>{formatDistance(track.scoreDistance)} / </>
+                          )}
                           {formatDistance(track.totalDistance)}
                         </td>
-                        <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
+                        <td className="px-6 py-4 text-sm text-right text-gray-500 whitespace-nowrap">
                           {formatDuration(track.duration)}
                         </td>
-                        <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
+                        <td className="px-6 py-4 text-sm text-right text-gray-500 whitespace-nowrap">
                           <Moment date={track.date} format="DD. MM. YYYY" />
                         </td>
                         {phaseNumber !== 1 && (
-                          <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500 bg-green-100">
-                            <span className="text-gray-900 font-medium">
+                          <td className="px-6 py-4 text-sm text-right text-gray-500 bg-green-100 whitespace-nowrap">
+                            <span className="font-medium text-gray-900">
                               {track.score}
                             </span>
                           </td>
                         )}
                         {actionsVisible && (
-                          <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500 flex items-center justify-end">
+                          <td className="flex items-center justify-end px-6 py-4 text-sm text-right text-gray-500 whitespace-nowrap">
                             {actionsVisible && (
                               <>
                                 {track.purchase.made ? (
