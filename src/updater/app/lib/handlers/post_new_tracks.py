@@ -1,7 +1,8 @@
 import pandas as pd
 import geopandas as gpd
-from datetime import datetime, timedelta
+from datetime import datetime
 import geopy.distance
+from dateutil import parser
 
 from ..packages.envirocar import TrackAPI, TimeSelector, ECConfig
 from ..packages.eda_quality import correction as correct
@@ -53,12 +54,10 @@ async def handler(data, x_user, x_token, bbox, influxdb_client):
 
     return {'statusCode': 200, 'message': f'{tracks_count} tracks were processed'}
 
-# "{}T00:00:00+00:00".format(data.phaseStartDate)
-
 
 def initialize_pipeline(data, x_user, x_token):
-    phase_start_time = datetime.strptime(
-        "2020-01-12T00:00:00+00:00", ENVIROCAR_DATETIME_FORMAT)
+    phase_start_time = parser.parse(
+        data.phaseStartDate).strftime(ENVIROCAR_DATETIME_FORMAT)
     now_time = datetime.now().strftime(ENVIROCAR_DATETIME_FORMAT)
     time_interval = TimeSelector(
         start_time=phase_start_time, end_time=now_time)
