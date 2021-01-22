@@ -11,7 +11,7 @@ from ..packages.eda_quality import manipulation as manipulate
 
 from ..api.envirocar import get_envirocar_tracks, get_envirocar_user, get_envirocar_track
 from ..api.strapi import get_strapi_tracks, update_strapi_tracks
-from ..utils.functions import seconds_between, filter_tracks
+from ..utils.functions import seconds_between
 from ..utils.constants import ENVIROCAR_DATETIME_FORMAT
 
 
@@ -28,7 +28,7 @@ async def handler(data, x_user, x_token, bbox, influxdb_client):
     # TODO Move below and set flag for incompatible track so that it is not being refetched and cleaned every time
     tracks_df = clean_data(tracks_df)
 
-    existing_tracks = await get_strapi_tracks(data.user)
+    existing_tracks = await get_strapi_tracks(data)
 
     tracks_df, track_ids = filter_tracks(tracks_df, existing_tracks)
 
@@ -57,6 +57,7 @@ async def handler(data, x_user, x_token, bbox, influxdb_client):
 
 
 def initialize_pipeline(data, x_user, x_token):
+    # TODO Revert for production
     # phase_start_time = parser.parse(
     #     data.phaseStartDate).strftime(ENVIROCAR_DATETIME_FORMAT)
     phase_start_time = parser.parse(
@@ -85,6 +86,31 @@ def clean_data(tracks_df):
     manipulate.drop_unit_columns(tracks_df).head()
 
     return tracks_df
+
+
+def filter_tracks(tracks_df, existing_tracks):
+    existing_track_ids = []
+
+    for existing_track in existing_tracks:
+        existing_track_ids.append(existing_track['envirocar'])
+
+    track_ids = tracks_df['track.id'].unique()
+
+    # No tracks are uploaded
+    if len(existing_track_ids) == 0:
+        print("No tracks were uploaded so far")
+        return tracks_df, track_ids
+
+    print("Number of tracks before filtering: {}".format(len(track_ids)))
+
+    # Some tracks or all tracks are uploaded
+    for existing_track_id in existing_track_ids:
+        tracks_df = tracks_df[tracks_df['track.id'] != existing_track_id]
+
+    track_ids = tracks_df['track.id'].unique()
+    print("Number of tracks after filtering: {}".format(len(track_ids)))
+
+    return tracks_df, track_ids
 
 
 async def persist_new_tracks_data(tracks_df, track_ids, x_user, x_token, influxdb_client):

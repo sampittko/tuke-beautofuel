@@ -4,17 +4,16 @@ from ..utils.constants import STRAPI_TOKEN, STRAPI_URL
 from ..utils.functions import seconds_between
 
 
-async def get_strapi_tracks(user):
-    strapiTracksRes = requests.get(
+async def get_strapi_tracks(data):
+    res = requests.get(
         f'{STRAPI_URL}/tracks',
-        json={
-            'user': user
-        },
         params={
-            'token': STRAPI_TOKEN
+            'token': STRAPI_TOKEN,
+            '_where[user]': data.user,
+            '_where[phaseNumber]': data.phaseNumber
         }
     )
-    return strapiTracksRes.json()
+    return res.json()
 
 
 async def update_strapi_tracks(tracks_df, track_ids, user, synchronization, phaseNumber, userGroup):
