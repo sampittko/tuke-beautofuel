@@ -20,8 +20,10 @@ class ECConfig:
 
     _instance = None
 
-    def __init__(self, username=None, password=None):
-        if not ECConfig._instance:
+    def __init__(self, username=None, password=None, reset=False):
+        if not ECConfig._instance or ECConfig._instance and reset:
+            if ECConfig._instance:
+                _instance = None
             ECConfig._instance = self._ECConfig(username, password)
 
         for item in ECConfig._instance.CONFIG_PARAMS:
