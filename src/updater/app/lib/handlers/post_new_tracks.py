@@ -1,5 +1,6 @@
 import pandas as pd
 import geopandas as gpd
+import numpy as np
 from datetime import datetime
 import geopy.distance
 from dateutil import parser
@@ -24,11 +25,12 @@ async def handler(data, x_user, x_token, bbox, influxdb_client):
         return {'statusCode': 200, 'message': 'You need to record some driving data first to synchronize them later'}
     print("Tracks fetched")
 
+    # TODO Move below and set flag for incompatible track so that it is not being refetched and cleaned every time
     tracks_df = clean_data(tracks_df)
 
     existing_tracks = await get_strapi_tracks(data.user)
 
-    tracks_df = filter_tracks(tracks_df, existing_tracks)
+    tracks_df, track_ids = filter_tracks(tracks_df, existing_tracks)
 
     if tracks_df.empty:
         message = 'There are no new track records for user with name {}'.format(
@@ -36,7 +38,6 @@ async def handler(data, x_user, x_token, bbox, influxdb_client):
         print(message)
         return {'statusCode': 200, 'message': message}
 
-    track_ids = tracks_df['track.id'].unique()
     tracks_count = len(track_ids)
     print("There are {} new track records for user with name {}".format(
         tracks_count, x_user))
@@ -56,8 +57,10 @@ async def handler(data, x_user, x_token, bbox, influxdb_client):
 
 
 def initialize_pipeline(data, x_user, x_token):
+    # phase_start_time = parser.parse(
+    #     data.phaseStartDate).strftime(ENVIROCAR_DATETIME_FORMAT)
     phase_start_time = parser.parse(
-        data.phaseStartDate).strftime(ENVIROCAR_DATETIME_FORMAT)
+        "2020-01-12").strftime(ENVIROCAR_DATETIME_FORMAT)
     now_time = datetime.now().strftime(ENVIROCAR_DATETIME_FORMAT)
     time_interval = TimeSelector(
         start_time=phase_start_time, end_time=now_time)
@@ -87,7 +90,7 @@ def clean_data(tracks_df):
 async def persist_new_tracks_data(tracks_df, track_ids, x_user, x_token, influxdb_client):
     tracks = []
     for track_id in track_ids:
-        track_df = tracks_df.filter(like=track_id, axis="index")
+        track_df = tracks_df[tracks_df['track.id'] == track_id]
 
         track_point = build_track_point(track_df)
         tracks.append(track_point)
@@ -142,12 +145,15 @@ def build_track_point(track_df):
 
 def build_track_feature_point(track_df_row):
     speed = None
+    emissions = None
 
     try:
         check_phenomenons_data(track_df_row)
     except ValueError as e:
         if 'speed' in e.message:
             speed = 0
+        elif 'emissions' in e.message:
+            emissions = 0
         else:
             raise
 
@@ -162,14 +168,18 @@ def build_track_feature_point(track_df_row):
             'lat': track_df_row['geometry'].y,
             'lng': track_df_row['geometry'].x,
             'consumption': track_df_row['Consumption (GPS-based).value'],
-            'emissions': track_df_row['CO2 Emission (GPS-based).value'],
+            'emissions': emissions or track_df_row['CO2 Emission (GPS-based).value'],
             'speed': speed or track_df_row['GPS Speed.value'],
         }
     }
 
 
 def check_phenomenons_data(track_df_row):
-    if type(track_df_row['Consumption (GPS-based).value']) != float:
+    consumption = track_df_row['Consumption (GPS-based).value']
+    speed = track_df_row['GPS Speed.value']
+    emissions = track_df_row['CO2 Emission (GPS-based).value']
+
+    if np.isnan(consumption) or not consumption:
         try:
             raise ValueError()
         except ValueError as e:
@@ -177,7 +187,7 @@ def check_phenomenons_data(track_df_row):
                 track_df_row['id'], track_df_row['track.id'])
             raise
 
-    if type(track_df_row['GPS Speed.value']) != float:
+    if np.isnan(speed) or not speed:
         try:
             raise ValueError()
         except ValueError as e:
@@ -185,6 +195,10 @@ def check_phenomenons_data(track_df_row):
                 track_df_row['id'], track_df_row['track.id'])
             raise
 
-    if type(track_df_row['CO2 Emission (GPS-based).value']) != float:
-        print("Track feature point ID {} has missing emissions inside track ID {}".format(
-            track_df_row['id'], track_df_row['track.id']))
+    if np.isnan(emissions) or not emissions:
+        try:
+            raise ValueError()
+        except ValueError as e:
+            e.message = "Track feature point ID {} has missing emissions inside track ID {}".format(
+                track_df_row['id'], track_df_row['track.id'])
+            raise
