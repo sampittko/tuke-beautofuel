@@ -62,7 +62,11 @@ module.exports = {
       return ctx.badRequest("Invalid enviroCar password");
     }
 
-    const { number: phaseNumber } = await strapi.query("phase").findOne();
+    const {
+      number: phaseNumber,
+      startDate: phaseStartDate,
+      endDate: phaseEndDate,
+    } = await strapi.query("phase").findOne();
 
     const entity = await strapi.services.synchronizations.create({
       user,
@@ -76,6 +80,8 @@ module.exports = {
           synchronization: entity.id,
           user,
           userGroup: ctx.state.user.group,
+          phaseStartDate,
+          phaseEndDate,
           phaseNumber,
         }),
         {

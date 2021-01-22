@@ -2,18 +2,16 @@
 from datetime import datetime
 
 
-def filter_tracks(allTracks, existingTracks):
-    existingTracksIds = []
-    newTracks = []
+def filter_tracks(tracks_df, existing_tracks):
+    existing_track_ids = []
 
-    for existingTrack in existingTracks:
-        existingTracksIds.append(existingTrack['envirocar'])
+    for existing_track in existing_tracks:
+        existing_track_ids.append(existing_track['envirocar'])
 
-    for track in allTracks:
-        if track['id'] not in existingTracksIds:
-            newTracks.append(track)
+    if len(existing_track_ids) == 0:
+        return tracks_df
 
-    return newTracks
+    return tracks_df.drop(index=existing_track_ids, errors='ignore')
 
 
 def seconds_between(d1, d2):

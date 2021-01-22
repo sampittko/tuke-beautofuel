@@ -17,16 +17,18 @@ async def get_strapi_tracks(user):
     return strapiTracksRes.json()
 
 
-async def update_strapi_tracks(newTracks, user, synchronization, phaseNumber, userGroup):
-    for newTrack in newTracks:
+async def update_strapi_tracks(tracks_df, track_ids, user, synchronization, phaseNumber, userGroup):
+    for track_id in track_ids:
+        first_coordinate_data = tracks_df[tracks_df['track.id']
+                                          == track_id].iloc[0]
         requests.post(
             f'{STRAPI_URL}/tracks',
             json={
-                'envirocar': newTrack['id'],
-                'duration': seconds_between(newTrack['begin'], newTrack['end']),
-                'date': newTrack['begin'],
-                'score': 1,
-                'totalDistance': newTrack['length'],
+                'envirocar': first_coordinate_data['track.id'],
+                'duration': seconds_between(first_coordinate_data['track.begin'], first_coordinate_data['track.end']),
+                'date': first_coordinate_data['track.begin'],
+                'score': 0,
+                'totalDistance': first_coordinate_data['track.length'],
                 'scoreDistance': 0,
                 'user': user,
                 'synchronization': synchronization,

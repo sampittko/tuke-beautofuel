@@ -52,7 +52,9 @@ const History = ({
                           </span>
                         )}
                         <span className="mt-1 inline-flex px-2.5 py-0.5 text-xs font-medium">
-                          {formatDistance(track.scoreDistance)} /{" "}
+                          {phaseNumber !== 1 && (
+                            <>{formatDistance(track.scoreDistance)} / </>
+                          )}
                           {formatDistance(track.totalDistance)}
                         </span>
                         <span className="mt-1 inline-flex px-2.5 py-0.5 text-xs font-medium">
