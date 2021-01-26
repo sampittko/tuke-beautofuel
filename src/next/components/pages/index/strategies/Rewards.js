@@ -7,7 +7,7 @@ const Rewards = ({ tracks }) => {
   useEffect(() => {
     if (tracks) {
       const newKrovkyCount = _.chain(tracks)
-        .filter((track) => !!track.purchase?.made)
+        .filter((track) => !!track?.purchase?.made)
         .sumBy("purchase.quantity")
         .value();
       setKrovkyCount(newKrovkyCount);
@@ -15,12 +15,12 @@ const Rewards = ({ tracks }) => {
   }, [tracks]);
 
   return (
-    <div className="bg-white overflow-hidden shadow rounded-lg">
+    <div className="overflow-hidden bg-white rounded-lg shadow">
       <div className="p-5">
         <div className="flex items-center">
           <div className="flex-shrink-0">
             <svg
-              className="h-6 w-6 text-gray-400"
+              className="w-6 h-6 text-gray-400"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -34,9 +34,9 @@ const Rewards = ({ tracks }) => {
               ></path>
             </svg>
           </div>
-          <div className="ml-5 w-0 flex-1">
+          <div className="flex-1 w-0 ml-5">
             <dl>
-              <dt className="text-sm font-medium text-gray-500 truncate uppercase">
+              <dt className="text-sm font-medium text-gray-500 uppercase truncate">
                 Získané krovky
               </dt>
               <dd>
