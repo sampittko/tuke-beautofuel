@@ -162,12 +162,13 @@ def build_track_point(track_df):
             'car': '{} {} {}'.format(
                 first_coordinate_data['sensor.manufacturer'], first_coordinate_data['sensor.model'], first_coordinate_data['sensor.constructionYear']),
             'carEngineDisplacement': first_coordinate_data['sensor.engineDisplacement'],
+            'begin': first_coordinate_data['track.begin'],
+            'end': first_coordinate_data['track.end'],
         },
         'time': first_coordinate_data['track.created'],
         'fields': {
             'length': first_coordinate_data['track.length'],
-            'begin': first_coordinate_data['track.begin'],
-            'end': first_coordinate_data['track.end'],
+            'duration': seconds_between(first_coordinate_data['track.begin'], first_coordinate_data['track.end'])
         }
     }
 
