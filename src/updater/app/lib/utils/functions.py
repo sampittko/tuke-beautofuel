@@ -12,3 +12,8 @@ def get_envirocar_headers(user, token):
         'X-User': user,
         'X-Token': token
     }
+
+
+def enum(*sequential, **named):
+    enums = dict(zip(sequential, range(len(sequential))), **named)
+    return type('Enum', (), enums)

@@ -68,7 +68,7 @@ const History = ({
 
                     {actionsVisible && (
                       <>
-                        {track?.purchase?.made ? (
+                        {track.purchase?.made ? (
                           <Revert
                             tracksRefetch={tracksRefetch}
                             userRefetch={userRefetch}
@@ -246,7 +246,7 @@ const History = ({
                         {actionsVisible && (
                           <td className="flex items-center justify-end px-6 py-4 text-sm text-right text-gray-500 whitespace-nowrap">
                             <>
-                              {track?.purchase?.made ? (
+                              {track.purchase?.made ? (
                                 <Revert
                                   allUsersRefetch={allUsersRefetch}
                                   tracksRefetch={tracksRefetch}

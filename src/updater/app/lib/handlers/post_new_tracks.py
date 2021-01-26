@@ -1,5 +1,4 @@
 import pandas as pd
-import geopandas as gpd
 import numpy as np
 from datetime import datetime
 import geopy.distance
@@ -8,11 +7,12 @@ from dateutil import parser
 from ..packages.envirocar import TrackAPI, TimeSelector, ECConfig
 from ..packages.eda_quality import correction as correct
 from ..packages.eda_quality import manipulation as manipulate
+from ..packages.vehicle_eco_balance import get_interval_time, accumulate_consumption, consumption_per100km
 
 from ..api.envirocar import get_envirocar_tracks, get_envirocar_user, get_envirocar_track
 from ..api.strapi import get_strapi_tracks, update_strapi_tracks
 from ..utils.functions import seconds_between
-from ..utils.constants import ENVIROCAR_DATETIME_FORMAT
+from ..utils.constants import ENVIROCAR_DATETIME_FORMAT, ENVIROCAR_DATA
 
 
 async def handler(data, x_user, x_token, bbox, influxdb_client):
@@ -43,7 +43,7 @@ async def handler(data, x_user, x_token, bbox, influxdb_client):
         tracks_count, x_user))
 
     try:
-        await persist_new_tracks_data(tracks_df, track_ids, x_user, x_token, influxdb_client)
+        await persist_new_tracks_data(tracks_df, track_ids, x_user, x_token, data, influxdb_client)
         print("Data persistence completed")
     except ChildProcessError:
         print("Data persistence is incomplete")
@@ -76,10 +76,13 @@ def initialize_pipeline(data, x_user, x_token):
 def clean_data(tracks_df):
     # Drop duplicated rows
     tracks_df = correct.drop_duplicates(tracks_df)
+    # Drop rows where specific columns are NaN
+    tracks_df = tracks_df.dropna(
+        subset=[ENVIROCAR_DATA.TRACK_FEATURE_CONSUMPTION, ENVIROCAR_DATA.TRACK_FEATURE_EMISSION, ENVIROCAR_DATA.TRACK_FEATURE_SPEED])
     # Remove tracks that exceed 8 hours of duration time
     _, tracks_df, _ = correct.exceed_eight_hours(tracks_df, flag=False)
     # Remove tracks that falls below x minutes of duration time
-    _, tracks_df, _ = correct.below_x_min(tracks_df, x=3, flag=False)
+    _, tracks_df, _ = correct.below_x_min(tracks_df, x=2, flag=False)
     # Remove tracks that exceed 250 km/h speed
     _, tracks_df, _ = correct.implausible_max_speed(tracks_df, flag=False)
     # Drop unit colums since we are not interested in them
@@ -91,12 +94,9 @@ def clean_data(tracks_df):
 def filter_tracks(tracks_df, existing_tracks, data):
     existing_track_ids = []
 
-    track_ids = tracks_df['track.id'].unique()
+    track_ids = tracks_df[ENVIROCAR_DATA.TRACK_ID].unique()
 
     print("Number of tracks before filtering: {}".format(len(track_ids)))
-
-    # TODO Remove tracks from other phases
-    # tracks_df = tracks_df[tracks_df['track.phaseNumber'] == data.phaseNumber]
 
     for existing_track in existing_tracks:
         existing_track_ids.append(existing_track['envirocar'])
@@ -108,20 +108,21 @@ def filter_tracks(tracks_df, existing_tracks, data):
 
     # Some tracks or all tracks are uploaded
     for existing_track_id in existing_track_ids:
-        tracks_df = tracks_df[tracks_df['track.id'] != existing_track_id]
+        tracks_df = tracks_df[tracks_df[ENVIROCAR_DATA.TRACK_ID]
+                              != existing_track_id]
 
-    track_ids = tracks_df['track.id'].unique()
+    track_ids = tracks_df[ENVIROCAR_DATA.TRACK_ID].unique()
     print("Number of tracks after filtering: {}".format(len(track_ids)))
 
     return tracks_df, track_ids
 
 
-async def persist_new_tracks_data(tracks_df, track_ids, x_user, x_token, influxdb_client):
+async def persist_new_tracks_data(tracks_df, track_ids, x_user, x_token, data, influxdb_client):
     tracks = []
     for track_id in track_ids:
-        track_df = tracks_df[tracks_df['track.id'] == track_id]
+        track_df = tracks_df[tracks_df[ENVIROCAR_DATA.TRACK_ID] == track_id]
 
-        track_point = build_track_point(track_df)
+        track_point = build_track_point(track_df, data)
         tracks.append(track_point)
 
         track_features = []
@@ -150,85 +151,74 @@ async def persist_new_tracks_data(tracks_df, track_ids, x_user, x_token, influxd
             raise
 
 
-def build_track_point(track_df):
+def build_track_point(track_df, data):
     first_coordinate_data = track_df.iloc[0]
+
+    fuel_consumed, consumption, average_speed = calculate_track_data(track_df)
 
     return {
         'measurement': 'tracks',
         'tags': {
-            'id': first_coordinate_data['track.id'],
-            'user': first_coordinate_data['track.user.name'],
-            'email': first_coordinate_data['track.user.mail'],
+            'id': first_coordinate_data[ENVIROCAR_DATA.TRACK_ID],
+            'user': first_coordinate_data[ENVIROCAR_DATA.USER],
+            'email': first_coordinate_data[ENVIROCAR_DATA.EMAIL],
             'car': '{} {} {}'.format(
-                first_coordinate_data['sensor.manufacturer'], first_coordinate_data['sensor.model'], first_coordinate_data['sensor.constructionYear']),
-            'carEngineDisplacement': first_coordinate_data['sensor.engineDisplacement'],
-            'begin': first_coordinate_data['track.begin'],
-            'end': first_coordinate_data['track.end'],
+                first_coordinate_data[ENVIROCAR_DATA.CAR_MANUFACTURER], first_coordinate_data[ENVIROCAR_DATA.CAR_MODEL], first_coordinate_data[ENVIROCAR_DATA.CAR_CONSTRUCTION]),
+            'carEngineDisplacement': first_coordinate_data[ENVIROCAR_DATA.CAR_ENGINE_DISPLACEMENT],
+            'begin': first_coordinate_data[ENVIROCAR_DATA.TRACK_BEGIN],
+            'end': first_coordinate_data[ENVIROCAR_DATA.TRACK_END],
+            'consumption': consumption,
+            'fuelConsumed': fuel_consumed,
+            'scoreConsumption': 0,
+            'speed': average_speed,
+            'scoreSpeed': 0,
+            'score': 0,
+            'phase': data.phaseNumber
         },
-        'time': first_coordinate_data['track.created'],
+        'time': first_coordinate_data[ENVIROCAR_DATA.TRACK_CREATED],
         'fields': {
-            'length': first_coordinate_data['track.length'],
-            'duration': seconds_between(first_coordinate_data['track.begin'], first_coordinate_data['track.end'])
+            'length': first_coordinate_data[ENVIROCAR_DATA.TRACK_LENGTH],
+            'scoreLength': 0,
+            'duration': seconds_between(first_coordinate_data[ENVIROCAR_DATA.TRACK_BEGIN], first_coordinate_data[ENVIROCAR_DATA.TRACK_END]),
+            'scoreDuration': 0
         }
     }
+
+
+def calculate_track_data(track_df):
+    # Calculate interval times
+    dt = np.zeros(len(track_df[ENVIROCAR_DATA.TIME]))
+    for i in range(1, len(track_df[ENVIROCAR_DATA.TIME])):
+        dt[i] = get_interval_time(
+            track_df[ENVIROCAR_DATA.TIME].iloc[i], track_df[ENVIROCAR_DATA.TIME].iloc[i-1])
+
+    # Calculate total amount of fuel consumed
+    fuel_consumed = accumulate_consumption(
+        track_df[ENVIROCAR_DATA.TRACK_FEATURE_CONSUMPTION], dt)
+
+    # Calculate amount of fuel consumed per 100km in average
+    consumption = consumption_per100km(
+        track_df[ENVIROCAR_DATA.TRACK_FEATURE_CONSUMPTION], dt, track_df[ENVIROCAR_DATA.TRACK_LENGTH])
+
+    # Calculate average speed
+    average_speed = np.average(track_df[ENVIROCAR_DATA.TRACK_FEATURE_SPEED])
+
+    return fuel_consumed, consumption, average_speed
 
 
 def build_track_feature_point(track_df_row):
-    speed = None
-    emissions = None
-
-    try:
-        check_phenomenons_data(track_df_row)
-    except ValueError as e:
-        if 'speed' in e.message:
-            speed = 0
-        elif 'emissions' in e.message:
-            emissions = 0
-        else:
-            raise
-
     return {
         'measurement': 'trackFeatures',
         'tags': {
-            'id': track_df_row['id'],
-            'track': track_df_row['track.id'],
+            'id': track_df_row[ENVIROCAR_DATA.TRACK_FEATURE_ID],
+            'track': track_df_row[ENVIROCAR_DATA.TRACK_ID],
         },
-        'time': track_df_row['time'],
+        'time': track_df_row[ENVIROCAR_DATA.TIME],
         'fields': {
-            'lat': track_df_row['geometry'].y,
-            'lng': track_df_row['geometry'].x,
-            'consumption': track_df_row['Consumption (GPS-based).value'],
-            'emissions': emissions or track_df_row['CO2 Emission (GPS-based).value'],
-            'speed': speed or track_df_row['GPS Speed.value'],
+            'lat': track_df_row[ENVIROCAR_DATA.TRACK_FEATURE_GEOMETRY].y,
+            'lng': track_df_row[ENVIROCAR_DATA.TRACK_FEATURE_GEOMETRY].x,
+            'consumption': track_df_row[ENVIROCAR_DATA.TRACK_FEATURE_CONSUMPTION],
+            'emissions': track_df_row[ENVIROCAR_DATA.TRACK_FEATURE_EMISSION],
+            'speed': track_df_row[ENVIROCAR_DATA.TRACK_FEATURE_SPEED],
         }
     }
-
-
-def check_phenomenons_data(track_df_row):
-    consumption = track_df_row['Consumption (GPS-based).value']
-    speed = track_df_row['GPS Speed.value']
-    emissions = track_df_row['CO2 Emission (GPS-based).value']
-
-    if np.isnan(consumption) or not consumption:
-        try:
-            raise ValueError()
-        except ValueError as e:
-            e.message = "Track feature point ID {} has missing consumption inside track ID {}".format(
-                track_df_row['id'], track_df_row['track.id'])
-            raise
-
-    if np.isnan(speed) or not speed:
-        try:
-            raise ValueError()
-        except ValueError as e:
-            e.message = "Track feature point ID {} has missing speed inside track ID {}".format(
-                track_df_row['id'], track_df_row['track.id'])
-            raise
-
-    if np.isnan(emissions) or not emissions:
-        try:
-            raise ValueError()
-        except ValueError as e:
-            e.message = "Track feature point ID {} has missing emissions inside track ID {}".format(
-                track_df_row['id'], track_df_row['track.id'])
-            raise

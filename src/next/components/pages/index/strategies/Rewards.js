@@ -7,7 +7,7 @@ const Rewards = ({ tracks }) => {
   useEffect(() => {
     if (tracks) {
       const newKrovkyCount = _.chain(tracks)
-        .filter((track) => !!track?.purchase?.made)
+        .filter((track) => !!track.purchase?.made)
         .sumBy("purchase.quantity")
         .value();
       setKrovkyCount(newKrovkyCount);
