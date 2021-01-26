@@ -35,48 +35,64 @@ const StepThree = ({
             Zber dát
           </h2>
           <p className="mt-4 text-lg leading-6 text-left text-gray-500">
-            Vykonanie synchronizácie dát spôsobí, že dáta, ktoré ste poskytli
-            cez mobilnú aplikáciu enviroCar budú spracované týmto systémom a
-            uložené do jeho databázy.
+            Pre úspešnú realizáciu a vyhodnotenie experimentu je nevyhnutné
+            zhromaždiť všetky dáta, ktoré vyzbierate pomocou aplikácie enviroCar
+            a zaznamenávať akcie, ktoré v systéme pre experiment vykonávate.
           </p>
           <p className="mt-4 text-lg leading-6 text-left text-gray-500">
-            Dáta sú použité výhradne na účely vyhodnotenia diplomovej práce. Po
-            vyhodnotení budú všetky zozbierané dáta odstránené.
+            Dokončením týchto úvodných nastavení sa stávate platným účastníkom
+            experimentu a ste povinný sa riadiť inštrukciami, ktoré Vám boli
+            poskytnuté organizátorom experimentu.
           </p>
           <p className="mt-4 text-lg leading-6 text-left text-gray-500">
-            Autor experimentu si vyhradzuje právo nedodať akékoľvek výhody,
-            ktoré mohli byť nadobudnuté počas experimentu. Tieto odmeny majú
-            pôsobiť len motivačne.
+            Organizátor experimentu si vyhradzuje právo:
+            <ul className="list-disc list-inside">
+              <li>
+                Pozmeniť inštrukcie prislúchajúce práve prebiehajúcej fáze
+                experimentu,
+              </li>
+              <li>
+                celkovo zrušiť experiment, ak to uzná za vhodné vzhľadom na
+                vzniknuté okolnosti a
+              </li>
+              <li>tiež kedykoľvek Vás vylúčiť z experimentu.</li>
+            </ul>
           </p>
           <p className="mt-4 text-lg leading-6 text-left text-gray-500">
-            Vykonanie synchronizácie dát spôsobí, že dáta, ktoré ste poskytli
-            cez mobilnú aplikáciu enviroCar budú spracované týmto systémom a
-            uložené do jeho databázy.
+            Organizátor experimentu si vyhradzuje právo aj:
+            <ul className="list-disc list-inside">
+              <li>Nezohľadniť Vaše dáta pri vyhodnotení experimentu,</li>
+              <li>
+                dodať Vám odmeny, ktoré mohli byť počas experimentu nadobudnuté,
+                až keď bude situácia ohľadom vírusu COVID-19 prijateľná,
+              </li>
+              <li>zmeniť podmienky pre získanie odmien,</li>
+              <li>kedykoľvek upraviť pomer ekologického výkonu ku odmenám a</li>
+              <li>
+                kedykoľvek zmeniť algoritmus pre výpočet ekologického výkonu.
+              </li>
+            </ul>
           </p>
           <p className="mt-4 text-lg leading-6 text-left text-gray-500">
-            Dáta sú použité výhradne na účely vyhodnotenia diplomovej práce. Po
-            vyhodnotení budú všetky zozbierané dáta odstránené.
-          </p>
-          <p className="mt-4 text-lg leading-6 text-left text-gray-500">
-            Autor experimentu si vyhradzuje právo nedodať akékoľvek výhody,
-            ktoré mohli byť nadobudnuté počas experimentu. Tieto odmeny majú
-            pôsobiť len motivačne.
-          </p>
-          <p className="mt-4 text-lg leading-6 text-left text-gray-500">
-            Vykonanie synchronizácie dát spôsobí, že dáta, ktoré ste poskytli
-            cez mobilnú aplikáciu enviroCar budú spracované týmto systémom a
-            uložené do jeho databázy.
-          </p>
-          <p className="mt-4 text-lg leading-6 text-left text-gray-500">
-            Dáta sú použité výhradne na účely vyhodnotenia diplomovej práce. Po
-            vyhodnotení budú všetky zozbierané dáta odstránené.
-          </p>
-          <p className="mt-4 text-lg leading-6 text-left text-gray-500">
-            Autor experimentu si vyhradzuje právo nedodať akékoľvek výhody,
-            ktoré mohli byť nadobudnuté počas experimentu. Tieto odmeny majú
-            pôsobiť len motivačne.
+            Systém o Vás zbiera nasledujúce dáta:
+            <ul className="list-disc list-inside">
+              <li>
+                Po vykonaní synchronizácie dát v tomto systéme všetky dáta,
+                ktoré poskytnete službe enviroCar (jedná sa hlavne o GPS
+                súradnice s podrobnosťami o aktuálnej spotrebe, emisiách a typ
+                automobilu s jeho detailmi - rok výroby, objem motora, typ
+                spaľovania a konkrétny model značky) a
+              </li>
+              <li>
+                všetky akcie, ktoré budete v tomto systéme vykonávať vrátane
+                času, kedy dané akcie vykonávate (jedná sa hlavne o
+                synchronizáciu dát so službou enviroCar, nákup alebo predaj
+                odmien a kedy ste sa naposledy prihlásili).
+              </li>
+            </ul>
           </p>
         </div>
+
         <div className="mt-8">
           <form
             onSubmit={handleSubmit}
@@ -108,7 +124,8 @@ const StepThree = ({
                 <div className="ml-3">
                   <p className="text-base text-gray-500">
                     Bol som upovedomený o zhromažďovaných dátach a súhlasím s
-                    ich sprostredkovaním pre vyhodnotenie experimentu{" "}
+                    ich sprostredkovaním organizátorovi experimentu pre účely
+                    uskutočnenia a vyhodnotenia experimentu{" "}
                     <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">
                       Povinné
                     </span>
@@ -127,7 +144,7 @@ const StepThree = ({
                     : "hover:cursor-default opacity-60"
                 }`}
               >
-                Dokončiť
+                Dokončiť a začať
               </button>
               <div className="w-full mt-2 text-center">
                 {status && (

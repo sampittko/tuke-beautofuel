@@ -181,8 +181,10 @@ const StepOne = ({
                 </div>
                 <div className="ml-3">
                   <p className="text-base text-gray-500">
-                    Vyjadrujem súhlas s tým, že tieto informácie organizátor
-                    experimentu použije výhradne pre účely jeho organizácie{" "}
+                    Poskytujem tieto informácie organizátorovi experimentu a
+                    súhlasím s ich použitím pre účel identifikácie Vami
+                    zozberaných dát. Prezývka bude viditeľná aj pre ostatných
+                    účastníkov experimentu{" "}
                     <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">
                       Povinné
                     </span>

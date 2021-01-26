@@ -84,19 +84,23 @@ const StepTwo = ({
             účelom zberu dát z jazdy automobilom.
           </p>
           <p className="mt-4 text-lg leading-6 text-left text-gray-500">
-            Po kliknutí na{" "}
+            Pokiaľ ešte nemáte svoj vlastný enviroCar účet tak navštívte{" "}
             <a
-              href="https://envirocar.org"
+              href="https://docs.google.com/document/d/1FyDyuTT2uJa0ECaCw4SS8P1wM8saR9QLK8IS6eh5Zic/"
               target="_blank"
               className="font-semibold text-green-600 underline hover:no-underline"
             >
               tento odkaz
-            </a>{" "}
-            budete presmerovaný na stránku služby, kde sa potrebujete
-            registrovať. Po úspešnej registrácii sa vráťte a zadajte
-            prihlasovacie údaje do políčok nižšie pre overenie existencie Vášho
-            enviroCar účtu. Po úspešnom zadaní údajov môžete pokračovať na ďalší
-            krok.
+            </a>
+            , kde postupujte podľa návodu s názvom{" "}
+            <span className="underline">
+              Registrácia na platforme enviroCar
+            </span>{" "}
+            v sekcii s názvom{" "}
+            <span className="underline">Mobilná aplikácia enviroCar</span>. Po
+            úspešnej registrácii sa vráťte a zadajte prihlasovacie údaje do
+            políčok nižšie pre overenie existencie Vášho enviroCar účtu. Po
+            úspešnom zadaní údajov môžete pokračovať na ďalší krok.
           </p>
           <p className="mt-4 text-lg leading-6 text-left text-gray-500">
             V systéme sa uloží <span className="font-semibold">len</span> Vaše
@@ -104,8 +108,8 @@ const StepTwo = ({
             Heslo je potrebné zadávať manuálne pri každej synchronizácii dát a
             je použité <span className="font-semibold">len</span> pre účely{" "}
             <span className="underline">synchronizácie dát</span>. Toto heslo sa{" "}
-            <span className="font-semibold">nikdy neuloží</span> v tomto systéme
-            a po synchronizácii je hneď zabudnuté.
+            <span className="font-semibold">nikdy neuloží</span> v tomto
+            systéme.
           </p>
         </div>
         <div className="mt-8">

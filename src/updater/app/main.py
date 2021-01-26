@@ -2,7 +2,6 @@ from fastapi import FastAPI, Header
 from influxdb import InfluxDBClient
 
 from lib.packages.envirocar import BboxSelector
-
 from lib.models import PostNewTracks as PostNewTracksModel
 from lib.handlers.post_new_tracks import handler as post_new_tracks_handler
 from lib.handlers.get_user_credentials_valid import handler as get_user_credentials_valid_handler

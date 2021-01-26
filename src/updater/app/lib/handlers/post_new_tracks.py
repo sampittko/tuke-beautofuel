@@ -30,7 +30,7 @@ async def handler(data, x_user, x_token, bbox, influxdb_client):
 
     existing_tracks = await get_strapi_tracks(data)
 
-    tracks_df, track_ids = filter_tracks(tracks_df, existing_tracks)
+    tracks_df, track_ids = filter_tracks(tracks_df, existing_tracks, data)
 
     if tracks_df.empty:
         message = 'There are no new track records for user with name {}'.format(
@@ -88,20 +88,23 @@ def clean_data(tracks_df):
     return tracks_df
 
 
-def filter_tracks(tracks_df, existing_tracks):
+def filter_tracks(tracks_df, existing_tracks, data):
     existing_track_ids = []
+
+    track_ids = tracks_df['track.id'].unique()
+
+    print("Number of tracks before filtering: {}".format(len(track_ids)))
+
+    # TODO Remove tracks from other phases
+    # tracks_df = tracks_df[tracks_df['track.phaseNumber'] == data.phaseNumber]
 
     for existing_track in existing_tracks:
         existing_track_ids.append(existing_track['envirocar'])
-
-    track_ids = tracks_df['track.id'].unique()
 
     # No tracks are uploaded
     if len(existing_track_ids) == 0:
         print("No tracks were uploaded so far")
         return tracks_df, track_ids
-
-    print("Number of tracks before filtering: {}".format(len(track_ids)))
 
     # Some tracks or all tracks are uploaded
     for existing_track_id in existing_track_ids:
