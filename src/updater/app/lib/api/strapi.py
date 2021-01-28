@@ -29,6 +29,8 @@ async def update_strapi_tracks(tracks_df, track_ids, user, synchronization, phas
                 'score': 0,
                 'totalDistance': first_coordinate_data['track.length'],
                 'scoreDistance': 0,
+                'consumption': 0,
+                'scoreConsumption': 0,
                 'user': user,
                 'synchronization': synchronization,
                 'phaseNumber': phaseNumber,

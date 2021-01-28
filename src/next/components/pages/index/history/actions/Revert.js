@@ -5,7 +5,7 @@ import PurchasesAPI from "../../../../../lib/api/purchases";
 const Revert = ({ tracksRefetch, userRefetch, track, allUsersRefetch }) => {
   const [revertPurchase, { data, error }] = useMutation(PurchasesAPI.revert, {
     variables: {
-      purchaseId: track.purchase.id,
+      purchaseId: track.purchase?.id,
     },
   });
 
@@ -21,14 +21,14 @@ const Revert = ({ tracksRefetch, userRefetch, track, allUsersRefetch }) => {
     <button
       onClick={revertPurchase}
       type="button"
-      className="flex-shrink-0 text-gray-400 p-1 border border-transparent rounded-full shadow-sm bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+      className="flex-shrink-0 p-1 text-gray-400 bg-gray-600 border border-transparent rounded-full shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
-        className="h-5 w-5 text-white"
+        className="w-5 h-5 text-white"
       >
         <path
           strokeLinecap="round"

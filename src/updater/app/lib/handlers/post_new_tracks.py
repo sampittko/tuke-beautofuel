@@ -132,8 +132,8 @@ async def persist_new_tracks_data(tracks_df, track_ids, x_user, x_token, data, i
             except ValueError as e:
                 print(e.message)
 
-        persisted_track_features = influxdb_client.write_points(track_features)
-        if not persisted_track_features:
+        track_features_persisted = influxdb_client.write_points(track_features)
+        if not track_features_persisted:
             try:
                 raise ChildProcessError()
             except ChildProcessError as e:
@@ -141,8 +141,8 @@ async def persist_new_tracks_data(tracks_df, track_ids, x_user, x_token, data, i
                     track_id)
                 raise
 
-    persisted_tracks = influxdb_client.write_points(tracks)
-    if not persisted_tracks:
+    tracks_persisted = influxdb_client.write_points(tracks)
+    if not tracks_persisted:
         try:
             raise ChildProcessError()
         except ChildProcessError as e:

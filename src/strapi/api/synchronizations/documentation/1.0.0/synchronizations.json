@@ -666,6 +666,12 @@
                 "purchase": {
                   "type": "string"
                 },
+                "consumption": {
+                  "type": "number"
+                },
+                "scoreConsumption": {
+                  "type": "number"
+                },
                 "created_by": {
                   "type": "string"
                 },

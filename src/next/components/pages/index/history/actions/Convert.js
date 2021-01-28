@@ -5,7 +5,7 @@ import PurchasesAPI from "../../../../../lib/api/purchases";
 const Convert = ({ tracksRefetch, userRefetch, track, allUsersRefetch }) => {
   const [makePurchase, { data, error }] = useMutation(PurchasesAPI.make, {
     variables: {
-      purchaseId: track.purchase.id,
+      purchaseId: track.purchase?.id,
     },
   });
 
@@ -21,10 +21,10 @@ const Convert = ({ tracksRefetch, userRefetch, track, allUsersRefetch }) => {
     <button
       onClick={makePurchase}
       type="button"
-      className="flex-shrink-0 text-gray-400 p-1 border border-transparent rounded-full shadow-sm bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+      className="flex-shrink-0 p-1 text-gray-400 bg-green-600 border border-transparent rounded-full shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
     >
       <svg
-        className="h-5 w-5 text-white"
+        className="w-5 h-5 text-white"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"

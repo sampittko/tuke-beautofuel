@@ -52,6 +52,12 @@
     "purchase": {
       "model": "purchases",
       "via": "track"
+    },
+    "consumption": {
+      "type": "decimal"
+    },
+    "scoreConsumption": {
+      "type": "decimal"
     }
   }
 }
