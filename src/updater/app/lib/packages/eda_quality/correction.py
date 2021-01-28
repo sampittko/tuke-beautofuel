@@ -89,10 +89,10 @@ def exceed_eight_hours(df, flag=True):
         cleanDF = df
         # For return, create empty DF
         df_eight = pd.DataFrame({'track.id': [], 'track_duration_h': []})
-        print('no track duration exceeds eight hours')
+        print('Exceed 8 hours: 0')
     else:
         # For return, create DF from all tracks which duration exceeds eight hours
-        print(len(listExceedEightHours), 'tracks are longer than eight hours')
+        print('Exceed 8 hours:', len(listExceedEightHours))
         df_eight = track_lengths[track_lengths['track.id'].isin(
             listExceedEightHours)]
         df_eight = df_eight[['track.id', 'track_duration_h']]
@@ -147,10 +147,10 @@ def below_x_min(df, x=5, flag=True):
         cleanDF = df
         # For return, create empty DF
         df_five = pd.DataFrame({'track.id': [], 'track_duration_h': []})
-        print('no track duration falls below 5 minutes')
+        print('Below {} minutes: 0'.format(x))
     else:
         # For return, create DF from all tracks which duration falls below x min
-        print(len(listBelowXMin), 'tracks are shorter than {} minutes'.format(x))
+        print('Below {} minutes: {}'.format(x, len(listBelowXMin)))
         df_five = track_lengths[track_lengths['track.id'].isin(
             listBelowXMin)]
         df_five = df_five[['track.id', 'track_duration_h']]
@@ -199,12 +199,12 @@ def implausible_max_speed(df, flag=True):
         row for row in track_lengths['exceeds250km'] if row != 0]
 
     if len(listExceeding250) == 0:
-        print('no track exceeds max speed 250km/h')
+        print('Exceeds 250km/h: 0')
         cleanDF = df
         # Create empty DF for return
         df_250 = pd.DataFrame({'track.id': [], 'track_max_speed': []})
     else:
-        print(len(listExceeding250), 'tracks exceed max speed 250')
+        print('Exceeds 250km/h:', len(listExceeding250))
         df_250 = track_lengths[track_lengths['track.id'].isin(
             listExceeding250)]
         df_250 = df_250[['track.id', 'track_max_speed']]
@@ -303,18 +303,15 @@ def flag_implausible_negative_values(df, setToNan=False, dropFlag=False):
 
 def drop_duplicates(complete_track_df, keep='last'):
     beforeDel = complete_track_df.shape[0]
-    complete_track_df.drop_duplicates(subset=['geometry', 'Engine Load.value', 'Calculated MAF.value',
-                                              'Speed.value', 'CO2.value', 'Intake Pressure.value', 'Rpm.value',
-                                              'Intake Temperature.value', 'Consumption (GPS-based).value',
-                                              'GPS Altitude.value', 'Throttle Position.value', 'GPS Bearing.value',
-                                              'Consumption.value', 'GPS Accuracy.value',
+    complete_track_df.drop_duplicates(subset=['geometry', 'Consumption (GPS-based).value',
+                                              'GPS Altitude.value', 'GPS Bearing.value', 'GPS Accuracy.value',
                                               'CO2 Emission (GPS-based).value', 'GPS Speed.value',
                                               'track.length', 'track.begin', 'track.end', 'sensor.type',
                                               'sensor.engineDisplacement', 'sensor.model', 'sensor.id',
                                               'sensor.fuelType', 'sensor.constructionYear', 'sensor.manufacturer'], keep='last', inplace=True)
     afterDel = complete_track_df.shape[0]
     deleted = beforeDel-afterDel
-    print('Deleted rows: ', deleted)
+    print('Duplicated rows:', deleted)
     return complete_track_df
 
 

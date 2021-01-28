@@ -17,7 +17,7 @@ def drop_unit_columns(df):
     units = df.filter(like='.unit').columns
     units.tolist()
     df.drop(units, axis=1, inplace=True)
-    print('Dropped unit columns: ', units)
+    print('Unit columns:', len(units))
     return df
 
 

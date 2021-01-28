@@ -17,3 +17,6 @@ def get_envirocar_headers(user, token):
 def enum(*sequential, **named):
     enums = dict(zip(sequential, range(len(sequential))), **named)
     return type('Enum', (), enums)
+
+def float_round_2(number):
+    return float("{:.2f}".format(number))

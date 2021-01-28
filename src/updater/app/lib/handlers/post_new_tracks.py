@@ -11,7 +11,7 @@ from ..packages.vehicle_eco_balance import get_interval_time, accumulate_consump
 
 from ..api.envirocar import get_envirocar_tracks, get_envirocar_user, get_envirocar_track
 from ..api.strapi import get_strapi_tracks, update_strapi_tracks
-from ..utils.functions import seconds_between
+from ..utils.functions import seconds_between, float_round_2
 from ..utils.constants import ENVIROCAR_DATETIME_FORMAT, ENVIROCAR_DATA
 
 
@@ -21,8 +21,8 @@ async def handler(data, x_user, x_token, bbox, influxdb_client):
     tracks_df = track_api.get_tracks(bbox=bbox, time_interval=time_interval)
 
     if tracks_df.empty:
-        print("There are no tracks to synchronize for user with name {}".format(x_user))
-        return {'statusCode': 200, 'message': 'You need to record some driving data first to synchronize them later'}
+        print("User {} does not have any tracks records".format(x_user))
+        return {'statusCode': 200, 'message': 'No track records'}
     print("Tracks fetched")
 
     # TODO Move below and set flag for incompatible track so that it is not being refetched and cleaned every time
@@ -33,14 +33,14 @@ async def handler(data, x_user, x_token, bbox, influxdb_client):
     tracks_df, track_ids = filter_tracks(tracks_df, existing_tracks, data)
 
     if tracks_df.empty:
-        message = 'There are no new track records for user with name {}'.format(
+        message = 'New tracks for user {}: 0'.format(
             x_user)
         print(message)
         return {'statusCode': 200, 'message': message}
 
     tracks_count = len(track_ids)
-    print("There are {} new track records for user with name {}".format(
-        tracks_count, x_user))
+    print("New tracks for user {}: {}".format(
+        x_user, tracks_count))
 
     try:
         await persist_new_tracks_data(tracks_df, track_ids, x_user, x_token, data, influxdb_client)
@@ -53,7 +53,7 @@ async def handler(data, x_user, x_token, bbox, influxdb_client):
 
     await update_strapi_tracks(tracks_df, track_ids, data.user, data.synchronization, data.phaseNumber, data.userGroup)
 
-    return {'statusCode': 200, 'message': f'{tracks_count} tracks were processed'}
+    return {'statusCode': 200, 'message': f'Processed tracks: {tracks_count}'}
 
 
 def initialize_pipeline(data, x_user, x_token):
@@ -61,7 +61,7 @@ def initialize_pipeline(data, x_user, x_token):
     # phase_start_time = parser.parse(
     #     data.phaseStartDate).strftime(ENVIROCAR_DATETIME_FORMAT)
     phase_start_time = parser.parse(
-        "2020-01-12").strftime(ENVIROCAR_DATETIME_FORMAT)
+        "2021-01-27").strftime(ENVIROCAR_DATETIME_FORMAT)
     now_time = datetime.now().strftime(ENVIROCAR_DATETIME_FORMAT)
     time_interval = TimeSelector(
         start_time=phase_start_time, end_time=now_time)
@@ -76,9 +76,8 @@ def initialize_pipeline(data, x_user, x_token):
 def clean_data(tracks_df):
     # Drop duplicated rows
     tracks_df = correct.drop_duplicates(tracks_df)
-    # Drop rows where specific columns are NaN
-    tracks_df = tracks_df.dropna(
-        subset=[ENVIROCAR_DATA.TRACK_FEATURE_CONSUMPTION, ENVIROCAR_DATA.TRACK_FEATURE_EMISSION, ENVIROCAR_DATA.TRACK_FEATURE_SPEED])
+    # Fill NaN values
+    tracks_df = tracks_df.fillna(tracks_df.mean())
     # Remove tracks that exceed 8 hours of duration time
     _, tracks_df, _ = correct.exceed_eight_hours(tracks_df, flag=False)
     # Remove tracks that falls below x minutes of duration time
@@ -96,14 +95,14 @@ def filter_tracks(tracks_df, existing_tracks, data):
 
     track_ids = tracks_df[ENVIROCAR_DATA.TRACK_ID].unique()
 
-    print("Number of tracks before filtering: {}".format(len(track_ids)))
+    print("Number of tracks before filtering:", len(track_ids))
 
     for existing_track in existing_tracks:
         existing_track_ids.append(existing_track['envirocar'])
 
     # No tracks are uploaded
     if len(existing_track_ids) == 0:
-        print("No tracks were uploaded so far")
+        print("Number of tracks after filtering:", len(track_ids))
         return tracks_df, track_ids
 
     # Some tracks or all tracks are uploaded
@@ -112,7 +111,7 @@ def filter_tracks(tracks_df, existing_tracks, data):
                               != existing_track_id]
 
     track_ids = tracks_df[ENVIROCAR_DATA.TRACK_ID].unique()
-    print("Number of tracks after filtering: {}".format(len(track_ids)))
+    print("Number of tracks after filtering:", len(track_ids))
 
     return tracks_df, track_ids
 
@@ -138,7 +137,7 @@ async def persist_new_tracks_data(tracks_df, track_ids, x_user, x_token, data, i
             try:
                 raise ChildProcessError()
             except ChildProcessError as e:
-                e.message = "Track features persistence was not successful for track".format(
+                e.message = "Track features persistence for track ID {} was not successful for track".format(
                     track_id)
                 raise
 
@@ -165,14 +164,6 @@ def build_track_point(track_df, data):
             'car': '{} {} {}'.format(
                 first_coordinate_data[ENVIROCAR_DATA.CAR_MANUFACTURER], first_coordinate_data[ENVIROCAR_DATA.CAR_MODEL], first_coordinate_data[ENVIROCAR_DATA.CAR_CONSTRUCTION]),
             'carEngineDisplacement': first_coordinate_data[ENVIROCAR_DATA.CAR_ENGINE_DISPLACEMENT],
-            'begin': first_coordinate_data[ENVIROCAR_DATA.TRACK_BEGIN],
-            'end': first_coordinate_data[ENVIROCAR_DATA.TRACK_END],
-            'consumption': consumption,
-            'fuelConsumed': fuel_consumed,
-            'scoreConsumption': 0,
-            'speed': average_speed,
-            'scoreSpeed': 0,
-            'score': 0,
             'phase': data.phaseNumber
         },
         'time': first_coordinate_data[ENVIROCAR_DATA.TRACK_CREATED],
@@ -180,7 +171,15 @@ def build_track_point(track_df, data):
             'length': first_coordinate_data[ENVIROCAR_DATA.TRACK_LENGTH],
             'scoreLength': 0,
             'duration': seconds_between(first_coordinate_data[ENVIROCAR_DATA.TRACK_BEGIN], first_coordinate_data[ENVIROCAR_DATA.TRACK_END]),
-            'scoreDuration': 0
+            'scoreDuration': 0,
+            'consumption': consumption,
+            'fuelConsumed': fuel_consumed,
+            'scoreConsumption': 0,
+            'speed': average_speed,
+            'scoreSpeed': 0,
+            'score': 0,
+            'begin': first_coordinate_data[ENVIROCAR_DATA.TRACK_BEGIN],
+            'end': first_coordinate_data[ENVIROCAR_DATA.TRACK_END]
         }
     }
 
@@ -195,13 +194,17 @@ def calculate_track_data(track_df):
     # Calculate total amount of fuel consumed
     fuel_consumed = accumulate_consumption(
         track_df[ENVIROCAR_DATA.TRACK_FEATURE_CONSUMPTION], dt)
+    fuel_consumed = float_round_2(fuel_consumed)
 
     # Calculate amount of fuel consumed per 100km in average
     consumption = consumption_per100km(
         track_df[ENVIROCAR_DATA.TRACK_FEATURE_CONSUMPTION], dt, track_df[ENVIROCAR_DATA.TRACK_LENGTH])
+    consumption = float_round_2(consumption[0])
 
     # Calculate average speed
-    average_speed = np.average(track_df[ENVIROCAR_DATA.TRACK_FEATURE_SPEED])
+    average_speed = np.average(
+        track_df[ENVIROCAR_DATA.TRACK_FEATURE_SPEED])
+    average_speed = float_round_2(average_speed)
 
     return fuel_consumed, consumption, average_speed
 
