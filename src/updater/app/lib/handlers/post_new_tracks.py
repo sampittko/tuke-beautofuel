@@ -15,15 +15,16 @@ from ..utils.functions import seconds_between, float_round_2
 from ..utils.constants import ENVIROCAR_DATETIME_FORMAT, ENVIROCAR_DATA
 
 
-async def handler(data, x_user, x_token, bbox, influxdb_client):
+async def handler(data, x_user, x_token, bbox, influxdb_client, request_number):
     time_interval, track_api = initialize_pipeline(data, x_user, x_token)
 
     tracks_df = track_api.get_tracks(bbox=bbox, time_interval=time_interval)
 
     if tracks_df.empty:
         print("User {} does not have any tracks records".format(x_user))
-        return {'statusCode': 200, 'message': 'No track records'}
-    print("Tracks fetched")
+        return handler_success('No track records', request_number)
+    print("Processing tracks synchronization request number {} of user {}",
+          request_number, x_user)
 
     # TODO Move below and set flag for incompatible track so that it is not being refetched and cleaned every time
     tracks_df = clean_data(tracks_df)
@@ -33,27 +34,28 @@ async def handler(data, x_user, x_token, bbox, influxdb_client):
     tracks_df, track_ids = filter_tracks(tracks_df, existing_tracks, data)
 
     if tracks_df.empty:
-        message = 'New tracks for user {}: 0'.format(
+        message = 'New tracks: 0'.format(
             x_user)
         print(message)
-        return {'statusCode': 200, 'message': message}
+        return handler_success(message, request_number)
 
     tracks_count = len(track_ids)
-    print("New tracks for user {}: {}".format(
+    print("New tracks: {}".format(
         x_user, tracks_count))
 
     try:
         await persist_new_tracks_data(tracks_df, track_ids, x_user, x_token, data, influxdb_client)
-        print("Data persistence completed")
+        print("Data persisted")
     except ChildProcessError:
-        print("Data persistence is incomplete")
+        print("Data not fully persisted")
 
     if data.phaseNumber == 2 or data.phaseNumber == 3:
         print("Eco-score calculation not yet implemented")
 
     await update_strapi_tracks(tracks_df, track_ids, data.user, data.synchronization, data.phaseNumber, data.userGroup)
+    print("New tracks inserted into CMS")
 
-    return {'statusCode': 200, 'message': f'Processed tracks: {tracks_count}'}
+    return handler_success(f'Processed tracks: {tracks_count}', request_number)
 
 
 def initialize_pipeline(data, x_user, x_token):
@@ -95,14 +97,14 @@ def filter_tracks(tracks_df, existing_tracks, data):
 
     track_ids = tracks_df[ENVIROCAR_DATA.TRACK_ID].unique()
 
-    print("Number of tracks before filtering:", len(track_ids))
+    print("Tracks count before filtering:", len(track_ids))
 
     for existing_track in existing_tracks:
         existing_track_ids.append(existing_track['envirocar'])
 
     # No tracks are uploaded
     if len(existing_track_ids) == 0:
-        print("Number of tracks after filtering:", len(track_ids))
+        print("Tracks count after filtering:", len(track_ids))
         return tracks_df, track_ids
 
     # Some tracks or all tracks are uploaded
@@ -111,7 +113,7 @@ def filter_tracks(tracks_df, existing_tracks, data):
                               != existing_track_id]
 
     track_ids = tracks_df[ENVIROCAR_DATA.TRACK_ID].unique()
-    print("Number of tracks after filtering:", len(track_ids))
+    print("Tracks count after filtering:", len(track_ids))
 
     return tracks_df, track_ids
 
@@ -225,3 +227,8 @@ def build_track_feature_point(track_df_row):
             'speed': track_df_row[ENVIROCAR_DATA.TRACK_FEATURE_SPEED],
         }
     }
+
+
+def handler_success(message, request_number):
+    print("Request number {} completed", request_number)
+    return {'statusCode': 200, 'message': message}
