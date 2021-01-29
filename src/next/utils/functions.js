@@ -28,6 +28,8 @@ export const formatDuration = (secs) => {
 export const formatDistance = (distance) =>
   `${distance.toFixed(2).replace(".", ",")} km`;
 
+export const formatNumber = (number) => number.toFixed(2).replace(".", ",");
+
 // DO NOT DO THIS FOR SECURITY REASONS
 // BUT I CAN SINCE THIS IS MY DIPLOMA THESIS
 export const getExperimentOverviewLink = (userGroup, phaseNumber) => {

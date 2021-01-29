@@ -6,10 +6,13 @@ const TracksAPI = {
       tracks(where: { user: $userId, phaseNumber: $phaseNumber }) {
         duration
         score
-        scoreDistance
         totalDistance
         consumption
+        scoreConsumption
         fuelConsumed
+        scoreFuelConsumed
+        speed
+        scoreSpeed
         date
         purchase {
           id

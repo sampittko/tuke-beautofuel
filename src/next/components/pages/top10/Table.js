@@ -17,32 +17,32 @@ const Table = ({ drivers }) => {
       }`}
     >
       <div className="relative pt-12">
-        <div className="mt-16 mx-auto max-w-7xl px-4 sm:mt-24">
+        <div className="px-4 mx-auto mt-16 max-w-7xl sm:mt-24">
           <div className="text-center">
-            <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+            <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
               <span className="block xl:inline">Tabuľka 10 najlepších</span>{" "}
               <span className="block text-green-600 xl:inline">
                 ekologických šoférov
               </span>
             </h1>
-            <p className="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
+            <p className="max-w-md mx-auto mt-3 text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
               Po dobu 2 týždňov sa šoféri snažia jazdiť úsporne a nakonci budú
               najlepší traja z nich vecne odmenení za ich výkon a budú si môcť
-              pochutnať na chutnej odmene
+              pochutnať na svojej odmene
             </p>
           </div>
         </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
+        <div className="px-4 pt-16 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="flex flex-col">
             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-              <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                <div className="shadow-xs overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                  <table className="min-w-full divide-y divide-gray-200 text-center">
+              <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                <div className="overflow-hidden border-b border-gray-200 shadow-xs sm:rounded-lg">
+                  <table className="min-w-full text-center divide-y divide-gray-200">
                     <thead className="bg-gray-50">
                       <tr>
                         <th
                           scope="col"
-                          className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          className="px-6 py-3 text-xs font-medium tracking-wider text-gray-500 uppercase"
                         >
                           <svg
                             className="inline w-5 h-5 pb-1 pl-1"
@@ -61,7 +61,7 @@ const Table = ({ drivers }) => {
                         </th>
                         <th
                           scope="col"
-                          className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          className="px-6 py-3 text-xs font-medium tracking-wider text-gray-500 uppercase"
                         >
                           Prezývka šoféra{" "}
                           <svg
@@ -82,7 +82,7 @@ const Table = ({ drivers }) => {
 
                         <th
                           scope="col"
-                          className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          className="px-6 py-3 text-xs font-medium tracking-wider text-gray-500 uppercase"
                         >
                           Eko skóre{" "}
                           <svg
@@ -129,7 +129,7 @@ const Table = ({ drivers }) => {
                             }`}
                             key={`driver-${i}`}
                           >
-                            <td className="font-medium px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <td className="px-6 py-4 text-sm font-medium text-gray-500 whitespace-nowrap">
                               {driver.score === 0 ? "-" : rank}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">

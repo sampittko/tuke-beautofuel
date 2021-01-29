@@ -54,13 +54,28 @@
       "via": "track"
     },
     "consumption": {
-      "type": "decimal"
+      "type": "decimal",
+      "required": true
     },
     "scoreConsumption": {
-      "type": "decimal"
+      "type": "decimal",
+      "required": true
     },
     "fuelConsumed": {
-      "type": "decimal"
+      "type": "decimal",
+      "required": true
+    },
+    "scoreFuelConsumed": {
+      "type": "decimal",
+      "required": true
+    },
+    "speed": {
+      "type": "decimal",
+      "required": true
+    },
+    "scoreSpeed": {
+      "type": "decimal",
+      "required": true
     }
   }
 }

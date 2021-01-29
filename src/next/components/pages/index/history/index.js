@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Moment from "react-moment";
 import { USER_GROUPS } from "../../../../utils/constants";
-import { formatDistance, formatDuration } from "../../../../utils/functions";
+import {
+  formatDistance,
+  formatDuration,
+  formatNumber,
+} from "../../../../utils/functions";
 import Convert from "./actions/Convert";
 import Revert from "./actions/Revert";
 import _ from "lodash";
@@ -52,13 +56,16 @@ const History = ({
                           </span>
                         )}
                         <span className="mt-1 inline-flex px-2.5 py-0.5 text-xs font-medium">
-                          {phaseNumber !== 1 && (
-                            <>{formatDistance(track.scoreDistance)} / </>
-                          )}
                           {formatDistance(track.totalDistance)}
                         </span>
                         <span className="mt-1 inline-flex px-2.5 py-0.5 text-xs font-medium">
-                          {(track.duration / 60).toFixed(2)} min.
+                          {formatDuration(track.duration)}
+                        </span>
+                        <span className="mt-1 inline-flex px-2.5 py-0.5 text-xs font-medium">
+                          {formatNumber(track.consumption)} L / 100 km
+                        </span>
+                        <span className="mt-1 inline-flex px-2.5 py-0.5 text-xs font-medium">
+                          {formatNumber(track.speed)} km / h
                         </span>
                         <span className="mt-1 inline-flex px-2.5 py-0.5 text-xs font-medium">
                           <Moment date={track.date} format="DD. MM. YYYY" />
@@ -155,6 +162,40 @@ const History = ({
                       </svg>
                     </th>
                     <th className="px-6 py-3 text-xs font-medium tracking-wider text-right text-gray-500 uppercase bg-gray-50">
+                      Spotreba{" "}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        className="inline w-5 h-5 pb-1"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M4.871 4A17.926 17.926 0 003 12c0 2.874.673 5.59 1.871 8m14.13 0a17.926 17.926 0 001.87-8c0-2.874-.673-5.59-1.87-8M9 9h1.246a1 1 0 01.961.725l1.586 5.55a1 1 0 00.961.725H15m1-7h-.08a2 2 0 00-1.519.698L9.6 15.302A2 2 0 018.08 16H8"
+                        />
+                      </svg>
+                    </th>
+                    <th className="px-6 py-3 text-xs font-medium tracking-wider text-right text-gray-500 uppercase bg-gray-50">
+                      Rýchlosť{" "}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        className="inline w-5 h-5 pb-1"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M14 5l7 7m0 0l-7 7m7-7H3"
+                        />
+                      </svg>
+                    </th>
+                    <th className="px-6 py-3 text-xs font-medium tracking-wider text-right text-gray-500 uppercase bg-gray-50">
                       Dátum{" "}
                       <svg
                         className="inline w-5 h-5 pb-1"
@@ -225,13 +266,16 @@ const History = ({
                           {tracks.length - i}
                         </td>
                         <td className="px-6 py-4 text-sm text-right text-gray-500 whitespace-nowrap">
-                          {phaseNumber !== 1 && (
-                            <>{formatDistance(track.scoreDistance)} / </>
-                          )}
                           {formatDistance(track.totalDistance)}
                         </td>
                         <td className="px-6 py-4 text-sm text-right text-gray-500 whitespace-nowrap">
                           {formatDuration(track.duration)}
+                        </td>
+                        <td className="px-6 py-4 text-sm text-right text-gray-500 whitespace-nowrap">
+                          {formatNumber(track.consumption)} L / 100 km
+                        </td>
+                        <td className="px-6 py-4 text-sm text-right text-gray-500 whitespace-nowrap">
+                          {formatNumber(track.speed)} km / h
                         </td>
                         <td className="px-6 py-4 text-sm text-right text-gray-500 whitespace-nowrap">
                           <Moment date={track.date} format="DD. MM. YYYY" />

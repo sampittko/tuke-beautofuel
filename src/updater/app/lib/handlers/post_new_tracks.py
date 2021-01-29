@@ -195,6 +195,7 @@ def build_track_point(track_df, fuel_consumed, consumption, average_speed, data)
             'speed': average_speed,
             'scoreSpeed': 0,
             'score': 0,
+            'scoreFuelConsumed': 0,
             'fuelConsumed': fuel_consumed,
             'begin': first_coordinate_data[ENVIROCAR_DATA.TRACK_BEGIN],
             'end': first_coordinate_data[ENVIROCAR_DATA.TRACK_END]

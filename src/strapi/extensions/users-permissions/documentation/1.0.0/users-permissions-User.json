@@ -1340,7 +1340,13 @@
                 "totalDistance",
                 "scoreDistance",
                 "envirocar",
-                "phaseNumber"
+                "phaseNumber",
+                "consumption",
+                "scoreConsumption",
+                "fuelConsumed",
+                "scoreFuelConsumed",
+                "speed",
+                "scoreSpeed"
               ],
               "properties": {
                 "id": {
@@ -1383,6 +1389,15 @@
                   "type": "number"
                 },
                 "fuelConsumed": {
+                  "type": "number"
+                },
+                "scoreFuelConsumed": {
+                  "type": "number"
+                },
+                "speed": {
+                  "type": "number"
+                },
+                "scoreSpeed": {
                   "type": "number"
                 },
                 "created_by": {
