@@ -23,7 +23,8 @@ async def handler(data, x_user, x_token, bbox, influxdb_client):
     if tracks_df.empty:
         print("User {} does not have any tracks records".format(x_user))
         return handler_success('No track records')
-    print("Processing tracks synchronization request of user", x_user)
+    print("Processing tracks synchronization request for user", x_user)
+    print()
 
     # TODO Move below and set flag for incompatible track so that it is not being refetched and cleaned every time
     tracks_df = clean_data(tracks_df)
@@ -51,6 +52,7 @@ async def handler(data, x_user, x_token, bbox, influxdb_client):
 
     await update_strapi_tracks(tracks_df, additional_tracks_data, track_ids, data.user, data.synchronization, data.phaseNumber, data.userGroup)
     print("New tracks inserted into Strapi")
+    print()
 
     return handler_success(f'Processed tracks: {tracks_count}')
 
@@ -86,6 +88,8 @@ def clean_data(tracks_df):
     # Drop unit colums since we are not interested in them
     manipulate.drop_unit_columns(tracks_df).head()
 
+    print()
+
     return tracks_df
 
 
@@ -102,6 +106,7 @@ def filter_tracks(tracks_df, existing_tracks, data):
     # No tracks are uploaded
     if len(existing_track_ids) == 0:
         print("Tracks after filtering:", len(track_ids))
+        print()
         return tracks_df, track_ids
 
     # Some tracks or all tracks are uploaded
@@ -111,6 +116,7 @@ def filter_tracks(tracks_df, existing_tracks, data):
 
     track_ids = tracks_df[ENVIROCAR_DATA.TRACK_ID].unique()
     print("Tracks count after filtering:", len(track_ids))
+    print()
 
     return tracks_df, track_ids
 
