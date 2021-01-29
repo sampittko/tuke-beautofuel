@@ -672,6 +672,9 @@
                 "scoreConsumption": {
                   "type": "number"
                 },
+                "fuelConsumed": {
+                  "type": "number"
+                },
                 "created_by": {
                   "type": "string"
                 },

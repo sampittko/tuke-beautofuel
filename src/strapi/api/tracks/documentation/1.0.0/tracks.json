@@ -733,6 +733,9 @@
           },
           "scoreConsumption": {
             "type": "number"
+          },
+          "fuelConsumed": {
+            "type": "number"
           }
         }
       },
@@ -782,6 +785,9 @@
             "type": "number"
           },
           "scoreConsumption": {
+            "type": "number"
+          },
+          "fuelConsumed": {
             "type": "number"
           },
           "created_by": {

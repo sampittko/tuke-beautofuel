@@ -8,6 +8,8 @@ const TracksAPI = {
         score
         scoreDistance
         totalDistance
+        consumption
+        fuelConsumed
         date
         purchase {
           id

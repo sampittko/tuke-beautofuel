@@ -62,20 +62,19 @@ module.exports = {
         user: data.user,
       });
 
-      await strapi.controllers.transactions.create({
-        request: {
-          body: {
-            type:
-              data.score > 0
-                ? TRANSACTION_TYPES.addition
-                : TRANSACTION_TYPES.substraction,
-            value: Math.abs(data.score),
-            synchronization: data.synchronization,
-            wallet: wallet.id,
-            phaseNumber,
+      if (data.score > 0) {
+        await strapi.controllers.transactions.create({
+          request: {
+            body: {
+              type: TRANSACTION_TYPES.addition,
+              value: Math.abs(data.score),
+              synchronization: data.synchronization,
+              wallet: wallet.id,
+              phaseNumber,
+            },
           },
-        },
-      });
+        });
+      }
     }
 
     return sanitizeEntity(entity, { model: strapi.models.tracks });

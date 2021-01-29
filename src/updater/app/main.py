@@ -27,13 +27,9 @@ bbox = BboxSelector([
 app = FastAPI()
 
 
-runtime_update_requests_count = 0
-
-
 @app.post("/newTracks")
 async def post_new_tracks(data: PostNewTracksModel, x_user: str = Header(None), x_token: str = Header(None)):
-    runtime_update_requests_count += 1
-    return await post_new_tracks_handler(data, x_user, x_token, bbox=bbox, influxdb_client=grafanadb, request_number=runtime_update_requests_count)
+    return await post_new_tracks_handler(data, x_user, x_token, bbox=bbox, influxdb_client=grafanadb)
 
 
 @app.get("/userCredentialsValid")

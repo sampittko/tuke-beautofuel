@@ -58,6 +58,9 @@
     },
     "scoreConsumption": {
       "type": "decimal"
+    },
+    "fuelConsumed": {
+      "type": "decimal"
     }
   }
 }

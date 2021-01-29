@@ -16,7 +16,7 @@ async def get_strapi_tracks(data):
     return res.json()
 
 
-async def update_strapi_tracks(tracks_df, track_ids, user, synchronization, phaseNumber, userGroup):
+async def update_strapi_tracks(tracks_df, additional_tracks_data, track_ids, user, synchronization, phaseNumber, userGroup):
     for track_id in track_ids:
         first_coordinate_data = tracks_df[tracks_df['track.id']
                                           == track_id].iloc[0]
@@ -29,7 +29,8 @@ async def update_strapi_tracks(tracks_df, track_ids, user, synchronization, phas
                 'score': 0,
                 'totalDistance': first_coordinate_data['track.length'],
                 'scoreDistance': 0,
-                'consumption': 0,
+                'consumption': additional_tracks_data[track_id]['consumption'],
+                'fuelConsumed': additional_tracks_data[track_id]['fuelConsumed'],
                 'scoreConsumption': 0,
                 'user': user,
                 'synchronization': synchronization,
