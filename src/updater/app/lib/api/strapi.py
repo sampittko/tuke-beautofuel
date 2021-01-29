@@ -26,7 +26,7 @@ async def update_strapi_tracks(tracks_df, additional_tracks_data, track_ids, use
                 'envirocar': first_coordinate_data['track.id'],
                 'duration': seconds_between(first_coordinate_data['track.begin'], first_coordinate_data['track.end']),
                 'date': first_coordinate_data['track.begin'],
-                'score': 2,
+                'score': 0,
                 'totalDistance': first_coordinate_data['track.length'],
                 'scoreDistance': 0,
                 'consumption': additional_tracks_data[track_id]['consumption'],
