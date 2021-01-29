@@ -60,8 +60,8 @@
       "configurable": false
     },
     "wallet": {
-      "model": "wallets",
-      "via": "user"
+      "via": "user",
+      "model": "wallets"
     },
     "synchronizations": {
       "collection": "synchronizations",

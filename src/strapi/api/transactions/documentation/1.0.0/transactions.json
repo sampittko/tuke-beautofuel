@@ -558,6 +558,12 @@
               "credits3": {
                 "type": "integer"
               },
+              "score2": {
+                "type": "integer"
+              },
+              "score3": {
+                "type": "integer"
+              },
               "created_by": {
                 "type": "string"
               },

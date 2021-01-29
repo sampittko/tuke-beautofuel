@@ -12,19 +12,27 @@
   },
   "attributes": {
     "user": {
-      "via": "wallet",
       "plugin": "users-permissions",
-      "model": "user"
+      "model": "user",
+      "via": "wallet"
     },
     "transactions": {
-      "via": "wallet",
-      "collection": "transactions"
+      "collection": "transactions",
+      "via": "wallet"
     },
     "credits2": {
       "default": 0,
       "type": "integer"
     },
     "credits3": {
+      "type": "integer",
+      "default": 0
+    },
+    "score2": {
+      "type": "integer",
+      "default": 0
+    },
+    "score3": {
       "type": "integer",
       "default": 0
     }

@@ -21,7 +21,7 @@ const Gamification = ({ allUsers, phaseNumber }) => {
 
       const sortedUsers = _.orderBy(
         filteredUsers,
-        [`wallet.credits${phaseNumber}`, "username"],
+        [`wallet.score${phaseNumber}`, "username"],
         ["desc", "asc"]
       );
 
@@ -42,12 +42,12 @@ const Gamification = ({ allUsers, phaseNumber }) => {
   }, [allUsers]);
 
   return (
-    <div className="bg-white overflow-hidden shadow rounded-lg">
+    <div className="overflow-hidden bg-white rounded-lg shadow">
       <div className="p-5">
         <div className="flex items-center">
           <div className="flex-shrink-0">
             <svg
-              className="h-6 w-6 text-gray-400"
+              className="w-6 h-6 text-gray-400"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -61,9 +61,9 @@ const Gamification = ({ allUsers, phaseNumber }) => {
               ></path>
             </svg>
           </div>
-          <div className="ml-5 w-0 flex-1">
+          <div className="flex-1 w-0 ml-5">
             <dl>
-              <dt className="text-sm font-medium text-gray-500 truncate uppercase">
+              <dt className="text-sm font-medium text-gray-500 uppercase truncate">
                 V celkovom poradí
               </dt>
               <dd>
@@ -75,7 +75,7 @@ const Gamification = ({ allUsers, phaseNumber }) => {
           </div>
         </div>
       </div>
-      <div className="bg-gray-50 px-5 py-3 sm:py-7 lg:py-3">
+      <div className="px-5 py-3 bg-gray-50 sm:py-7 lg:py-3">
         <div className="text-sm">
           <Link
             href="/top10"

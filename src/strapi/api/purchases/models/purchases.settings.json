@@ -32,8 +32,8 @@
       "required": true
     },
     "track": {
-      "via": "purchase",
-      "model": "tracks"
+      "model": "tracks",
+      "via": "purchase"
     },
     "user": {
       "plugin": "users-permissions",

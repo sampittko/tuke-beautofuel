@@ -50,8 +50,8 @@
       "required": true
     },
     "purchase": {
-      "model": "purchases",
-      "via": "track"
+      "via": "track",
+      "model": "purchases"
     },
     "consumption": {
       "type": "decimal",

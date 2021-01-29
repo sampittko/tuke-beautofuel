@@ -656,6 +656,14 @@
           "credits3": {
             "type": "integer",
             "default": 0
+          },
+          "score2": {
+            "type": "integer",
+            "default": 0
+          },
+          "score3": {
+            "type": "integer",
+            "default": 0
           }
         }
       },
@@ -675,6 +683,14 @@
             "default": 0
           },
           "credits3": {
+            "type": "integer",
+            "default": 0
+          },
+          "score2": {
+            "type": "integer",
+            "default": 0
+          },
+          "score3": {
             "type": "integer",
             "default": 0
           },

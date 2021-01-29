@@ -27,6 +27,8 @@ module.exports = {
     let substractedCredits3 = 0;
     let addedCredits2 = 0;
     let addedCredits3 = 0;
+    let addedScore2 = 0;
+    let addedScore3 = 0;
 
     const { number: phaseNumber } = await strapi.query("phase").findOne();
 
@@ -34,10 +36,16 @@ module.exports = {
       substractedCredits2 =
         data.type === TRANSACTION_TYPES.substraction ? -data.value : 0;
       addedCredits2 = data.type === TRANSACTION_TYPES.addition ? data.value : 0;
+      if (data.synchronization) {
+        addedScore2 = data.value;
+      }
     } else if (phaseNumber === 3) {
       substractedCredits3 =
         data.type === TRANSACTION_TYPES.substraction ? -data.value : 0;
       addedCredits3 = data.type === TRANSACTION_TYPES.addition ? data.value : 0;
+      if (data.synchronization) {
+        addedScore3 = data.value;
+      }
     }
 
     await strapi.query("wallets").update(
@@ -45,6 +53,8 @@ module.exports = {
       {
         credits2: wallet.credits2 + substractedCredits2 + addedCredits2,
         credits3: wallet.credits3 + substractedCredits3 + addedCredits3,
+        score2: wallet.score2 + addedScore2,
+        score3: wallet.score3 + addedScore3,
       }
     );
 

@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { USER_GROUPS } from "../../../../utils/constants";
 
-const EcoScore = ({ recommendation, score }) => {
+const EcoScore = ({
+  recommendation,
+  credits,
+  score,
+  phaseNumber,
+  userGroup,
+}) => {
   const [currentRecommendation, setCurrentRecommendation] = useState(
     recommendation
   );
@@ -15,12 +22,12 @@ const EcoScore = ({ recommendation, score }) => {
   }, [recommendation]);
 
   return (
-    <div className="lg:col-span-2 bg-gradient-to-r from-cyan-600 to-green-400 overflow-hidden shadow rounded-lg">
+    <div className="overflow-hidden rounded-lg shadow lg:col-span-2 bg-gradient-to-r from-cyan-600 to-green-400">
       <div className="p-5">
         <div className="flex items-center">
           <div className="flex-shrink-0">
             <svg
-              className="h-6 w-6 text-gray-100"
+              className="w-6 h-6 text-gray-100"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
               fill="currentColor"
@@ -32,13 +39,25 @@ const EcoScore = ({ recommendation, score }) => {
               />
             </svg>
           </div>
-          <div className="ml-5 w-0 flex-1">
+          <div className="flex-1 w-0 ml-5">
             <dl>
-              <dt className="text-sm font-medium text-gray-200 truncate uppercase">
+              <dt className="text-sm font-medium text-gray-200 uppercase truncate">
                 Eko skóre
               </dt>
               <dd>
-                <div className="text-lg font-medium text-white">{score}</div>
+                <div className="text-lg font-medium text-white">
+                  {(phaseNumber === 2 && userGroup === USER_GROUPS.rewards) ||
+                  phaseNumber === 3 ? (
+                    <>
+                      {score - credits} / {score}{" "}
+                      <span className="pl-1.5 text-xs opacity-50 lowercase">
+                        Uplatnené na odmeny / Celkom
+                      </span>
+                    </>
+                  ) : (
+                    score
+                  )}
+                </div>
               </dd>
             </dl>
           </div>
@@ -47,7 +66,7 @@ const EcoScore = ({ recommendation, score }) => {
       <div className="bg-gray-50 bg-opacity-20 px-5 py-1.5 h-full">
         <div className="text-sm">
           <span href="#" className="font-medium text-gray-100">
-            <div className="min-w-0 flex-1 py-0">
+            <div className="flex-1 min-w-0 py-0">
               <div className="text-sm leading-8 text-gray-100">
                 <span className="mr-2">
                   <span className="relative inline-flex items-center rounded-full border border-gray-300 px-3 py-0.5 text-sm">

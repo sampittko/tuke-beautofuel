@@ -24,8 +24,8 @@
       "required": true
     },
     "wallet": {
-      "model": "wallets",
-      "via": "transactions"
+      "via": "transactions",
+      "model": "wallets"
     },
     "synchronization": {
       "model": "synchronizations",

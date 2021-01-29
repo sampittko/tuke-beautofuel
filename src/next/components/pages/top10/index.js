@@ -50,7 +50,7 @@ const Top10PageComponent = () => {
         .map((track, key) => ({
           username: key,
           id: track[0].user.id,
-          score: track[0].user.wallet[`credits${phaseData.phase.number}`],
+          score: track[0].user.wallet[`score${phaseData.phase.number}`],
           duration: _.sumBy(track, "duration"),
           distance: _.sumBy(track, "totalDistance"),
           group: track[0].user.group,

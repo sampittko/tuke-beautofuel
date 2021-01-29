@@ -29,8 +29,8 @@ const TracksAPI = {
           id
           username
           wallet {
-            credits2
-            credits3
+            score2
+            score3
           }
           group
         }

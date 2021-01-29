@@ -9,6 +9,8 @@ const UsersAPI = {
         wallet {
           credits2
           credits3
+          score2
+          score3
         }
         notified1
         notified2

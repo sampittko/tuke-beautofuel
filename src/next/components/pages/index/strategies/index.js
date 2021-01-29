@@ -12,11 +12,14 @@ const Strategies = ({ phase, user, recommendation, allUsers, tracks }) => {
 
   return (
     <div className="mt-8">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="max-w-6xl px-4 mx-auto sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-5 mt-2 sm:grid-cols-2 lg:grid-cols-3">
           <EcoScore
             recommendation={recommendation?.text}
-            score={user?.wallet[`credits${phaseNumber}`]}
+            credits={user?.wallet[`credits${phaseNumber}`]}
+            score={user?.wallet[`score${phaseNumber}`]}
+            phaseNumber={phaseNumber}
+            userGroup={userGroup}
           />
 
           {phaseNumber === 2 && userGroup === USER_GROUPS.rewards && (
