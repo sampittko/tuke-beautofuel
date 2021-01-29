@@ -66,7 +66,7 @@ const SetupStepPageComponent = ({
       {!userData?.user.setupCompleted ? (
         <div className="min-h-screen bg-gray-50">
           <Navigation />
-          <div className="pb-32 bg-green-800">
+          <div className="pb-32 bg-gradient-to-r from-cyan-600 to-green-400">
             <header className="py-10"></header>
           </div>
 

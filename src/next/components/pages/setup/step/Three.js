@@ -44,53 +44,53 @@ const StepThree = ({
             experimentu a ste povinný sa riadiť inštrukciami, ktoré Vám boli
             poskytnuté organizátorom experimentu.
           </p>
-          <p className="mt-4 text-lg leading-6 text-left text-gray-500">
+          <p className="mt-4 mb-2 text-lg leading-6 text-left text-gray-500">
             Organizátor experimentu si vyhradzuje právo:
-            <ul className="list-disc list-inside">
-              <li>
-                Pozmeniť inštrukcie prislúchajúce práve prebiehajúcej fáze
-                experimentu,
-              </li>
-              <li>
-                celkovo zrušiť experiment, ak to uzná za vhodné vzhľadom na
-                vzniknuté okolnosti a
-              </li>
-              <li>tiež kedykoľvek Vás vylúčiť z experimentu.</li>
-            </ul>
           </p>
-          <p className="mt-4 text-lg leading-6 text-left text-gray-500">
+          <ul className="text-left text-gray-500 list-disc list-inside">
+            <li>
+              Kedykoľvek pozmeniť inštrukcie prislúchajúce práve prebiehajúcej
+              fáze experimentu,
+            </li>
+            <li>
+              celkovo zrušiť experiment, ak to uzná za vhodné vzhľadom na
+              vzniknuté okolnosti a
+            </li>
+            <li>tiež kedykoľvek Vás vylúčiť z experimentu.</li>
+          </ul>
+          <p className="mt-4 mb-2 text-lg leading-6 text-left text-gray-500">
             Organizátor experimentu si vyhradzuje právo aj:
-            <ul className="list-disc list-inside">
-              <li>Nezohľadniť Vaše dáta pri vyhodnotení experimentu,</li>
-              <li>
-                dodať Vám odmeny, ktoré mohli byť počas experimentu nadobudnuté,
-                až keď bude situácia ohľadom vírusu COVID-19 prijateľná,
-              </li>
-              <li>zmeniť podmienky pre získanie odmien,</li>
-              <li>kedykoľvek upraviť pomer ekologického výkonu ku odmenám a</li>
-              <li>
-                kedykoľvek zmeniť algoritmus pre výpočet ekologického výkonu.
-              </li>
-            </ul>
           </p>
-          <p className="mt-4 text-lg leading-6 text-left text-gray-500">
+          <ul className="text-left text-gray-500 list-disc list-inside">
+            <li>Nezohľadniť Vaše dáta pri vyhodnotení experimentu,</li>
+            <li>
+              dodať Vám odmeny, ktoré mohli byť počas experimentu nadobudnuté,
+              až keď bude situácia ohľadom vírusu COVID-19 prijateľná,
+            </li>
+            <li>kedykoľvek zmeniť podmienky pre získanie odmien,</li>
+            <li>kedykoľvek upraviť pomer ekologického výkonu ku odmenám a</li>
+            <li>
+              kedykoľvek zmeniť algoritmus pre výpočet ekologického výkonu.
+            </li>
+          </ul>
+          <p className="mt-4 mb-2 text-lg leading-6 text-left text-gray-500">
             Systém o Vás zbiera nasledujúce dáta:
-            <ul className="list-disc list-inside">
-              <li>
-                Po vykonaní synchronizácie dát v tomto systéme všetky dáta,
-                ktoré poskytnete službe enviroCar (jedná sa hlavne o GPS
-                súradnice s podrobnosťami o aktuálnej spotrebe, emisiách a typ
-                automobilu s jeho detailmi - rok výroby, objem motora, typ
-                spaľovania a konkrétny model značky) a
-              </li>
-              <li>
-                všetky akcie, ktoré budete v tomto systéme vykonávať vrátane
-                času, kedy dané akcie vykonávate (jedná sa hlavne o
-                synchronizáciu dát so službou enviroCar, nákup alebo predaj
-                odmien a kedy ste sa naposledy prihlásili).
-              </li>
-            </ul>
           </p>
+          <ul className="text-left text-gray-500 list-disc list-inside">
+            <li>
+              Po vykonaní synchronizácie dát v tomto systéme všetky dáta, ktoré
+              poskytnete službe enviroCar (jedná sa hlavne o GPS súradnice s
+              podrobnosťami o aktuálnej spotrebe, emisiách a typ automobilu s
+              jeho detailmi - rok výroby, objem motora, typ spaľovania a
+              konkrétny model značky) a
+            </li>
+            <li>
+              všetky akcie, ktoré budete v tomto systéme vykonávať vrátane času,
+              kedy dané akcie vykonávate (jedná sa hlavne o synchronizáciu dát
+              so službou enviroCar, nákup alebo predaj odmien a kedy ste sa
+              naposledy prihlásili).
+            </li>
+          </ul>
         </div>
 
         <div className="mt-8">
