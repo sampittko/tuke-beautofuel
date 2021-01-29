@@ -81,7 +81,7 @@ const Top10PageComponent = () => {
       _.forOwn(driversWithTracksObject, (value) => {
         if (
           phaseData.phase.number === 3 ||
-          value.group !== USER_GROUPS.rewards
+          value.group === USER_GROUPS.gamification
         ) {
           newDrivers.push(value);
         }
