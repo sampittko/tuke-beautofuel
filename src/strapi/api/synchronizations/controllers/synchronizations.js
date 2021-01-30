@@ -8,7 +8,10 @@
 const { sanitizeEntity } = require("strapi-utils");
 const axios = require("axios");
 const { SYNCHRONIZATION_STATUSES } = require("../../../utils/constants");
-const { getUpdaterUrl } = require("../../../utils/functions");
+const {
+  getUpdaterUrl,
+  buildSynchronizationPoint,
+} = require("../../../utils/functions");
 
 module.exports = {
   /**
@@ -16,7 +19,6 @@ module.exports = {
    *
    * @return {Object}
    */
-
   async create(ctx) {
     const enviroCarToken = ctx.request.header["x-token"];
 
@@ -100,6 +102,16 @@ module.exports = {
             status: SYNCHRONIZATION_STATUSES.success,
           }
         );
+
+        const tracksCount = data.message.match(/\d/g).join("");
+        strapi.services.influxdb.writePoint(
+          buildSynchronizationPoint({
+            id: entity.id,
+            user: ctx.state.user.id,
+            phase: phaseNumber,
+            tracks: tracksCount,
+          })
+        );
       })
       .catch((error) => {
         strapi.query("synchronizations").update(
@@ -110,6 +122,17 @@ module.exports = {
             status: SYNCHRONIZATION_STATUSES.failure,
           }
         );
+        strapi.services.influxdb.writePoint(
+          buildSynchronizationPoint({
+            id: entity.id,
+            user: ctx.state.user.id,
+            phase: phaseNumber,
+            tracks: 0,
+          })
+        );
+      })
+      .finally(() => {
+        strapi.services.influxdb.flush();
       });
 
     return sanitizeEntity(entity, { model: strapi.models.synchronizations });

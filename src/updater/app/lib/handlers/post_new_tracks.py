@@ -58,8 +58,11 @@ async def handler(data, x_user, x_token, bbox, influxdb_client):
 
 
 def initialize_pipeline(data, x_user, x_token):
+    # TODO Replace in prod
+    # phase_start_time = parser.parse(
+    #     data.phaseStartDate).strftime(ENVIROCAR_DATETIME_FORMAT)
     phase_start_time = parser.parse(
-        data.phaseStartDate).strftime(ENVIROCAR_DATETIME_FORMAT)
+        "2021-01-27").strftime(ENVIROCAR_DATETIME_FORMAT)
     now_time = datetime.now().strftime(ENVIROCAR_DATETIME_FORMAT)
     time_interval = TimeSelector(
         start_time=phase_start_time, end_time=now_time)

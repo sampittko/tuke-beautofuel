@@ -11,6 +11,7 @@
   },
   "devDependencies": {},
   "dependencies": {
+    "@influxdata/influxdb-client": "^1.10.0",
     "axios": "^0.21.1",
     "strapi": "3.4.1",
     "strapi-admin": "3.4.1",

@@ -7,6 +7,7 @@
 
 const { sanitizeEntity } = require("strapi-utils");
 const { TRANSACTION_TYPES, USER_GROUPS } = require("../../../utils/constants");
+const { buildPurchasesPoint } = require("../../../utils/functions");
 
 module.exports = {
   /**
@@ -31,6 +32,18 @@ module.exports = {
       { id },
       ctx.request.body
     );
+
+    strapi.services.influxdb.writePoint(
+      buildPurchasesPoint({
+        id,
+        user: ctx.state.user.id,
+        phase: phaseNumber,
+        quantity: entity.quantity,
+        unitPrice: entity.unitPrice,
+        made: entity.made,
+      })
+    );
+    strapi.services.influxdb.flush();
 
     const wallet = await strapi.query("wallets").findOne({
       user: ctx.state.user.id,
