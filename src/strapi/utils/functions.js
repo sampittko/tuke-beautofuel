@@ -27,5 +27,5 @@ exports.buildPurchasesPoint = ({
     .tag("phase", phase)
     .tag("unitPrice", unitPrice)
     .tag("quantity", quantity)
-    .booleanField("made", made)
+    .intField("made", made ? 1 : 0)
     .timestamp(new Date());
