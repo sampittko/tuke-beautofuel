@@ -32,6 +32,7 @@ services:
       - 1337:1337
     depends_on:
       - strapidb
+      - grafanadb
 
   strapidb:
     image: mongo:4.4.2
