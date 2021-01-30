@@ -141,7 +141,8 @@ async def persist_new_tracks_data(tracks_df, track_ids, x_user, x_token, data, i
         influx_track_features = []
         for _, track_df_row in track_df.iterrows():
             try:
-                track_feature_point = build_track_feature_point(track_df_row)
+                track_feature_point = build_track_feature_point(
+                    track_df_row, data)
                 influx_track_features.append(track_feature_point)
             except ValueError as e:
                 print(e.message)
@@ -225,12 +226,18 @@ def calculate_track_data(track_df):
     return fuel_consumed, consumption, average_speed
 
 
-def build_track_feature_point(track_df_row):
+def build_track_feature_point(track_df_row, data):
     return {
         'measurement': 'trackFeatures',
         'tags': {
             'id': track_df_row[ENVIROCAR_DATA.TRACK_FEATURE_ID],
             'track': track_df_row[ENVIROCAR_DATA.TRACK_ID],
+            'user': track_df_row[ENVIROCAR_DATA.USER],
+            'email': track_df_row[ENVIROCAR_DATA.EMAIL],
+            'car': '{} {} {}'.format(
+                track_df_row[ENVIROCAR_DATA.CAR_MANUFACTURER], track_df_row[ENVIROCAR_DATA.CAR_MODEL], track_df_row[ENVIROCAR_DATA.CAR_CONSTRUCTION]),
+            'carEngineDisplacement': track_df_row[ENVIROCAR_DATA.CAR_ENGINE_DISPLACEMENT],
+            'phase': data.phaseNumber
         },
         'time': track_df_row[ENVIROCAR_DATA.TIME],
         'fields': {
