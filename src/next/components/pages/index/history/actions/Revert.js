@@ -17,11 +17,16 @@ const Revert = ({ tracksRefetch, userRefetch, track, allUsersRefetch }) => {
     }
   }, [data]);
 
+  const disabled = track.score === 0;
+
   return (
     <button
+      disabled={disabled}
       onClick={revertPurchase}
       type="button"
-      className="flex-shrink-0 p-1 text-gray-400 bg-gray-600 border border-transparent rounded-full shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+      className={`flex-shrink-0 p-1 text-gray-400 bg-gray-600 border border-transparent rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 ${
+        disabled ? "opacity-50 hover:cursor-default" : "hover:bg-gray-700 "
+      }`}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

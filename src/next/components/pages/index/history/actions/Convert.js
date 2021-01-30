@@ -17,11 +17,16 @@ const Convert = ({ tracksRefetch, userRefetch, track, allUsersRefetch }) => {
     }
   }, [data]);
 
+  const disabled = track.score === 0;
+
   return (
     <button
+      disabled={disabled}
       onClick={makePurchase}
       type="button"
-      className="flex-shrink-0 p-1 text-gray-400 bg-green-600 border border-transparent rounded-full shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+      className={`flex-shrink-0 p-1 text-gray-400 bg-green-600 border border-transparent rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 ${
+        disabled ? "opacity-50 hover:cursor-default" : "hover:bg-green-700 "
+      }`}
     >
       <svg
         className="w-5 h-5 text-white"
