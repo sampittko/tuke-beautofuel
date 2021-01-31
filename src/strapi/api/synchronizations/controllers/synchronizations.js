@@ -103,7 +103,13 @@ module.exports = {
           }
         );
 
-        const tracksCount = data.message.match(/\d/g).join("");
+        let tracksCount;
+        if (new RegExp(/\d/g).test(data.message)) {
+          tracksCount = data.message.match().join("");
+        } else {
+          tracksCount = 0;
+        }
+
         strapi.services.influxdb.writePoint(
           buildSynchronizationPoint({
             id: entity.id,
