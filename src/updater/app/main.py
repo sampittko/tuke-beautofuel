@@ -17,11 +17,19 @@ grafanadb = InfluxDBClient(
 )
 
 # Boundary box for Slovakia
+# bbox = BboxSelector([
+#     16.76425013529685,  # min_x
+#     47.37325224412486,  # min_y
+#     22.594816079401987,  # max_x
+#     49.7297265173567  # max_y
+# ])
+
+# I have Kuba so I need to include Kraków too lol
 bbox = BboxSelector([
     16.76425013529685,  # min_x
     47.37325224412486,  # min_y
-    22.594816079401987,  # max_x
-    49.7297265173567  # max_y
+    22.901215546816232,  # max_x
+    50.488836439759744  # max_y
 ])
 
 app = FastAPI()
