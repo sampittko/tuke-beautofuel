@@ -105,7 +105,7 @@ module.exports = {
 
         let tracksCount;
         if (new RegExp(/\d/g).test(data.message)) {
-          tracksCount = data.message.match().join("");
+          tracksCount = data.message.match(/\d/g).join("");
         } else {
           tracksCount = 0;
         }
