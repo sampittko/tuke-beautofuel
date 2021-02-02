@@ -180,7 +180,8 @@ def build_track_point(track_df, fuel_consumed, consumption, average_speed, data)
             'car': '{} {} {}'.format(
                 first_coordinate_data[ENVIROCAR_DATA.CAR_MANUFACTURER], first_coordinate_data[ENVIROCAR_DATA.CAR_MODEL], first_coordinate_data[ENVIROCAR_DATA.CAR_CONSTRUCTION]),
             'carEngineDisplacement': first_coordinate_data[ENVIROCAR_DATA.CAR_ENGINE_DISPLACEMENT],
-            'phase': data.phaseNumber
+            'phase': data.phaseNumber,
+            'strategy': data.userGroup
         },
         'time': first_coordinate_data[ENVIROCAR_DATA.TRACK_CREATED],
         'fields': {
@@ -237,7 +238,8 @@ def build_track_feature_point(track_df_row, data):
             'car': '{} {} {}'.format(
                 track_df_row[ENVIROCAR_DATA.CAR_MANUFACTURER], track_df_row[ENVIROCAR_DATA.CAR_MODEL], track_df_row[ENVIROCAR_DATA.CAR_CONSTRUCTION]),
             'carEngineDisplacement': track_df_row[ENVIROCAR_DATA.CAR_ENGINE_DISPLACEMENT],
-            'phase': data.phaseNumber
+            'phase': data.phaseNumber,
+            'strategy': data.userGroup
         },
         'time': track_df_row[ENVIROCAR_DATA.TIME],
         'fields': {
