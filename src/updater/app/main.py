@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Header
-from influxdb import InfluxDBClient, DataFrameClient
+from influxdb import InfluxDBClient
 
 from lib.packages.envirocar import BboxSelector
 from lib.models import PostNewTracks as PostNewTracksModel
@@ -9,15 +9,6 @@ from lib.utils.constants import INFLUXDB_HOST, INFLUXDB_PORT, INFLUXDB_USER, INF
 
 # Database client
 grafanadb = InfluxDBClient(
-    host=INFLUXDB_HOST,
-    port=INFLUXDB_PORT,
-    database=INFLUXDB_DB,
-    username=INFLUXDB_USER,
-    password=INFLUXDB_PASSWORD
-)
-
-# Database client for DataFrame querying
-grafanadb_df = DataFrameClient(
     host=INFLUXDB_HOST,
     port=INFLUXDB_PORT,
     database=INFLUXDB_DB,
@@ -46,7 +37,7 @@ app = FastAPI()
 
 @app.post("/newTracks")
 async def post_new_tracks(data: PostNewTracksModel, x_user: str = Header(None), x_token: str = Header(None)):
-    return await post_new_tracks_handler(data, x_user, x_token, bbox=bbox, influxdb_client=grafanadb, influxdb_client_df=grafanadb_df)
+    return await post_new_tracks_handler(data, x_user, x_token, bbox=bbox, influxdb_client=grafanadb)
 
 
 @app.get("/userCredentialsValid")

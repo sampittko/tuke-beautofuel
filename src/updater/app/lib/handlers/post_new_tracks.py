@@ -15,7 +15,7 @@ from ..utils.functions import seconds_between, float_round_2
 from ..utils.constants import ENVIROCAR_DATETIME_FORMAT, ENVIROCAR_DATA
 
 
-async def handler(data, x_user, x_token, bbox, influxdb_client, influxdb_client_df):
+async def handler(data, x_user, x_token, bbox, influxdb_client):
     time_interval, track_api = initialize_pipeline(data, x_user, x_token)
 
     tracks_df = track_api.get_tracks(bbox=bbox, time_interval=time_interval)
@@ -46,10 +46,6 @@ async def handler(data, x_user, x_token, bbox, influxdb_client, influxdb_client_
         print("New tracks inserted into Grafana")
     except ChildProcessError:
         print("Not all new tracks were inserted into Grafana")
-
-    if data.phaseNumber == 2 or data.phaseNumber == 3:
-        additional_tracks_data = get_tracks_eco_score(data,
-                                                      additional_tracks_data, influxdb_client_df)
 
     await update_strapi_tracks(tracks_df, additional_tracks_data, track_ids, data)
     print("New tracks inserted into Strapi")
@@ -135,8 +131,12 @@ async def persist_new_tracks_data(tracks_df, track_ids, x_user, x_token, data, i
             'speed': average_speed
         }
 
+        if data.phaseNumber == 2 or data.phaseNumber == 3:
+            additional_tracks_data = get_tracks_eco_score(x_user,
+                                                          additional_tracks_data, influxdb_client)
+
         track_point = build_track_point(
-            track_df, fuel_consumed, consumption, average_speed, data)
+            track_df, additional_tracks_data[track_id], data)
         influx_tracks.append(track_point)
 
         influx_track_features = []
@@ -169,7 +169,80 @@ async def persist_new_tracks_data(tracks_df, track_ids, x_user, x_token, data, i
     return additional_tracks_data
 
 
-def build_track_point(track_df, fuel_consumed, consumption, average_speed, data):
+def get_tracks_eco_score(x_user, additional_tracks_data, influxdb_client):
+    # Consumption queries
+    stdddev_consumption_query = "SELECT stddev(\"consumption\") {};".format(
+        get_query_end(x_user))
+    mean_consumption_query = "SELECT mean(\"consumption\") {};".format(
+        get_query_end(x_user))
+    min_consumption_query = "SELECT min(\"consumption\") {};".format(
+        get_query_end(x_user))
+    max_consumption_query = "SELECT max(\"consumption\") {};".format(
+        get_query_end(x_user))
+
+    # Execute consumption queries
+    stddev_consumption = get_query_result_value(
+        influxdb_client.query(stdddev_consumption_query), 'stddev')
+    mean_consumption = get_query_result_value(
+        influxdb_client.query(mean_consumption_query), 'mean')
+    min_consumption = get_query_result_value(
+        influxdb_client.query(min_consumption_query), 'min')
+    max_consumption = get_query_result_value(
+        influxdb_client.query(max_consumption_query), 'max')
+
+    for track_id in additional_tracks_data:
+        track_2_consumption = additional_tracks_data[track_id]['consumption']
+
+        part_50 = None
+        part_30 = None
+        part_20 = None
+        part_10 = None
+
+        lower_consumption_limit = mean_consumption - stddev_consumption
+        upper_consumption_limit = mean_consumption + stddev_consumption
+
+        if track_2_consumption >= upper_consumption_limit:
+            part_50 = 0
+        elif track_2_consumption <= lower_consumption_limit:
+            part_50 = 100
+        else:
+            track_2_consumption = track_2_consumption - lower_consumption_limit
+            upper_consumption_limit = upper_consumption_limit - lower_consumption_limit
+            part_50 = int(
+                (track_2_consumption / upper_consumption_limit) * 100)
+
+        if track_2_consumption < min_consumption:
+            part_30 = 100
+        else:
+            part_30 = 0
+
+        if track_2_consumption < mean_consumption:
+            part_20 = 100
+        else:
+            part_20 = 0
+
+        if track_2_consumption < max_consumption:
+            part_10 = 100
+        else:
+            part_10 = 0
+
+        eco_score = int(part_50 * 0.5 + part_30 * 0.3 +
+                        part_20 * 0.2 + part_10 * 0.1)
+
+        print("Eco score of track {}: {}".format(track_id, eco_score))
+        additional_tracks_data[track_id]['score'] = eco_score
+    return additional_tracks_data
+
+
+def get_query_end(user):
+    return "FROM \"tracks\" WHERE (\"phase\"='1' AND \"user\"='{}')".format(user)
+
+
+def get_query_result_value(result, field):
+    return list(result.get_points())[0][field]
+
+
+def build_track_point(track_df, additional_tracks_data, data):
     first_coordinate_data = track_df.iloc[0]
 
     return {
@@ -190,13 +263,13 @@ def build_track_point(track_df, fuel_consumed, consumption, average_speed, data)
             'scoreLength': 0,
             'duration': seconds_between(first_coordinate_data[ENVIROCAR_DATA.TRACK_BEGIN], first_coordinate_data[ENVIROCAR_DATA.TRACK_END]),
             'scoreDuration': 0,
-            'consumption': consumption,
+            'consumption': additional_tracks_data['consumption'],
             'scoreConsumption': 0,
-            'speed': average_speed,
+            'speed': additional_tracks_data['speed'],
             'scoreSpeed': 0,
-            'score': 0,
+            'score': additional_tracks_data['score'] or 0,
             'scoreFuelConsumed': 0,
-            'fuelConsumed': fuel_consumed,
+            'fuelConsumed': additional_tracks_data['fuelConsumed'],
             'begin': first_coordinate_data[ENVIROCAR_DATA.TRACK_BEGIN],
             'end': first_coordinate_data[ENVIROCAR_DATA.TRACK_END]
         }
@@ -251,79 +324,6 @@ def build_track_feature_point(track_df_row, data):
             'speed': track_df_row[ENVIROCAR_DATA.TRACK_FEATURE_SPEED],
         }
     }
-
-
-def get_tracks_eco_score(data, additional_tracks_data, influxdb_client_df):
-    # Consumption queries
-    stdddev_consumption_query = "SELECT stddev(\"consumption\") {};".format(
-        get_query_end(data.user))
-    mean_consumption_query = "SELECT mean(\"consumption\") {};".format(
-        get_query_end(data.user))
-    min_consumption_query = "SELECT min(\"consumption\") {};".format(
-        get_query_end(data.user))
-    max_consumption_query = "SELECT max(\"consumption\") {};".format(
-        get_query_end(data.user))
-
-    # Execute consumption queries
-    stddev_consumption = get_query_result_value(
-        influxdb_client_df.query(stdddev_consumption_query), 'stddev')
-    mean_consumption = get_query_result_value(
-        influxdb_client_df.query(mean_consumption_query), 'mean')
-    min_consumption = get_query_result_value(
-        influxdb_client_df.query(min_consumption_query), 'min')
-    max_consumption = get_query_result_value(
-        influxdb_client_df.query(max_consumption_query), 'max')
-
-    for track_id in additional_tracks_data:
-        track_2_consumption = additional_tracks_data[track_id]['consumption']
-
-        part_50 = None
-        part_30 = None
-        part_20 = None
-        part_10 = None
-
-        lower_consumption_limit = mean_consumption - stddev_consumption
-        upper_consumption_limit = mean_consumption + stddev_consumption
-
-        if track_2_consumption >= upper_consumption_limit:
-            part_50 = 0
-        elif track_2_consumption <= lower_consumption_limit:
-            part_50 = 100
-        else:
-            track_2_consumption = track_2_consumption - lower_consumption_limit
-            upper_consumption_limit = upper_consumption_limit - lower_consumption_limit
-            part_50 = int(
-                (track_2_consumption / upper_consumption_limit) * 100)
-
-        if track_2_consumption < min_consumption:
-            part_30 = 100
-        else:
-            part_30 = 0
-
-        if track_2_consumption < mean_consumption:
-            part_20 = 100
-        else:
-            part_20 = 0
-
-        if track_2_consumption < max_consumption:
-            part_10 = 100
-        else:
-            part_10 = 0
-
-        eco_score = int(part_50 * 0.5 + part_30 * 0.3 +
-                        part_20 * 0.2 + part_10 * 0.1)
-
-        print("Eco score of track {}: {}".format(track_id, eco_score))
-        additional_tracks_data[track_id]['score'] = eco_score
-    return additional_tracks_data
-
-
-def get_query_end(user):
-    return "FROM \"tracks\" WHERE (\"phase\"='1' AND \"user\"='{}')".format(user)
-
-
-def get_query_result_value(result, field):
-    return result['tracks'][field][0]
 
 
 def handler_success(message):
