@@ -7,7 +7,7 @@ import WithGraphQL from "../lib/with-graphql";
 const Top10Page = ({ session }) => (
   <WithGraphQL session={session}>
     <Head>
-      <title>Sieň slávy | beautofuel</title>
+      <title>Top 10 ekologických šoférov | beautofuel</title>
     </Head>
     <PageComponent />
   </WithGraphQL>

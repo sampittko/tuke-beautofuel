@@ -40,13 +40,19 @@ const Gamification = ({ allTracks, allUsers, phaseNumber }) => {
         }
       });
 
-      const newDrivers = [];
+      let newDrivers = [];
 
       _.forOwn(driversWithTracksObject, (value) => {
         if (phaseNumber === 3 || value.group === USER_GROUPS.gamification) {
           newDrivers.push(value);
         }
       });
+
+      newDrivers = _.orderBy(
+        newDrivers,
+        ["score", "username"],
+        ["desc", "asc"]
+      );
 
       const newRank = newDrivers.findIndex((elm) => elm.id === session.id) + 1;
 

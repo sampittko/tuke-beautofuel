@@ -35,10 +35,18 @@ const Stats = ({ phaseNumber, tracks, drivers }) => {
               <dl className="bg-white rounded-lg shadow-lg lg:grid lg:grid-cols-3">
                 <div className="flex flex-col p-6 text-center border-b border-gray-100 sm:border-0 sm:border-r">
                   <dt className="order-2 mt-2 text-lg font-medium leading-6 text-gray-500">
-                    Spolu najazdené
+                    Spolu najazdené vyše
                   </dt>
                   <dd className="order-1 text-5xl font-extrabold text-green-600">
-                    {formatDistance(totalDistance)}
+                    {formatDistance(1500, 0)}
+                  </dd>
+                </div>
+                <div className="flex flex-col p-6 text-center border-t border-gray-100 sm:border-0 sm:border-l">
+                  <dt className="order-2 mt-2 text-lg font-medium leading-6 text-gray-500">
+                    Zapojení šoféri
+                  </dt>
+                  <dd className="order-1 text-5xl font-extrabold text-green-600">
+                    {drivers.length}
                   </dd>
                 </div>
                 <div className="flex flex-col p-6 text-center border-t border-b border-gray-100 sm:border-0 sm:border-l sm:border-r">
@@ -47,14 +55,6 @@ const Stats = ({ phaseNumber, tracks, drivers }) => {
                   </dt>
                   <dd className="order-1 text-5xl font-extrabold text-green-600">
                     {formatDuration(totalDuration)}
-                  </dd>
-                </div>
-                <div className="flex flex-col p-6 text-center border-t border-gray-100 sm:border-0 sm:border-l">
-                  <dt className="order-2 mt-2 text-lg font-medium leading-6 text-gray-500">
-                    Počet zapojených šoférov
-                  </dt>
-                  <dd className="order-1 text-5xl font-extrabold text-green-600">
-                    {drivers.length}
                   </dd>
                 </div>
               </dl>

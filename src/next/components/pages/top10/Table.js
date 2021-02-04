@@ -20,7 +20,7 @@ const Table = ({ drivers }) => {
         <div className="px-4 mx-auto mt-16 max-w-7xl sm:mt-24">
           <div className="text-center">
             <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
-              <span className="block xl:inline">Tabuľka 10 najlepších</span>{" "}
+              <span className="block xl:inline">Top 10</span>{" "}
               <span className="block text-green-600 xl:inline">
                 ekologických šoférov
               </span>

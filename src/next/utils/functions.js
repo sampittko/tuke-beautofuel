@@ -25,8 +25,8 @@ export const formatDuration = (secs) => {
   // return pad(hours)+":"+pad(minutes)+":"+pad(secs); for old browsers
 };
 
-export const formatDistance = (distance) =>
-  `${distance.toFixed(2).replace(".", ",")} km`;
+export const formatDistance = (distance, decimals = 2) =>
+  `${distance.toFixed(decimals).replace(".", ",")} km`;
 
 export const formatNumber = (number) => number.toFixed(2).replace(".", ",");
 
