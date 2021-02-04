@@ -246,10 +246,12 @@ def get_track_eco_score(additional_track_data, phase_1_consumptions):
     elif track_2_consumption <= lower_consumption_limit:
         part_50 = 100
     else:
-        track_2_consumption = track_2_consumption - lower_consumption_limit
-        upper_consumption_limit = upper_consumption_limit - lower_consumption_limit
-        part_50 = int(
-            (track_2_consumption / upper_consumption_limit) * 100)
+        part_50 = track_2_consumption / upper_consumption_limit
+        if part_50 > 1:
+            part_50 = 0
+        else:
+            part_50 = 100 - int(
+                (track_2_consumption / upper_consumption_limit) * 100)
 
     if track_2_consumption < phase_1_consumptions['min']:
         part_30 = 100
