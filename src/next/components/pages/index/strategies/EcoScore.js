@@ -14,7 +14,9 @@ const EcoScore = ({
     recommendation
   );
   const [animating, setAnimating] = useState(false);
-  const [averageScore, setAverageScore] = useState(0);
+  const [averageScore, setAverageScore] = useState(() =>
+    tracks.length !== 0 ? Math.floor(_.meanBy(tracks, "score")) : 0
+  );
 
   useEffect(() => {
     setAnimating(true);
@@ -25,7 +27,9 @@ const EcoScore = ({
   }, [recommendation]);
 
   useEffect(() => {
-    setAverageScore(Math.floor(_.meanBy(tracks, "score")));
+    if (tracks.length !== 0) {
+      setAverageScore(Math.floor(_.meanBy(tracks, "score")));
+    }
   }, [tracks]);
 
   return (

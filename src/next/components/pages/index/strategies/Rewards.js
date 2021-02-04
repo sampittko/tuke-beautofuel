@@ -41,7 +41,7 @@ const Rewards = ({ tracks }) => {
               </dt>
               <dd>
                 <div className="text-lg font-medium text-green-900">
-                  {krovkyCount} ks / {krovkyCount * 7} g
+                  {krovkyCount} ks = {krovkyCount * 7} g
                 </div>
               </dd>
             </dl>
