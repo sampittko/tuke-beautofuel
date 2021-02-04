@@ -117,26 +117,27 @@ def filter_tracks(tracks_df, existing_tracks, data):
 
 async def persist_new_tracks_data(tracks_df, track_ids, x_user, x_token, data, influxdb_client):
     additional_tracks_data = {}
+    phase_1_consumptions = None
+
+    if data.phaseNumber == 2 or data.phaseNumber == 3:
+        phase_1_consumptions = query_phase_1_consumptions(
+            x_user, influxdb_client)
 
     influx_tracks = []
     for track_id in track_ids:
         track_df = tracks_df[tracks_df[ENVIROCAR_DATA.TRACK_ID] == track_id]
 
-        fuel_consumed, consumption, average_speed = calculate_track_data(
-            track_df)
+        additional_tracks_data = calculate_track_data(
+            track_df, additional_tracks_data, track_id)
 
-        additional_tracks_data[track_id] = {
-            'fuelConsumed': fuel_consumed,
-            'consumption': consumption,
-            'speed': average_speed
-        }
+        additional_track_data = additional_tracks_data[track_id]
 
-        if data.phaseNumber == 2 or data.phaseNumber == 3:
-            additional_tracks_data = get_tracks_eco_score(x_user,
-                                                          additional_tracks_data, influxdb_client)
+        if phase_1_consumptions:
+            additional_tracks_data[track_id] = get_track_eco_score(
+                additional_track_data, phase_1_consumptions)
 
         track_point = build_track_point(
-            track_df, additional_tracks_data[track_id], data)
+            track_df, additional_track_data, data)
         influx_tracks.append(track_point)
 
         influx_track_features = []
@@ -169,7 +170,7 @@ async def persist_new_tracks_data(tracks_df, track_ids, x_user, x_token, data, i
     return additional_tracks_data
 
 
-def get_tracks_eco_score(x_user, additional_tracks_data, influxdb_client):
+def query_phase_1_consumptions(x_user, influxdb_client):
     # Consumption queries
     stdddev_consumption_query = "SELECT stddev(\"consumption\") {};".format(
         get_query_end(x_user))
@@ -190,93 +191,15 @@ def get_tracks_eco_score(x_user, additional_tracks_data, influxdb_client):
     max_consumption = get_query_result_value(
         influxdb_client.query(max_consumption_query), 'max')
 
-    for track_id in additional_tracks_data:
-        track_2_consumption = additional_tracks_data[track_id]['consumption']
-
-        part_50 = None
-        part_30 = None
-        part_20 = None
-        part_10 = None
-
-        lower_consumption_limit = mean_consumption - stddev_consumption
-        upper_consumption_limit = mean_consumption + stddev_consumption
-
-        if track_2_consumption >= upper_consumption_limit:
-            part_50 = 0
-        elif track_2_consumption <= lower_consumption_limit:
-            part_50 = 100
-        else:
-            track_2_consumption = track_2_consumption - lower_consumption_limit
-            upper_consumption_limit = upper_consumption_limit - lower_consumption_limit
-            part_50 = int(
-                (track_2_consumption / upper_consumption_limit) * 100)
-
-        if track_2_consumption < min_consumption:
-            part_30 = 100
-        else:
-            part_30 = 0
-
-        if track_2_consumption < mean_consumption:
-            part_20 = 100
-        else:
-            part_20 = 0
-
-        if track_2_consumption < max_consumption:
-            part_10 = 100
-        else:
-            part_10 = 0
-
-        eco_score = int(part_50 * 0.5 + part_30 * 0.3 +
-                        part_20 * 0.2 + part_10 * 0.1)
-
-        print("Eco score of track {}: {}".format(track_id, eco_score))
-        additional_tracks_data[track_id]['score'] = eco_score
-    return additional_tracks_data
-
-
-def get_query_end(user):
-    return "FROM \"tracks\" WHERE (\"phase\"='1' AND \"user\"='{}')".format(user)
-
-
-def get_query_result_value(result, field):
-    return list(result.get_points())[0][field]
-
-
-def build_track_point(track_df, additional_tracks_data, data):
-    first_coordinate_data = track_df.iloc[0]
-
     return {
-        'measurement': 'tracks',
-        'tags': {
-            'id': first_coordinate_data[ENVIROCAR_DATA.TRACK_ID],
-            'user': first_coordinate_data[ENVIROCAR_DATA.USER],
-            'email': first_coordinate_data[ENVIROCAR_DATA.EMAIL],
-            'car': '{} {} {}'.format(
-                first_coordinate_data[ENVIROCAR_DATA.CAR_MANUFACTURER], first_coordinate_data[ENVIROCAR_DATA.CAR_MODEL], first_coordinate_data[ENVIROCAR_DATA.CAR_CONSTRUCTION]),
-            'carEngineDisplacement': first_coordinate_data[ENVIROCAR_DATA.CAR_ENGINE_DISPLACEMENT],
-            'phase': data.phaseNumber,
-            'strategy': data.userGroup
-        },
-        'time': first_coordinate_data[ENVIROCAR_DATA.TRACK_CREATED],
-        'fields': {
-            'length': first_coordinate_data[ENVIROCAR_DATA.TRACK_LENGTH],
-            'scoreLength': 0,
-            'duration': seconds_between(first_coordinate_data[ENVIROCAR_DATA.TRACK_BEGIN], first_coordinate_data[ENVIROCAR_DATA.TRACK_END]),
-            'scoreDuration': 0,
-            'consumption': additional_tracks_data['consumption'],
-            'scoreConsumption': 0,
-            'speed': additional_tracks_data['speed'],
-            'scoreSpeed': 0,
-            'score': additional_tracks_data['score'] or 0,
-            'scoreFuelConsumed': 0,
-            'fuelConsumed': additional_tracks_data['fuelConsumed'],
-            'begin': first_coordinate_data[ENVIROCAR_DATA.TRACK_BEGIN],
-            'end': first_coordinate_data[ENVIROCAR_DATA.TRACK_END]
-        }
+        'stddev': stddev_consumption,
+        'mean': mean_consumption,
+        'min': min_consumption,
+        'max': max_consumption
     }
 
 
-def calculate_track_data(track_df):
+def calculate_track_data(track_df, additional_tracks_data, track_id):
     # Calculate interval times
     dt = np.zeros(len(track_df[ENVIROCAR_DATA.TIME]))
     for i in range(1, len(track_df[ENVIROCAR_DATA.TIME])):
@@ -298,7 +221,99 @@ def calculate_track_data(track_df):
         track_df[ENVIROCAR_DATA.TRACK_FEATURE_SPEED])
     average_speed = float_round_2(average_speed)
 
-    return fuel_consumed, consumption, average_speed
+    additional_tracks_data[track_id] = {
+        'fuelConsumed': fuel_consumed,
+        'consumption': consumption,
+        'speed': average_speed
+    }
+
+    return additional_tracks_data
+
+
+def get_track_eco_score(additional_track_data, phase_1_consumptions):
+    track_2_consumption = additional_track_data['consumption']
+
+    part_50 = None
+    part_30 = None
+    part_20 = None
+    part_10 = None
+
+    lower_consumption_limit = phase_1_consumptions['mean'] - \
+        phase_1_consumptions['stddev']
+    upper_consumption_limit = phase_1_consumptions['mean'] + \
+        phase_1_consumptions['stddev']
+
+    if track_2_consumption >= upper_consumption_limit:
+        part_50 = 0
+    elif track_2_consumption <= lower_consumption_limit:
+        part_50 = 100
+    else:
+        track_2_consumption = track_2_consumption - lower_consumption_limit
+        upper_consumption_limit = upper_consumption_limit - lower_consumption_limit
+        part_50 = int(
+            (track_2_consumption / upper_consumption_limit) * 100)
+
+    if track_2_consumption < phase_1_consumptions['min']:
+        part_30 = 100
+    else:
+        part_30 = 0
+
+    if track_2_consumption < phase_1_consumptions['mean']:
+        part_20 = 100
+    else:
+        part_20 = 0
+
+    if track_2_consumption < phase_1_consumptions['max']:
+        part_10 = 100
+    else:
+        part_10 = 0
+
+    additional_track_data['score'] = int(part_50 * 0.5 + part_30 * 0.3 +
+                                         part_20 * 0.2 + part_10 * 0.1)
+
+    return additional_track_data
+
+
+def get_query_end(user):
+    return "FROM \"tracks\" WHERE (\"phase\"='1' AND \"user\"='{}')".format(user)
+
+
+def get_query_result_value(result, field):
+    return list(result.get_points())[0][field]
+
+
+def build_track_point(track_df, additional_track_data, data):
+    first_coordinate_data = track_df.iloc[0]
+
+    return {
+        'measurement': 'tracks',
+        'tags': {
+            'id': first_coordinate_data[ENVIROCAR_DATA.TRACK_ID],
+            'user': first_coordinate_data[ENVIROCAR_DATA.USER],
+            'email': first_coordinate_data[ENVIROCAR_DATA.EMAIL],
+            'car': '{} {} {}'.format(
+                first_coordinate_data[ENVIROCAR_DATA.CAR_MANUFACTURER], first_coordinate_data[ENVIROCAR_DATA.CAR_MODEL], first_coordinate_data[ENVIROCAR_DATA.CAR_CONSTRUCTION]),
+            'carEngineDisplacement': first_coordinate_data[ENVIROCAR_DATA.CAR_ENGINE_DISPLACEMENT],
+            'phase': data.phaseNumber,
+            'strategy': data.userGroup
+        },
+        'time': first_coordinate_data[ENVIROCAR_DATA.TRACK_CREATED],
+        'fields': {
+            'length': first_coordinate_data[ENVIROCAR_DATA.TRACK_LENGTH],
+            'scoreLength': 0,
+            'duration': seconds_between(first_coordinate_data[ENVIROCAR_DATA.TRACK_BEGIN], first_coordinate_data[ENVIROCAR_DATA.TRACK_END]),
+            'scoreDuration': 0,
+            'consumption': additional_track_data['consumption'],
+            'scoreConsumption': 0,
+            'speed': additional_track_data['speed'],
+            'scoreSpeed': 0,
+            'score': additional_track_data['score'] or 0,
+            'scoreFuelConsumed': 0,
+            'fuelConsumed': additional_track_data['fuelConsumed'],
+            'begin': first_coordinate_data[ENVIROCAR_DATA.TRACK_BEGIN],
+            'end': first_coordinate_data[ENVIROCAR_DATA.TRACK_END]
+        }
+    }
 
 
 def build_track_feature_point(track_df_row, data):
