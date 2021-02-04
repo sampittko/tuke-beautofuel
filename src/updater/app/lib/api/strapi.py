@@ -16,7 +16,7 @@ async def get_strapi_tracks(data):
     return res.json()
 
 
-async def update_strapi_tracks(tracks_df, additional_tracks_data, track_ids, user, synchronization, phaseNumber, userGroup):
+async def update_strapi_tracks(tracks_df, additional_tracks_data, track_ids, data):
     for track_id in track_ids:
         first_coordinate_data = tracks_df[tracks_df['track.id']
                                           == track_id].iloc[0]
@@ -26,7 +26,7 @@ async def update_strapi_tracks(tracks_df, additional_tracks_data, track_ids, use
                 'envirocar': first_coordinate_data['track.id'],
                 'duration': seconds_between(first_coordinate_data['track.begin'], first_coordinate_data['track.end']),
                 'date': first_coordinate_data['track.begin'],
-                'score': 0,
+                'score': additional_tracks_data[track_id]['score'],
                 'totalDistance': first_coordinate_data['track.length'],
                 'scoreDistance': 0,
                 'consumption': additional_tracks_data[track_id]['consumption'],
@@ -35,10 +35,10 @@ async def update_strapi_tracks(tracks_df, additional_tracks_data, track_ids, use
                 'scoreFuelConsumed': 0,
                 'speed': additional_tracks_data[track_id]['speed'],
                 'scoreSpeed': 0,
-                'user': user,
-                'synchronization': synchronization,
-                'phaseNumber': phaseNumber,
-                'userGroup': userGroup
+                'user': data.user,
+                'synchronization': data.synchronization,
+                'phaseNumber': data.phaseNumber,
+                'userGroup': data.userGroup
             },
             params={
                 'token': STRAPI_TOKEN
