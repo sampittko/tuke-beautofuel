@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { USER_GROUPS } from "../../../../utils/constants";
+import _ from "lodash";
 
 const EcoScore = ({
   recommendation,
@@ -7,11 +8,13 @@ const EcoScore = ({
   score,
   phaseNumber,
   userGroup,
+  tracks,
 }) => {
   const [currentRecommendation, setCurrentRecommendation] = useState(
     recommendation
   );
   const [animating, setAnimating] = useState(false);
+  const [averageScore, setAverageScore] = useState(0);
 
   useEffect(() => {
     setAnimating(true);
@@ -20,6 +23,10 @@ const EcoScore = ({
       setAnimating(false);
     }, 700);
   }, [recommendation]);
+
+  useEffect(() => {
+    setAverageScore(Math.floor(_.meanBy(tracks, "score")));
+  }, [tracks]);
 
   return (
     <div className="overflow-hidden rounded-lg shadow lg:col-span-2 bg-gradient-to-r from-cyan-600 to-green-400">
@@ -49,13 +56,20 @@ const EcoScore = ({
                   {(phaseNumber === 2 && userGroup === USER_GROUPS.rewards) ||
                   phaseNumber === 3 ? (
                     <>
+                      <span className="font-bold">{averageScore}</span> &#8226;{" "}
                       {score - credits} / {score}{" "}
                       <span className="pl-1.5 text-xs opacity-50 lowercase">
-                        Uplatnené na odmeny / Celkom
+                        Priemerné &#8226; Uplatnené na odmeny / Celkové
                       </span>
                     </>
                   ) : (
-                    score
+                    <>
+                      <span className="font-bold">{averageScore}</span> &#8226;{" "}
+                      {score}{" "}
+                      <span className="pl-1.5 text-xs opacity-50 lowercase">
+                        Priemerné &#8226; Celkové
+                      </span>
+                    </>
                   )}
                 </div>
               </dd>

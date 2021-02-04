@@ -81,6 +81,35 @@ const IndexPageComponent = () => {
     skip: !phaseData,
   });
 
+  const {
+    loading: gamificationTracksLoading,
+    error: gamificationTracksError,
+    data: gamificationTracksData,
+  } = useQuery(TracksAPI.gamification, {
+    variables: {
+      phaseNumber: phaseData?.phase.number,
+    },
+    skip:
+      !phaseData ||
+      !userData ||
+      phaseData?.phase.number === 1 ||
+      (phaseData?.phase.number === 2 &&
+        userData?.user.group === USER_GROUPS.rewards),
+  });
+
+  const {
+    data: gamificationUsersData,
+    loading: gamificationUsersDataLoading,
+    error: gamificationUsersDataError,
+  } = useQuery(UsersAPI.allUsernamesByStrategy, {
+    skip:
+      !phaseData ||
+      !userData ||
+      phaseData?.phase.number === 1 ||
+      (phaseData?.phase.number === 2 &&
+        userData?.user.group === USER_GROUPS.rewards),
+  });
+
   const { error: synchronizationError, data: synchronizationData } = useQuery(
     SynchronizationsAPI.byId,
     {
@@ -132,6 +161,8 @@ const IndexPageComponent = () => {
         userLoading,
         tracksLoading,
         allUsersLoading,
+        gamificationTracksLoading,
+        gamificationUsersDataLoading,
       ]}
       errors={[
         phaseError,
@@ -139,6 +170,8 @@ const IndexPageComponent = () => {
         userError,
         tracksError,
         allUsersError,
+        gamificationTracksError,
+        gamificationUsersDataError,
       ]}
     >
       <div className="z-0 flex h-screen overflow-hidden bg-gray-100">
@@ -156,7 +189,8 @@ const IndexPageComponent = () => {
                 user={userData?.user}
                 phase={phaseData?.phase}
                 recommendation={recommendationData?.recommendation}
-                allUsers={allUsersData?.users}
+                allTracks={gamificationTracksData?.tracks}
+                allUsers={gamificationUsersData}
                 tracks={tracksData?.tracks}
               />
               <Stats tracks={tracksData?.tracks} />

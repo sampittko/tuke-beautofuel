@@ -4,7 +4,14 @@ import Gamification from "./Gamification";
 import Rewards from "./Rewards";
 import { USER_GROUPS } from "../../../../utils/constants";
 
-const Strategies = ({ phase, user, recommendation, allUsers, tracks }) => {
+const Strategies = ({
+  phase,
+  user,
+  recommendation,
+  allTracks,
+  allUsers,
+  tracks,
+}) => {
   const phaseNumber = phase?.number;
   const userGroup = user?.group;
 
@@ -16,6 +23,7 @@ const Strategies = ({ phase, user, recommendation, allUsers, tracks }) => {
         <div className="grid grid-cols-1 gap-5 mt-2 sm:grid-cols-2 lg:grid-cols-3">
           <EcoScore
             recommendation={recommendation?.text}
+            tracks={tracks}
             credits={user?.wallet[`credits${phaseNumber}`]}
             score={user?.wallet[`score${phaseNumber}`]}
             phaseNumber={phaseNumber}
@@ -28,7 +36,11 @@ const Strategies = ({ phase, user, recommendation, allUsers, tracks }) => {
 
           {(phaseNumber === 3 ||
             (phaseNumber === 2 && userGroup === USER_GROUPS.gamification)) && (
-            <Gamification allUsers={allUsers} phaseNumber={phaseNumber} />
+            <Gamification
+              allTracks={allTracks}
+              allUsers={allUsers}
+              phaseNumber={phaseNumber}
+            />
           )}
 
           {phaseNumber === 3 && (

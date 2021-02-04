@@ -130,14 +130,12 @@ async def persist_new_tracks_data(tracks_df, track_ids, x_user, x_token, data, i
         additional_tracks_data = calculate_track_data(
             track_df, additional_tracks_data, track_id)
 
-        additional_track_data = additional_tracks_data[track_id]
-
         if phase_1_consumptions:
             additional_tracks_data[track_id] = get_track_eco_score(
-                additional_track_data, phase_1_consumptions)
+                additional_tracks_data[track_id], phase_1_consumptions)
 
         track_point = build_track_point(
-            track_df, additional_track_data, data)
+            track_df, additional_tracks_data[track_id], data)
         influx_tracks.append(track_point)
 
         influx_track_features = []
@@ -307,7 +305,7 @@ def build_track_point(track_df, additional_track_data, data):
             'scoreConsumption': 0,
             'speed': additional_track_data['speed'],
             'scoreSpeed': 0,
-            'score': additional_track_data['score'] or 0,
+            'score': additional_track_data['score'] if 'score' in additional_track_data else 0,
             'scoreFuelConsumed': 0,
             'fuelConsumed': additional_track_data['fuelConsumed'],
             'begin': first_coordinate_data[ENVIROCAR_DATA.TRACK_BEGIN],

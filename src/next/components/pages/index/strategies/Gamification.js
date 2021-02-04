@@ -4,29 +4,51 @@ import _ from "lodash";
 import { USER_GROUPS } from "../../../../utils/constants";
 import { useSession } from "next-auth/client";
 
-const Gamification = ({ allUsers, phaseNumber }) => {
+const Gamification = ({ allTracks, allUsers, phaseNumber }) => {
   const [session] = useSession();
   const [rank, setRank] = useState("bez poradia");
 
   useEffect(() => {
-    if (allUsers) {
-      const filteredUsers = allUsers.filter((user) => {
-        let phaseFilter = true;
-        if (phaseNumber === 2) {
-          phaseFilter = user.group !== USER_GROUPS.rewards;
-        }
+    if (allTracks && allUsers) {
+      const allUsernamesByStrategy = allUsers;
+      const driversWithTracksObject = _.chain(allTracks.tracks)
+        .groupBy("user.username")
+        .map((track, key, tracks) => ({
+          username: key,
+          id: track[0].user.id,
+          score: Math.floor(
+            track[0].user.wallet[`score${phaseNumber}`] / tracks[key].length
+          ),
+          group: track[0].user.group,
+        }))
+        .keyBy("username")
+        .value();
 
-        return user.group !== USER_GROUPS.unassigned && phaseFilter;
+      const allUsernames = [
+        ...allUsernamesByStrategy.gamificationUsernames,
+        ...allUsernamesByStrategy.rewardsUsernames,
+      ];
+
+      allUsernames.forEach((driver) => {
+        if (!driversWithTracksObject[`${driver.username}`]) {
+          driversWithTracksObject[`${driver.username}`] = {
+            id: driver.id,
+            username: driver.username,
+            score: 0,
+            group: driver.group,
+          };
+        }
       });
 
-      const sortedUsers = _.orderBy(
-        filteredUsers,
-        [`wallet.score${phaseNumber}`, "username"],
-        ["desc", "asc"]
-      );
+      const newDrivers = [];
 
-      const newRank =
-        sortedUsers.findIndex((user) => user.id === session.id) + 1;
+      _.forOwn(driversWithTracksObject, (value) => {
+        if (phaseNumber === 3 || value.group === USER_GROUPS.gamification) {
+          newDrivers.push(value);
+        }
+      });
+
+      const newRank = newDrivers.findIndex((elm) => elm.id === session.id) + 1;
 
       const newRankString =
         newRank === 1
@@ -39,7 +61,7 @@ const Gamification = ({ allUsers, phaseNumber }) => {
 
       setRank(newRankString);
     }
-  }, [allUsers]);
+  }, [allTracks, allUsers]);
 
   return (
     <div className="overflow-hidden bg-white rounded-lg shadow">

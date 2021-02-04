@@ -47,10 +47,13 @@ const Top10PageComponent = () => {
       const allUsernamesByStrategy = usersData;
       const driversWithTracksObject = _.chain(tracksData.tracks)
         .groupBy("user.username")
-        .map((track, key) => ({
+        .map((track, key, tracks) => ({
           username: key,
           id: track[0].user.id,
-          score: track[0].user.wallet[`score${phaseData.phase.number}`],
+          score: Math.floor(
+            track[0].user.wallet[`score${phaseData.phase.number}`] /
+              tracks[key].length
+          ),
           duration: _.sumBy(track, "duration"),
           distance: _.sumBy(track, "totalDistance"),
           group: track[0].user.group,
