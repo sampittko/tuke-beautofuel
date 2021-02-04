@@ -50,14 +50,43 @@ const Gamification = ({ allTracks, allUsers, phaseNumber }) => {
 
       const newRank = newDrivers.findIndex((elm) => elm.id === session.id) + 1;
 
-      const newRankString =
-        newRank === 1
-          ? "prvý"
-          : newRank === 2
-          ? "druhý"
-          : newRank === 3
-          ? "tretí"
-          : `${newRank}.`;
+      let newRankString;
+
+      switch (newRank) {
+        case 1:
+          newRankString = "Prvý";
+          break;
+        case 2:
+          newRankString = "Druhý";
+          break;
+        case 3:
+          newRankString = "Tretí";
+          break;
+        case 4:
+          newRankString = "Štvrtý";
+          break;
+        case 5:
+          newRankString = "Piaty";
+          break;
+        case 6:
+          newRankString = "Šiesty";
+          break;
+        case 7:
+          newRankString = "Siedmy";
+          break;
+        case 8:
+          newRankString = "Ôsmy";
+          break;
+        case 9:
+          newRankString = "Deviaty";
+          break;
+        case 10:
+          newRankString = "Desiaty";
+          break;
+        default:
+          newRankString = `${newRank}.`;
+          break;
+      }
 
       setRank(newRankString);
     }
