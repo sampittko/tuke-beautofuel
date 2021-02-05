@@ -44,20 +44,20 @@ const SyncSlideOver = ({
     >
       <div className="absolute inset-0 overflow-hidden">
         <div
-          className="absolute top-0 left-0 h-screen w-screen bg-black opacity-60"
+          className="absolute top-0 left-0 w-screen h-screen bg-black opacity-60"
           onClick={handleClose}
         />
         <section
-          className="absolute inset-y-0 max-w-full right-0 flex"
+          className="absolute inset-y-0 right-0 flex max-w-full"
           aria-labelledby="slide-over-heading"
         >
           <div className="w-screen max-w-md">
             <form
-              className="h-full divide-y divide-gray-200 flex flex-col bg-white shadow-xl"
+              className="flex flex-col h-full bg-white divide-y divide-gray-200 shadow-xl"
               onSubmit={handleSubmit}
             >
               <div className="flex-1 h-0 overflow-y-auto">
-                <div className="py-6 px-4 bg-green-700 sm:px-6">
+                <div className="px-4 py-6 bg-green-700 sm:px-6">
                   <div className="flex items-center justify-between">
                     <h2
                       id="slide-over-heading"
@@ -69,19 +69,19 @@ const SyncSlideOver = ({
                   <div className="mt-1">
                     <p className="text-sm text-green-300">
                       Vykonaním synchronizácie jázd sa naimportujú chýbajúce
-                      dáta zo služby enviroCar a aktualizujú Vaše štatistiky
+                      jazdy z enviroCar a aktualizujú Vaše štatistiky
                     </p>
                   </div>
                 </div>
-                <div className="flex-1 flex flex-col justify-between">
+                <div className="flex flex-col justify-between flex-1">
                   <div className="px-4 divide-y divide-gray-200 sm:px-6">
-                    <div className="space-y-6 pt-6 pb-5">
+                    <div className="pt-6 pb-5 space-y-6">
                       <div>
                         <label
                           htmlFor="envirocar-password"
                           className="block text-sm font-medium text-gray-900"
                         >
-                          Heslo na službe{" "}
+                          Heslo na{" "}
                           <span className="text-green-600">enviroCar</span>{" "}
                           <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">
                             Povinné
@@ -95,7 +95,7 @@ const SyncSlideOver = ({
                             type="password"
                             name="envirocar-password"
                             id="envirocar-password"
-                            className="block w-full shadow-sm sm:text-sm focus:ring-green-500 focus:border-green-500 border-gray-300 rounded-md"
+                            className="block w-full border-gray-300 rounded-md shadow-sm sm:text-sm focus:ring-green-500 focus:border-green-500"
                           />
                         </div>
                       </div>
@@ -115,10 +115,10 @@ const SyncSlideOver = ({
                                 name="save-password"
                                 aria-describedby="save-password_description"
                                 type="radio"
-                                className="focus:ring-green-500 h-4 w-4 text-green-600 border-gray-300"
+                                className="w-4 h-4 text-green-600 border-gray-300 focus:ring-green-500"
                               />
                             </div>
-                            <div className="pl-7 text-sm">
+                            <div className="text-sm pl-7">
                               <label
                                 htmlFor="save-password"
                                 className="font-medium text-gray-900"
@@ -143,11 +143,11 @@ const SyncSlideOver = ({
                                   name="forget-password"
                                   aria-describedby="forget-password_description"
                                   type="radio"
-                                  className="focus:ring-green-500 h-4 w-4 text-green-600 border-gray-300"
+                                  className="w-4 h-4 text-green-600 border-gray-300 focus:ring-green-500"
                                   checked
                                 />
                               </div>
-                              <div className="pl-7 text-sm">
+                              <div className="text-sm pl-7">
                                 <label
                                   htmlFor="forget-password"
                                   className="font-medium text-gray-900"
@@ -170,11 +170,11 @@ const SyncSlideOver = ({
                   </div>
                 </div>
               </div>
-              <div className="flex-shrink-0 px-4 py-4 flex justify-end">
+              <div className="flex justify-end flex-shrink-0 px-4 py-4">
                 <button
                   type="button"
                   onClick={handleClose}
-                  className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                 >
                   Zrušiť
                 </button>

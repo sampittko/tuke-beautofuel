@@ -27,8 +27,7 @@ const Table = ({ drivers }) => {
             </h1>
             <p className="max-w-md mx-auto mt-3 text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
               Po dobu 2 týždňov sa šoféri snažia jazdiť úsporne a nakonci budú
-              najlepší traja z nich vecne odmenení za ich výkon a budú si môcť
-              pochutnať na svojej odmene
+              najlepší traja z nich sladko odmenení za svoj ekologický výkon
             </p>
           </div>
         </div>

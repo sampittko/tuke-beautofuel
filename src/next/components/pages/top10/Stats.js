@@ -1,15 +1,18 @@
 import { useSession } from "next-auth/client";
 import React, { useEffect, useState } from "react";
 import { formatDistance, formatDuration } from "../../../utils/functions";
-// import Moment from "react-moment";
 
 const Stats = ({ phaseNumber, tracks, drivers }) => {
   const [session] = useSession();
 
   const [totalDistance, setTotalDistance] = useState(0);
   const [totalDuration, setTotalDuration] = useState(0);
+  const [averageEcoScore, setAverageEcoScore] = useState(0);
 
   useEffect(() => {
+    setAverageEcoScore(
+      drivers.length !== 0 ? Math.floor(_.meanBy(drivers, "score")) : 0
+    );
     setTotalDuration(_.sumBy(drivers, "duration"));
     setTotalDistance(_.sumBy(drivers, "distance"));
   }, [tracks]);
@@ -43,10 +46,10 @@ const Stats = ({ phaseNumber, tracks, drivers }) => {
                 </div>
                 <div className="flex flex-col p-6 text-center border-t border-gray-100 sm:border-0 sm:border-l">
                   <dt className="order-2 mt-2 text-lg font-medium leading-6 text-gray-500">
-                    Zapojení šoféri
+                    Priemerné ekologické skóre
                   </dt>
                   <dd className="order-1 text-5xl font-extrabold text-green-600">
-                    {drivers.length}
+                    {averageEcoScore}
                   </dd>
                 </div>
                 <div className="flex flex-col p-6 text-center border-t border-b border-gray-100 sm:border-0 sm:border-l sm:border-r">
