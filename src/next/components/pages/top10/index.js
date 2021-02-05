@@ -56,6 +56,7 @@ const Top10PageComponent = () => {
           ),
           duration: _.sumBy(track, "duration"),
           distance: _.sumBy(track, "totalDistance"),
+          fuelConsumed: _.sumBy(track, "fuelConsumed"),
           group: track[0].user.group,
         }))
         .keyBy("username")
@@ -74,6 +75,7 @@ const Top10PageComponent = () => {
             score: 0,
             distance: 0,
             duration: 0,
+            fuelConsumed: 0,
             group: driver.group,
           };
         }

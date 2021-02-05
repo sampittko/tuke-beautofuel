@@ -4,6 +4,7 @@ const TracksAPI = {
   bySession: gql`
     query tracksBySession($userId: ID!, $phaseNumber: Int!) {
       tracks(where: { user: $userId, phaseNumber: $phaseNumber }) {
+        id
         duration
         score
         totalDistance
@@ -36,6 +37,7 @@ const TracksAPI = {
         }
         duration
         totalDistance
+        fuelConsumed
       }
     }
   `,

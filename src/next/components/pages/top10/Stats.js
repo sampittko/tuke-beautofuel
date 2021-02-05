@@ -8,6 +8,7 @@ const Stats = ({ phaseNumber, tracks, drivers }) => {
   const [totalDistance, setTotalDistance] = useState(0);
   const [totalDuration, setTotalDuration] = useState(0);
   const [averageEcoScore, setAverageEcoScore] = useState(0);
+  const [totalFuelConsumed, setTotalFuelConsumed] = useState(0);
 
   useEffect(() => {
     setAverageEcoScore(
@@ -15,6 +16,7 @@ const Stats = ({ phaseNumber, tracks, drivers }) => {
     );
     setTotalDuration(_.sumBy(drivers, "duration"));
     setTotalDistance(_.sumBy(drivers, "distance"));
+    setTotalFuelConsumed(_.sumBy(drivers, "fuelConsumed"));
   }, [tracks]);
 
   return (
@@ -35,13 +37,13 @@ const Stats = ({ phaseNumber, tracks, drivers }) => {
         <div className="relative">
           <div className="relative px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
-              <dl className="bg-white rounded-lg shadow-lg lg:grid lg:grid-cols-3">
+              <dl className="bg-white rounded-lg shadow-lg lg:grid lg:grid-cols-2">
                 <div className="flex flex-col p-6 text-center border-b border-gray-100 sm:border-0 sm:border-r">
                   <dt className="order-2 mt-2 text-lg font-medium leading-6 text-gray-500">
-                    Spolu najazdené okolo
+                    Spolu najazdené
                   </dt>
                   <dd className="order-1 text-5xl font-extrabold text-green-600">
-                    {formatDistance(totalDistance, 0)}
+                    {formatDistance(totalDistance, 2)}
                   </dd>
                 </div>
                 <div className="flex flex-col p-6 text-center border-t border-gray-100 sm:border-0 sm:border-l">
@@ -50,6 +52,14 @@ const Stats = ({ phaseNumber, tracks, drivers }) => {
                   </dt>
                   <dd className="order-1 text-5xl font-extrabold text-green-600">
                     {averageEcoScore}
+                  </dd>
+                </div>
+                <div className="flex flex-col p-6 text-center border-t border-b border-gray-100 sm:border-0 sm:border-l sm:border-r">
+                  <dt className="order-2 mt-2 text-lg font-medium leading-6 text-gray-500">
+                    Spotrebované množstvo paliva
+                  </dt>
+                  <dd className="order-1 text-5xl font-extrabold text-green-600">
+                    {totalFuelConsumed.toFixed(2)} L
                   </dd>
                 </div>
                 <div className="flex flex-col p-6 text-center border-t border-b border-gray-100 sm:border-0 sm:border-l sm:border-r">

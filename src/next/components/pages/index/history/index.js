@@ -10,6 +10,8 @@ import Convert from "./actions/Convert";
 import Revert from "./actions/Revert";
 import _ from "lodash";
 
+const TRACKS_PER_PAGE = 2;
+
 const History = ({
   user,
   phase,
@@ -19,6 +21,10 @@ const History = ({
   onAction: handleAction,
 }) => {
   const [sortedTracks, setSortedTracks] = useState([]);
+  const [paginatedTracks, setPaginatedTracks] = useState([]);
+  const [startIdx, setStartIdx] = useState(
+    sortedTracks.length > 0 ? sortedTracks.length - 1 : 0
+  );
 
   const phaseNumber = phase?.number;
   const userGroup = user?.group;
@@ -30,9 +36,24 @@ const History = ({
   useEffect(() => {
     if (tracks) {
       const newSortedTracks = _.orderBy(tracks, ["date"], ["desc"]);
+      setStartIdx(newSortedTracks.length > 0 ? newSortedTracks.length - 1 : 0);
       setSortedTracks(newSortedTracks);
     }
   }, [tracks]);
+
+  useEffect(() => {
+    if (sortedTracks.length > 0) {
+      if (sortedTracks[startIdx + TRACKS_PER_PAGE - 1]) {
+        setPaginatedTracks([
+          ...sortedTracks.slice(startIdx - TRACKS_PER_PAGE + 1, startIdx + 1),
+        ]);
+      } else {
+        setPaginatedTracks([
+          ...sortedTracks.slice(startIdx - TRACKS_PER_PAGE + 1),
+        ]);
+      }
+    }
+  }, [sortedTracks, startIdx]);
 
   return (
     <>
@@ -42,14 +63,16 @@ const History = ({
 
       <div className="shadow sm:hidden">
         <ul className="mt-2 overflow-hidden divide-y divide-gray-200 shadow sm:hidden">
-          {sortedTracks.map((track, i) => {
+          {paginatedTracks.map((track) => {
+            const trackIndex = tracks.findIndex((elm) => elm.id === track.id);
+
             return (
-              <li key={`track-${i}`}>
+              <li key={`track-${trackIndex}`}>
                 <span className="block px-4 py-4 bg-white">
                   <span className="flex items-center space-x-4">
                     <span className="flex flex-1 space-x-2 truncate">
                       <span className="flex flex-col text-sm text-gray-500 truncate">
-                        <span># {tracks.length - i}</span>
+                        <span># {tracks.length - trackIndex}</span>
                         {phaseNumber !== 1 && (
                           <span className="mt-2 rounded-lg inline-flex px-2.5 py-0.5 text-xs font-medium bg-green-100 text-green-800">
                             {track.score}
@@ -259,11 +282,18 @@ const History = ({
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {sortedTracks.map((track, i) => {
+                  {paginatedTracks.map((track) => {
+                    const trackIndex = tracks.findIndex(
+                      (elm) => elm.id === track.id
+                    );
+
                     return (
-                      <tr className="bg-white" key={`track-${i}-small`}>
+                      <tr
+                        className="bg-white"
+                        key={`track-${trackIndex}-small`}
+                      >
                         <td className="px-6 py-4 text-sm text-left text-gray-500 whitespace-nowrap">
-                          {tracks.length - i}
+                          {tracks.length - trackIndex}
                         </td>
                         <td className="px-6 py-4 text-sm text-right text-gray-500 whitespace-nowrap">
                           {formatDistance(track.totalDistance)}
@@ -313,6 +343,44 @@ const History = ({
                   })}
                 </tbody>
               </table>
+              <nav
+                className="flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200 sm:px-6"
+                aria-label="Pagination"
+              >
+                <div className="hidden sm:block">
+                  <p className="text-sm text-gray-700">
+                    Celkový počet jázd:{" "}
+                    <span className="font-medium">{sortedTracks.length}</span>
+                  </p>
+                </div>
+                <div className="flex justify-between flex-1 sm:justify-end">
+                  {startIdx !== sortedTracks.length - 1 && (
+                    <button
+                      onClick={() => {
+                        setStartIdx(startIdx + TRACKS_PER_PAGE);
+                      }}
+                      className={`${
+                        startIdx - TRACKS_PER_PAGE > 0 ? "invisible" : ""
+                      } relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50`}
+                    >
+                      Skoršie
+                    </button>
+                  )}
+                  <button
+                    onClick={() => {
+                      setStartIdx(startIdx - TRACKS_PER_PAGE);
+                    }}
+                    disabled={startIdx - TRACKS_PER_PAGE < 0}
+                    className={`${tracks.length === 0 ? "invisible" : ""} ${
+                      startIdx - TRACKS_PER_PAGE < 0
+                        ? "hover:cursor-default opacity-50"
+                        : "hover:bg-gray-50"
+                    } relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md `}
+                  >
+                    Staršie
+                  </button>
+                </div>
+              </nav>
             </div>
           </div>
         </div>
