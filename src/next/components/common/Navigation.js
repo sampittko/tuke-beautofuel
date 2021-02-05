@@ -29,25 +29,17 @@ const Navigation = () => {
           <div className="flex items-center ml-4 md:ml-6">
             <div className="relative ml-3">
               <div className="flex items-center max-w-xs text-sm bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 lg:py-2 lg:rounded-md">
-                <Image
-                  width={32}
-                  height={32}
-                  className="w-8 h-8 rounded-full"
-                  src={profileImage}
-                  title={profileName}
-                  alt="profilová fotka"
-                />
                 <button
                   type="button"
-                  className="inline-flex items-center py-2 pl-2 ml-2 text-sm font-medium text-gray-600 border border-transparent rounded-md hover:text-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                  title="Odhlásiť sa"
+                  className="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-green-700 border border-transparent rounded-md hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                   onClick={(event) => {
                     event.preventDefault();
                     signOut();
                   }}
                 >
+                  Odhlásenie
                   <svg
-                    className="w-5 h-5"
+                    className="ml-2 -mr-0.5 h-4 w-4"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
