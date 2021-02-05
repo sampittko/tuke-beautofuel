@@ -48,15 +48,11 @@ const Gamification = ({ allTracks, allUsers, phaseNumber }) => {
         }
       });
 
-      console.log(newDrivers);
-
       newDrivers = _.orderBy(
         newDrivers,
         ["score", "username"],
         ["desc", "asc"]
       );
-
-      console.log(newDrivers);
 
       const newRank = newDrivers.findIndex((elm) => elm.id === session.id) + 1;
 
