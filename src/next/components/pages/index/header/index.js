@@ -1,5 +1,5 @@
 import { useSession } from "next-auth/client";
-import React from "react";
+import React, { useRef } from "react";
 import Moment from "react-moment";
 import SyncButton from "./SyncButton";
 import Typewriter from "typewriter-effect";
@@ -14,9 +14,10 @@ const nicknames = [
 
 const Header = ({ username, phase, onSyncClick: handleClick, syncing }) => {
   const [session] = useSession();
+  const strIdx = useRef(0);
 
   const profileImage = `${session.user.image}?field=image`;
-  const profileName = session.user.name;
+  const profileName = session.user.name.split(" ")[0];
 
   return (
     <div className="bg-white shadow">
@@ -37,26 +38,35 @@ const Header = ({ username, phase, onSyncClick: handleClick, syncing }) => {
                     alt=""
                   />
                   <h1 className="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:leading-9 sm:truncate">
-                    Ahojte,{" "}
                     <span className="inline-block">
                       <Typewriter
-                        options={{ delay: 500 }}
+                        options={{
+                          delay: 50,
+                          deleteSpeed: 30,
+                        }}
                         onInit={(typewriter) => {
                           typewriter
-                            .typeString(profileName.split(" ")[0])
+                            .typeString("Ahojte")
+                            .pauseFor(500)
+                            .typeString(",")
+                            .pauseFor(500)
+                            .typeString(" ")
+                            .pauseFor(500)
+                            .typeString(profileName)
                             .pauseFor(7500)
-                            .deleteAll()
+                            .deleteChars(profileName.length)
+                            .callFunction(() => {
+                              strIdx.current = Math.floor(
+                                Math.random() * nicknames.length
+                              );
+                            })
+                            .typeString(nicknames[strIdx.current])
+                            .pauseFor(7500)
+                            .deleteChars(nicknames[strIdx.current].length)
                             .typeString(username)
                             .pauseFor(7500)
-                            .deleteAll()
-                            .typeString(
-                              nicknames[
-                                Math.floor(Math.random() * nicknames.length)
-                              ]
-                            )
-                            .pauseFor(7500)
-                            .deleteAll()
-                            .typeString(profileName.split(" ")[0])
+                            .deleteChars(username.length)
+                            .typeString(profileName)
                             .start();
                         }}
                       />
