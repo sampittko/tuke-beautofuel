@@ -62,7 +62,7 @@ const Table = ({ drivers }) => {
                           scope="col"
                           className="px-6 py-3 text-xs font-medium tracking-wider text-gray-500 uppercase"
                         >
-                          Prezývka šoféra{" "}
+                          Šofér{" "}
                           <svg
                             className="inline w-5 h-5 pb-1"
                             xmlns="http://www.w3.org/2000/svg"

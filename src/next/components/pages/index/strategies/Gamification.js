@@ -138,7 +138,7 @@ const Gamification = ({ allTracks, allUsers, phaseNumber }) => {
             href="/top10"
             className="font-medium text-gray-700 hover:text-cyan-900"
           >
-            Zobraziť tabuľku
+            Zobraziť celkové poradie
           </Link>
         </div>
       </div>
