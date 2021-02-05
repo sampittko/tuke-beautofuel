@@ -6,12 +6,12 @@ import { useSession } from "next-auth/client";
 
 const Gamification = ({ allTracks, allUsers, phaseNumber }) => {
   const [session] = useSession();
-  const [rank, setRank] = useState("bez poradia");
+  const [rank, setRank] = useState("Bez poradia");
 
   useEffect(() => {
     if (allTracks && allUsers) {
       const allUsernamesByStrategy = allUsers;
-      const driversWithTracksObject = _.chain(allTracks.tracks)
+      const driversWithTracksObject = _.chain(allTracks)
         .groupBy("user.username")
         .map((track, key, tracks) => ({
           username: key,
@@ -48,11 +48,15 @@ const Gamification = ({ allTracks, allUsers, phaseNumber }) => {
         }
       });
 
+      console.log(newDrivers);
+
       newDrivers = _.orderBy(
         newDrivers,
         ["score", "username"],
         ["desc", "asc"]
       );
+
+      console.log(newDrivers);
 
       const newRank = newDrivers.findIndex((elm) => elm.id === session.id) + 1;
 
