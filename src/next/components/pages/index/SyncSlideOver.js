@@ -68,7 +68,7 @@ const SyncSlideOver = ({
                   </div>
                   <div className="mt-1">
                     <p className="text-sm text-green-300">
-                      Vykonaním synchronizácie jázd sa naimportujú chýbajúce
+                      Vykonaním tejto synchronizácie sa naimportujú chýbajúce
                       jazdy z enviroCar a aktualizujú Vaše štatistiky
                     </p>
                   </div>
