@@ -14,7 +14,7 @@ const nicknames = [
 
 const Header = ({ username, phase, onSyncClick: handleClick, syncing }) => {
   const [session] = useSession();
-  const strIdx = useRef(0);
+  const strIdx = useRef(Math.floor(Math.random() * nicknames.length));
 
   const profileImage = `${session.user.image}?field=image`;
   const profileName = session.user.name.split(" ")[0];
@@ -53,18 +53,13 @@ const Header = ({ username, phase, onSyncClick: handleClick, syncing }) => {
                             .typeString(" ")
                             .pauseFor(500)
                             .typeString(profileName)
-                            .pauseFor(7500)
+                            .pauseFor(15000)
                             .deleteChars(profileName.length)
-                            .callFunction(() => {
-                              strIdx.current = Math.floor(
-                                Math.random() * nicknames.length
-                              );
-                            })
                             .typeString(nicknames[strIdx.current])
-                            .pauseFor(7500)
+                            .pauseFor(15000)
                             .deleteChars(nicknames[strIdx.current].length)
                             .typeString(username)
-                            .pauseFor(7500)
+                            .pauseFor(15000)
                             .deleteChars(username.length)
                             .typeString(profileName)
                             .start();
