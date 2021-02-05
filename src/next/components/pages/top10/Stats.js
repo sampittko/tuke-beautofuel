@@ -38,7 +38,7 @@ const Stats = ({ phaseNumber, tracks, drivers }) => {
                     Spolu najazdené vyše
                   </dt>
                   <dd className="order-1 text-5xl font-extrabold text-green-600">
-                    {formatDistance(1500, 0)}
+                    {formatDistance(totalDistance, 0)}
                   </dd>
                 </div>
                 <div className="flex flex-col p-6 text-center border-t border-gray-100 sm:border-0 sm:border-l">
