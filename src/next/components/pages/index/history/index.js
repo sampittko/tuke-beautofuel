@@ -10,7 +10,7 @@ import Convert from "./actions/Convert";
 import Revert from "./actions/Revert";
 import _ from "lodash";
 
-const TRACKS_PER_PAGE = 2;
+const TRACKS_PER_PAGE = 5;
 
 const History = ({
   user,
@@ -19,12 +19,11 @@ const History = ({
   tracksRefetch,
   userRefetch,
   onAction: handleAction,
+  startIdx,
+  onIdxChange: handleIdxChange,
 }) => {
   const [sortedTracks, setSortedTracks] = useState([]);
   const [paginatedTracks, setPaginatedTracks] = useState([]);
-  const [startIdx, setStartIdx] = useState(
-    sortedTracks.length > 0 ? sortedTracks.length - 1 : 0
-  );
 
   const phaseNumber = phase?.number;
   const userGroup = user?.group;
@@ -35,23 +34,25 @@ const History = ({
 
   useEffect(() => {
     if (tracks) {
-      const newSortedTracks = _.orderBy(tracks, ["date"], ["desc"]);
-      setStartIdx(newSortedTracks.length > 0 ? newSortedTracks.length - 1 : 0);
+      const newSortedTracks = _.orderBy(tracks, ["date"], ["asc"]);
+      if (!startIdx) {
+        handleIdxChange(tracks.length > 0 ? tracks.length - 1 : null);
+      }
       setSortedTracks(newSortedTracks);
     }
   }, [tracks]);
 
   useEffect(() => {
     if (sortedTracks.length > 0) {
-      if (sortedTracks[startIdx + TRACKS_PER_PAGE - 1]) {
-        setPaginatedTracks([
+      let newPaginatedTracks;
+      if (sortedTracks[startIdx - TRACKS_PER_PAGE + 1]) {
+        newPaginatedTracks = [
           ...sortedTracks.slice(startIdx - TRACKS_PER_PAGE + 1, startIdx + 1),
-        ]);
+        ];
       } else {
-        setPaginatedTracks([
-          ...sortedTracks.slice(startIdx - TRACKS_PER_PAGE + 1),
-        ]);
+        newPaginatedTracks = [...sortedTracks.slice(0, startIdx + 1)];
       }
+      setPaginatedTracks(_.orderBy(newPaginatedTracks, ["date"], ["desc"]));
     }
   }, [sortedTracks, startIdx]);
 
@@ -282,105 +283,101 @@ const History = ({
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {paginatedTracks.map((track) => {
-                    const trackIndex = tracks.findIndex(
-                      (elm) => elm.id === track.id
-                    );
-
-                    return (
-                      <tr
-                        className="bg-white"
-                        key={`track-${trackIndex}-small`}
-                      >
-                        <td className="px-6 py-4 text-sm text-left text-gray-500 whitespace-nowrap">
-                          {tracks.length - trackIndex}
+                  {paginatedTracks.map((track, i) => (
+                    <tr
+                      className="bg-white"
+                      key={`track-${startIdx - i}-small`}
+                    >
+                      <td className="px-6 py-4 text-sm text-left text-gray-500 whitespace-nowrap">
+                        {startIdx - i + 1}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-right text-gray-500 whitespace-nowrap">
+                        {formatDistance(track.totalDistance)}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-right text-gray-500 whitespace-nowrap">
+                        {formatDuration(track.duration)}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-right text-gray-500 whitespace-nowrap">
+                        {formatNumber(track.consumption)} L / 100 km
+                      </td>
+                      <td className="px-6 py-4 text-sm text-right text-gray-500 whitespace-nowrap">
+                        {formatNumber(track.speed)} km / h
+                      </td>
+                      <td className="px-6 py-4 text-sm text-right text-gray-500 whitespace-nowrap">
+                        <Moment date={track.date} format="DD. MM. YYYY" />
+                      </td>
+                      {phaseNumber !== 1 && (
+                        <td className="px-6 py-4 text-sm text-right text-gray-500 bg-green-100 whitespace-nowrap">
+                          <span className="font-medium text-gray-900">
+                            {track.score}
+                          </span>
                         </td>
-                        <td className="px-6 py-4 text-sm text-right text-gray-500 whitespace-nowrap">
-                          {formatDistance(track.totalDistance)}
+                      )}
+                      {actionsVisible && (
+                        <td className="flex items-center justify-end px-6 py-4 text-sm text-right text-gray-500 whitespace-nowrap">
+                          <>
+                            {track.purchase?.made ? (
+                              <Revert
+                                onAction={handleAction}
+                                tracksRefetch={tracksRefetch}
+                                userRefetch={userRefetch}
+                                track={track}
+                              />
+                            ) : (
+                              <Convert
+                                onAction={handleAction}
+                                tracksRefetch={tracksRefetch}
+                                userRefetch={userRefetch}
+                                track={track}
+                              />
+                            )}
+                          </>
                         </td>
-                        <td className="px-6 py-4 text-sm text-right text-gray-500 whitespace-nowrap">
-                          {formatDuration(track.duration)}
-                        </td>
-                        <td className="px-6 py-4 text-sm text-right text-gray-500 whitespace-nowrap">
-                          {formatNumber(track.consumption)} L / 100 km
-                        </td>
-                        <td className="px-6 py-4 text-sm text-right text-gray-500 whitespace-nowrap">
-                          {formatNumber(track.speed)} km / h
-                        </td>
-                        <td className="px-6 py-4 text-sm text-right text-gray-500 whitespace-nowrap">
-                          <Moment date={track.date} format="DD. MM. YYYY" />
-                        </td>
-                        {phaseNumber !== 1 && (
-                          <td className="px-6 py-4 text-sm text-right text-gray-500 bg-green-100 whitespace-nowrap">
-                            <span className="font-medium text-gray-900">
-                              {track.score}
-                            </span>
-                          </td>
-                        )}
-                        {actionsVisible && (
-                          <td className="flex items-center justify-end px-6 py-4 text-sm text-right text-gray-500 whitespace-nowrap">
-                            <>
-                              {track.purchase?.made ? (
-                                <Revert
-                                  onAction={handleAction}
-                                  tracksRefetch={tracksRefetch}
-                                  userRefetch={userRefetch}
-                                  track={track}
-                                />
-                              ) : (
-                                <Convert
-                                  onAction={handleAction}
-                                  tracksRefetch={tracksRefetch}
-                                  userRefetch={userRefetch}
-                                  track={track}
-                                />
-                              )}
-                            </>
-                          </td>
-                        )}
-                      </tr>
-                    );
-                  })}
+                      )}
+                    </tr>
+                  ))}
                 </tbody>
               </table>
-              <nav
-                className="flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200 sm:px-6"
-                aria-label="Pagination"
-              >
-                <div className="hidden sm:block">
-                  <p className="text-sm text-gray-700">
-                    Celkový počet jázd:{" "}
-                    <span className="font-medium">{sortedTracks.length}</span>
-                  </p>
-                </div>
-                <div className="flex justify-between flex-1 sm:justify-end">
-                  {startIdx !== sortedTracks.length - 1 && (
-                    <button
-                      onClick={() => {
-                        setStartIdx(startIdx + TRACKS_PER_PAGE);
-                      }}
-                      className={`${
-                        startIdx - TRACKS_PER_PAGE > 0 ? "invisible" : ""
-                      } relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50`}
-                    >
-                      Skoršie
-                    </button>
-                  )}
-                  <button
-                    onClick={() => {
-                      setStartIdx(startIdx - TRACKS_PER_PAGE);
-                    }}
-                    disabled={startIdx - TRACKS_PER_PAGE < 0}
-                    className={`${tracks.length === 0 ? "invisible" : ""} ${
-                      startIdx - TRACKS_PER_PAGE < 0
-                        ? "hover:cursor-default opacity-50"
-                        : "hover:bg-gray-50"
-                    } relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md `}
-                  >
-                    Staršie
-                  </button>
-                </div>
-              </nav>
+              {sortedTracks.length !== 0 && (
+                <nav
+                  className="flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200 sm:px-6"
+                  aria-label="Pagination"
+                >
+                  <div className="hidden sm:block">
+                    <p className="py-2.5 text-sm text-gray-700">
+                      Počet synchronizovaných jázd:{" "}
+                      <span className="font-medium">{sortedTracks.length}</span>
+                    </p>
+                  </div>
+                  <div className="flex justify-between flex-1 sm:justify-end">
+                    {startIdx !== sortedTracks.length - 1 && (
+                      <button
+                        onClick={() => {
+                          handleIdxChange(startIdx + TRACKS_PER_PAGE);
+                        }}
+                        className="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+                      >
+                        Skoršie
+                      </button>
+                    )}
+                    {sortedTracks.length > TRACKS_PER_PAGE && (
+                      <button
+                        onClick={() => {
+                          handleIdxChange(startIdx - TRACKS_PER_PAGE);
+                        }}
+                        disabled={startIdx - TRACKS_PER_PAGE < 0}
+                        className={`${
+                          startIdx - TRACKS_PER_PAGE < 0
+                            ? "hover:cursor-default opacity-50"
+                            : "hover:bg-gray-50"
+                        } relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md `}
+                      >
+                        Staršie
+                      </button>
+                    )}
+                  </div>
+                </nav>
+              )}
             </div>
           </div>
         </div>

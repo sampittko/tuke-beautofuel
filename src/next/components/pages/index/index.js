@@ -37,6 +37,7 @@ const IndexPageComponent = () => {
     experimentOverviewLinkVisible,
     setExperimentOverviewLinkVisible,
   ] = useState(false);
+  const [historyStartIdx, setHistoryStartIdx] = useState(null);
 
   const {
     loading: phaseLoading,
@@ -195,6 +196,8 @@ const IndexPageComponent = () => {
               />
               <Stats tracks={tracksData?.tracks} />
               <History
+                startIdx={historyStartIdx}
+                onIdxChange={(newIdx) => setHistoryStartIdx(newIdx)}
                 user={userData?.user}
                 phase={phaseData?.phase}
                 tracks={tracksData?.tracks}
