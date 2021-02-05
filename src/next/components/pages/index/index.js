@@ -60,18 +60,6 @@ const IndexPageComponent = () => {
   });
 
   const {
-    loading: allUsersLoading,
-    error: allUsersError,
-    data: allUsersData,
-    refetch: allUsersRefetch,
-  } = useQuery(UsersAPI.allUsersWithWallets, {
-    skip:
-      phaseData?.phase.number === 1 ||
-      (phaseData?.phase.number === 2 &&
-        userData?.user.group === USER_GROUPS.rewards),
-  });
-
-  const {
     loading: tracksLoading,
     error: tracksError,
     data: tracksData,
@@ -143,7 +131,6 @@ const IndexPageComponent = () => {
         setPollingSyncId(null);
         tracksRefetch();
         userRefetch();
-        allUsersRefetch();
         showNotification();
       } else {
         if (synchronizationError) {
@@ -160,7 +147,6 @@ const IndexPageComponent = () => {
         recommendationLoading,
         userLoading,
         tracksLoading,
-        allUsersLoading,
         gamificationTracksLoading,
         gamificationUsersDataLoading,
       ]}
@@ -169,7 +155,6 @@ const IndexPageComponent = () => {
         recommendationError,
         userError,
         tracksError,
-        allUsersError,
         gamificationTracksError,
         gamificationUsersDataError,
       ]}
@@ -200,7 +185,6 @@ const IndexPageComponent = () => {
                 tracks={tracksData?.tracks}
                 tracksRefetch={tracksRefetch}
                 userRefetch={userRefetch}
-                allUsersRefetch={allUsersRefetch}
               />
             </Skeleton>
           </main>

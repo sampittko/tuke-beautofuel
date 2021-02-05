@@ -2,7 +2,7 @@ import { useMutation } from "@apollo/client";
 import React, { useEffect } from "react";
 import PurchasesAPI from "../../../../../lib/api/purchases";
 
-const Convert = ({ tracksRefetch, userRefetch, track, allUsersRefetch }) => {
+const Convert = ({ tracksRefetch, userRefetch, track }) => {
   const [makePurchase, { data, error }] = useMutation(PurchasesAPI.make, {
     variables: {
       purchaseId: track.purchase?.id,
@@ -13,7 +13,6 @@ const Convert = ({ tracksRefetch, userRefetch, track, allUsersRefetch }) => {
     if (data && !error) {
       tracksRefetch();
       userRefetch();
-      allUsersRefetch();
     }
   }, [data]);
 
