@@ -1,8 +1,16 @@
 import { useSession } from "next-auth/client";
-import React, { useEffect } from "react";
+import React from "react";
 import Moment from "react-moment";
 import SyncButton from "./SyncButton";
 import Typewriter from "typewriter-effect";
+
+const nicknames = [
+  "ekologický šofér",
+  "pomocník",
+  "ohľaduplný šofér",
+  "bezpečný šofér",
+  "spoľahlivý šofér",
+];
 
 const Header = ({ username, phase, onSyncClick: handleClick, syncing }) => {
   const [session] = useSession();
@@ -39,6 +47,13 @@ const Header = ({ username, phase, onSyncClick: handleClick, syncing }) => {
                             .pauseFor(7500)
                             .deleteAll()
                             .typeString(username)
+                            .pauseFor(7500)
+                            .deleteAll()
+                            .typeString(
+                              nicknames[
+                                Math.floor(Math.random() * nicknames.length)
+                              ]
+                            )
                             .pauseFor(7500)
                             .deleteAll()
                             .typeString(profileName.split(" ")[0])
