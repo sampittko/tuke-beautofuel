@@ -64,64 +64,96 @@ const History = ({
 
       <div className="shadow sm:hidden">
         <ul className="mt-2 overflow-hidden divide-y divide-gray-200 shadow sm:hidden">
-          {paginatedTracks.map((track) => {
-            const trackIndex = tracks.findIndex((elm) => elm.id === track.id);
-
-            return (
-              <li key={`track-${trackIndex}`}>
-                <span className="block px-4 py-4 bg-white">
-                  <span className="flex items-center space-x-4">
-                    <span className="flex flex-1 space-x-2 truncate">
-                      <span className="flex flex-col text-sm text-gray-500 truncate">
-                        <span># {tracks.length - trackIndex}</span>
-                        {phaseNumber !== 1 && (
-                          <span className="mt-2 rounded-lg inline-flex px-2.5 py-0.5 text-xs font-medium bg-green-100 text-green-800">
-                            {track.score}
-                          </span>
-                        )}
-                        <span className="mt-1 inline-flex px-2.5 py-0.5 text-xs font-medium">
-                          {formatDistance(track.totalDistance)}
+          {paginatedTracks.map((track, i) => (
+            <li key={`track-${startIdx - i}`}>
+              <span className="block px-4 py-4 bg-white">
+                <span className="flex items-center space-x-4">
+                  <span className="flex flex-1 space-x-2 truncate">
+                    <span className="flex flex-col text-sm text-gray-500 truncate">
+                      <span># {startIdx - i + 1}</span>
+                      {phaseNumber !== 1 && (
+                        <span className="mt-2 rounded-lg inline-flex px-2.5 py-0.5 text-xs font-medium bg-green-100 text-green-800">
+                          {track.score}
                         </span>
-                        <span className="mt-1 inline-flex px-2.5 py-0.5 text-xs font-medium">
-                          {formatDuration(track.duration)}
-                        </span>
-                        <span className="mt-1 inline-flex px-2.5 py-0.5 text-xs font-medium">
-                          {formatNumber(track.consumption)} L / 100 km
-                        </span>
-                        <span className="mt-1 inline-flex px-2.5 py-0.5 text-xs font-medium">
-                          {formatNumber(track.speed)} km / h
-                        </span>
-                        <span className="mt-1 inline-flex px-2.5 py-0.5 text-xs font-medium">
-                          <Moment date={track.date} format="DD. MM. YYYY" />
-                        </span>
+                      )}
+                      <span className="mt-1 inline-flex px-2.5 py-0.5 text-xs font-medium">
+                        {formatDistance(track.totalDistance)}
+                      </span>
+                      <span className="mt-1 inline-flex px-2.5 py-0.5 text-xs font-medium">
+                        {formatDuration(track.duration)}
+                      </span>
+                      <span className="mt-1 inline-flex px-2.5 py-0.5 text-xs font-medium">
+                        {formatNumber(track.consumption)} L / 100 km
+                      </span>
+                      <span className="mt-1 inline-flex px-2.5 py-0.5 text-xs font-medium">
+                        {formatNumber(track.speed)} km / h
+                      </span>
+                      <span className="mt-1 inline-flex px-2.5 py-0.5 text-xs font-medium">
+                        <Moment date={track.date} format="DD. MM. YYYY" />
                       </span>
                     </span>
-
-                    {actionsVisible && (
-                      <>
-                        {track.purchase?.made ? (
-                          <Revert
-                            onAction={handleAction}
-                            tracksRefetch={tracksRefetch}
-                            userRefetch={userRefetch}
-                            track={track}
-                          />
-                        ) : (
-                          <Convert
-                            onAction={handleAction}
-                            tracksRefetch={tracksRefetch}
-                            userRefetch={userRefetch}
-                            track={track}
-                          />
-                        )}
-                      </>
-                    )}
                   </span>
+
+                  {actionsVisible && (
+                    <>
+                      {track.purchase?.made ? (
+                        <Revert
+                          onAction={handleAction}
+                          tracksRefetch={tracksRefetch}
+                          userRefetch={userRefetch}
+                          track={track}
+                        />
+                      ) : (
+                        <Convert
+                          onAction={handleAction}
+                          tracksRefetch={tracksRefetch}
+                          userRefetch={userRefetch}
+                          track={track}
+                        />
+                      )}
+                    </>
+                  )}
                 </span>
-              </li>
-            );
-          })}
+              </span>
+            </li>
+          ))}
         </ul>
+        {sortedTracks.length !== 0 && (
+          <nav
+            className="flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200"
+            aria-label="Pagination"
+          >
+            <div className="flex justify-between flex-1">
+              {startIdx !== sortedTracks.length - 1 ? (
+                <button
+                  onClick={() => {
+                    handleIdxChange(startIdx + TRACKS_PER_PAGE);
+                  }}
+                  className="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:text-gray-500"
+                >
+                  Skoršie
+                </button>
+              ) : (
+                <div />
+              )}
+              {sortedTracks.length > TRACKS_PER_PAGE && (
+                <button
+                  onClick={() => {
+                    handleIdxChange(startIdx - TRACKS_PER_PAGE);
+                  }}
+                  disabled={startIdx - TRACKS_PER_PAGE < 0}
+                  className={`${
+                    startIdx - TRACKS_PER_PAGE < 0
+                      ? "hover:cursor-default opacity-50"
+                      : "hover:text-gray-500"
+                  } relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md `}
+                >
+                  Staršie
+                </button>
+              )}
+            </div>
+          </nav>
+        )}
       </div>
 
       <div className="hidden sm:block">
@@ -345,7 +377,7 @@ const History = ({
                 >
                   <div className="hidden sm:block">
                     <p className="py-2.5 text-sm text-gray-700">
-                      Počet synchronizovaných jázd:{" "}
+                      Celkový počet synchronizovaných jázd:{" "}
                       <span className="font-medium">{sortedTracks.length}</span>
                     </p>
                   </div>
