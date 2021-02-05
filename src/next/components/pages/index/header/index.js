@@ -1,10 +1,14 @@
-import React from "react";
+import { useSession } from "next-auth/client";
+import React, { useEffect } from "react";
 import Moment from "react-moment";
 import SyncButton from "./SyncButton";
+import Typewriter from "typewriter-effect";
 
-const Header = ({ user, phase, onSyncClick: handleClick, syncing }) => {
-  const profileImage = `${user.image}?field=image`;
-  const profileName = user.name;
+const Header = ({ username, phase, onSyncClick: handleClick, syncing }) => {
+  const [session] = useSession();
+
+  const profileImage = `${session.user.image}?field=image`;
+  const profileName = session.user.name;
 
   return (
     <div className="bg-white shadow">
@@ -13,24 +17,40 @@ const Header = ({ user, phase, onSyncClick: handleClick, syncing }) => {
           <div className="flex-1 min-w-0">
             <div className="flex items-center">
               <img
-                className="hidden h-16 w-16 rounded-full sm:block"
+                className="hidden w-16 h-16 rounded-full sm:block"
                 src={profileImage}
                 alt=""
               />
               <div>
                 <div className="flex items-center">
                   <img
-                    className="h-16 w-16 rounded-full sm:hidden"
+                    className="w-16 h-16 rounded-full sm:hidden"
                     src={profileImage}
                     alt=""
                   />
                   <h1 className="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:leading-9 sm:truncate">
-                    Ahojte, {profileName.split(" ")[0]}
+                    Ahojte,{" "}
+                    <span className="inline-block">
+                      <Typewriter
+                        options={{ delay: 500 }}
+                        onInit={(typewriter) => {
+                          typewriter
+                            .typeString(profileName.split(" ")[0])
+                            .pauseFor(7500)
+                            .deleteAll()
+                            .typeString(username)
+                            .pauseFor(7500)
+                            .deleteAll()
+                            .typeString(profileName.split(" ")[0])
+                            .start();
+                        }}
+                      />
+                    </span>
                   </h1>
                 </div>
-                <dl className="mt-6 flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap">
+                <dl className="flex flex-col mt-6 sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap">
                   <dt className="sr-only">Aktuálna fáza</dt>
-                  <dd className="flex items-center text-sm text-gray-500 font-medium sm:mr-6">
+                  <dd className="flex items-center text-sm font-medium text-gray-500 sm:mr-6">
                     <svg
                       className="flex-shrink-0 mr-1.5 h-5 w-5 text-green-400"
                       xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +70,7 @@ const Header = ({ user, phase, onSyncClick: handleClick, syncing }) => {
                     </span>
                   </dd>
                   <dt className="sr-only">Termín trvania aktuálnej fázy</dt>
-                  <dd className="mt-3 flex items-center text-sm text-gray-500 font-medium sm:mt-0 sm:mr-6">
+                  <dd className="flex items-center mt-3 text-sm font-medium text-gray-500 sm:mt-0 sm:mr-6">
                     <svg
                       className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
                       fill="none"
@@ -79,7 +99,7 @@ const Header = ({ user, phase, onSyncClick: handleClick, syncing }) => {
               </div>
             </div>
           </div>
-          <div className="mt-6 flex space-x-3 md:mt-0 md:ml-4">
+          <div className="flex mt-6 space-x-3 md:mt-0 md:ml-4">
             <SyncButton onSyncClick={handleClick} syncing={syncing} />
           </div>
         </div>

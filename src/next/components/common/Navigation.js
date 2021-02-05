@@ -1,13 +1,9 @@
 import { signOut, useSession } from "next-auth/client";
-import Link from "next/link";
 import Image from "next/image";
 import React from "react";
 
 const Navigation = () => {
   const [session] = useSession();
-
-  const profileName = session?.user.name;
-  const profileImage = session ? `${session.user.image}?field=image` : null;
 
   return (
     <div className="relative z-10 flex flex-shrink-0 h-16 bg-white border-b border-gray-200 lg:border-none">

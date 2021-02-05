@@ -179,8 +179,8 @@ const IndexPageComponent = () => {
           <Navigation />
           <main className="relative z-0 flex-1 pb-8 overflow-y-auto">
             <Header
+              username={userData?.user.username}
               phase={phaseData?.phase}
-              user={session.user}
               onSyncClick={() => setSyncSlideOverOpen(true)}
               syncing={!!pollingSyncId}
             />
