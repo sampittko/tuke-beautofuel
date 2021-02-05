@@ -12,6 +12,7 @@ import Stats from "./Stats";
 import History from "./history/";
 import SyncSlideOver from "./SyncSlideOver";
 import SyncNotification from "./SyncNotification";
+import PurchaseNotification from "./PurchaseNotification";
 import Skeleton from "./Skeleton";
 import TracksAPI from "../../../lib/api/tracks";
 import SynchronizationsAPI from "../../../lib/api/synchronizations";
@@ -27,6 +28,10 @@ const IndexPageComponent = () => {
   const [pollingSyncId, setPollingSyncId] = useState(false);
   const [syncSlideOverOpen, setSyncSlideOverOpen] = useState(false);
   const [syncNotificationVisible, setSyncNotificationVisible] = useState(false);
+  const [
+    purchaseNotificationDetails,
+    setPurchaseNotificationDetails,
+  ] = useState(null);
   const [syncPasswordError, setSyncPasswordError] = useState(false);
   const [
     experimentOverviewLinkVisible,
@@ -113,14 +118,24 @@ const IndexPageComponent = () => {
 
   const handleSyncError = () => {
     setSyncPasswordError(true);
-    showNotification();
+    showSyncNotification();
   };
 
-  const showNotification = () => {
+  const showSyncNotification = () => {
     setSyncNotificationVisible(true);
     setTimeout(() => {
       setSyncNotificationVisible(false);
       setSyncPasswordError(false);
+    }, 3000);
+  };
+
+  const showPurchaseNotification = (purchased, quantity) => {
+    setPurchaseNotificationDetails({
+      purchased,
+      quantity,
+    });
+    setTimeout(() => {
+      setPurchaseNotificationDetails(null);
     }, 3000);
   };
 
@@ -131,10 +146,10 @@ const IndexPageComponent = () => {
         setPollingSyncId(null);
         tracksRefetch();
         userRefetch();
-        showNotification();
+        showSyncNotification();
       } else {
         if (synchronizationError) {
-          showNotification();
+          showSyncNotification();
         }
       }
     }
@@ -185,6 +200,7 @@ const IndexPageComponent = () => {
                 tracks={tracksData?.tracks}
                 tracksRefetch={tracksRefetch}
                 userRefetch={userRefetch}
+                onAction={showPurchaseNotification}
               />
             </Skeleton>
           </main>
@@ -200,6 +216,7 @@ const IndexPageComponent = () => {
         show={syncNotificationVisible}
         error={synchronizationError || syncPasswordError}
       />
+      <PurchaseNotification purchaseDetails={purchaseNotificationDetails} />
       <PhaseBanner
         user={userData?.user}
         phaseNumber={phaseData?.phase.number}

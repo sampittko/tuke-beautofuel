@@ -10,7 +10,14 @@ import Convert from "./actions/Convert";
 import Revert from "./actions/Revert";
 import _ from "lodash";
 
-const History = ({ user, phase, tracks, tracksRefetch, userRefetch }) => {
+const History = ({
+  user,
+  phase,
+  tracks,
+  tracksRefetch,
+  userRefetch,
+  onAction: handleAction,
+}) => {
   const [sortedTracks, setSortedTracks] = useState([]);
 
   const phaseNumber = phase?.number;
@@ -70,12 +77,14 @@ const History = ({ user, phase, tracks, tracksRefetch, userRefetch }) => {
                       <>
                         {track.purchase?.made ? (
                           <Revert
+                            onAction={handleAction}
                             tracksRefetch={tracksRefetch}
                             userRefetch={userRefetch}
                             track={track}
                           />
                         ) : (
                           <Convert
+                            onAction={handleAction}
                             tracksRefetch={tracksRefetch}
                             userRefetch={userRefetch}
                             track={track}
@@ -283,12 +292,14 @@ const History = ({ user, phase, tracks, tracksRefetch, userRefetch }) => {
                             <>
                               {track.purchase?.made ? (
                                 <Revert
+                                  onAction={handleAction}
                                   tracksRefetch={tracksRefetch}
                                   userRefetch={userRefetch}
                                   track={track}
                                 />
                               ) : (
                                 <Convert
+                                  onAction={handleAction}
                                   tracksRefetch={tracksRefetch}
                                   userRefetch={userRefetch}
                                   track={track}

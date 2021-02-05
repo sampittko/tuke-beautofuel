@@ -1,12 +1,12 @@
 import { Transition } from "@headlessui/react";
 import React from "react";
 
-const SyncNotification = ({ show, error }) => (
+const PurchaseNotification = ({ purchaseDetails }) => (
   <div className="fixed bottom-0 right-0 z-10 flex items-end justify-center w-full px-4 py-6 pointer-events-none sm:p-6 sm:items-start sm:justify-end">
     <Transition
       as="div"
       className="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-lg pointer-events-auto ring-1 ring-black ring-opacity-5"
-      show={show}
+      show={!!purchaseDetails}
       enter="transform ease-out duration-300 transition"
       enterFrom="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
       enterTo="translate-y-0 opacity-100 sm:translate-x-0"
@@ -15,50 +15,49 @@ const SyncNotification = ({ show, error }) => (
       leaveTo="opacity-0"
     >
       <div className="h-20 p-4">
-        {show && (
+        {purchaseDetails && (
           <div className="flex items-start">
             <div className="flex-shrink-0">
-              {!error ? (
+              {purchaseDetails?.purchased ? (
                 <svg
                   className="w-6 h-6 text-green-400"
-                  xmlns="http://www.w3.org/2000/svg"
                   fill="none"
-                  viewBox="0 0 24 24"
                   stroke="currentColor"
-                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="2"
-                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
+                    d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
+                  ></path>
                 </svg>
               ) : (
                 <svg
-                  className="w-6 h-6 text-red-400"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  className="w-6 h-6 text-gray-600"
                 >
                   <path
-                    fillRule="evenodd"
-                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                    clipRule="evenodd"
-                  ></path>
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z"
+                  />
                 </svg>
               )}
             </div>
             <div className="ml-3 w-0 flex-1 pt-0.5">
               <p className="text-sm font-medium text-gray-900">
-                {!error
-                  ? "Synchronizácia bola úspešná"
-                  : "Synchronizácia sa nepodarila"}
+                {purchaseDetails?.purchased
+                  ? "Odmeny za jazdu boli získané"
+                  : "Odmeny za jazdu boli vrátené"}
               </p>
               <p className="mt-1 text-sm text-gray-500">
-                {!error
-                  ? "Vaše štatistiky boli aktualizované"
-                  : "Skontrolujte svoje heslo a skúste znovu"}
+                {`Počet kroviek: ${purchaseDetails?.quantity}`}
               </p>
             </div>
           </div>
@@ -68,4 +67,4 @@ const SyncNotification = ({ show, error }) => (
   </div>
 );
 
-export default SyncNotification;
+export default PurchaseNotification;
