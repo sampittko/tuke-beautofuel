@@ -53,8 +53,8 @@ const PurchaseNotification = ({ purchaseDetails }) => (
             <div className="ml-3 w-0 flex-1 pt-0.5">
               <p className="text-sm font-medium text-gray-900">
                 {purchaseDetails?.purchased
-                  ? "Odmeny za jazdu boli získané"
-                  : "Odmeny za jazdu boli vrátené"}
+                  ? "Získali ste odmeny za jazdu"
+                  : "Vrátili ste odmeny za jazdu"}
               </p>
               <p className="mt-1 text-sm text-gray-500">
                 {`Počet kroviek: ${purchaseDetails?.quantity}`}
