@@ -232,40 +232,40 @@ def get_track_eco_score(additional_track_data, phase_1_consumptions):
     track_2_consumption = additional_track_data['consumption']
 
     part_50 = None
-    part_30 = None
-    part_20 = None
+    part_25 = None
+    part_15 = None
     part_10 = None
 
-    lower_consumption_limit = phase_1_consumptions['mean'] - \
+    lower_consumption_threshold = phase_1_consumptions['mean'] - \
         phase_1_consumptions['stddev']
-    upper_consumption_limit = phase_1_consumptions['mean'] + \
+    upper_consumption_threshold = phase_1_consumptions['mean'] + \
         phase_1_consumptions['stddev']
 
-    if track_2_consumption >= upper_consumption_limit:
+    if track_2_consumption >= upper_consumption_threshold:
         part_50 = 0
-    elif track_2_consumption <= lower_consumption_limit:
+    elif track_2_consumption <= lower_consumption_threshold:
         part_50 = 100
     else:
         part_50 = 100 - int(
-            (track_2_consumption / upper_consumption_limit) * 100)
+            (track_2_consumption / upper_consumption_threshold) * 100)
 
     if track_2_consumption < phase_1_consumptions['min']:
-        part_30 = 100
+        part_25 = 100
     else:
-        part_30 = 0
+        part_25 = 0
 
     if track_2_consumption < phase_1_consumptions['mean']:
-        part_20 = 100
+        part_15 = 100
     else:
-        part_20 = 0
+        part_15 = 0
 
     if track_2_consumption < phase_1_consumptions['max']:
         part_10 = 100
     else:
         part_10 = 0
 
-    additional_track_data['score'] = int(part_50 * 0.5 + part_30 * 0.3 +
-                                         part_20 * 0.2 + part_10 * 0.1)
+    additional_track_data['score'] = int(part_50 * 0.50 + part_25 * 0.25 +
+                                         part_15 * 0.15 + part_10 * 0.10)
 
     return additional_track_data
 
