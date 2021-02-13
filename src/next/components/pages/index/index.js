@@ -156,6 +156,12 @@ const IndexPageComponent = () => {
     }
   }, [synchronizationData, synchronizationError]);
 
+  useEffect(() => {
+    if (tracksData) {
+      setHistoryStartIdx(tracksData.tracks.length - 1);
+    }
+  }, [tracksData]);
+
   return (
     <Spinner
       dependencies={[

@@ -16,6 +16,18 @@ async def get_strapi_tracks(data):
     return res.json()
 
 
+async def get_strapi_phase_1_tracks_count(data):
+    res = requests.get(
+        f'{STRAPI_URL}/tracks/count',
+        params={
+            'token': STRAPI_TOKEN,
+            '_where[user]': data.user,
+            '_where[phaseNumber]': 1
+        }
+    )
+    return res.json()
+
+
 async def update_strapi_tracks(tracks_df, additional_tracks_data, track_ids, data):
     for track_id in track_ids:
         first_coordinate_data = tracks_df[tracks_df['track.id']

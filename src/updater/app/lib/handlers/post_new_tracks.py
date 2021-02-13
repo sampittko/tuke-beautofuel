@@ -10,9 +10,9 @@ from ..packages.eda_quality import manipulation as manipulate
 from ..packages.vehicle_eco_balance import get_interval_time, accumulate_consumption, consumption_per100km
 
 from ..api.envirocar import get_envirocar_tracks, get_envirocar_user, get_envirocar_track
-from ..api.strapi import get_strapi_tracks, update_strapi_tracks
+from ..api.strapi import get_strapi_tracks, update_strapi_tracks, get_strapi_phase_1_tracks_count
 from ..utils.functions import seconds_between, float_round_2
-from ..utils.constants import ENVIROCAR_DATETIME_FORMAT, ENVIROCAR_DATA
+from ..utils.constants import ENVIROCAR_DATETIME_FORMAT, ENVIROCAR_DATA, PHASE_1_MIN_TRACKS, COMPONENT_1_WEIGHT, COMPONENT_2_WEIGHT, COMPONENT_3_WEIGHT, COMPONENT_4_WEIGHT
 
 
 async def handler(data, x_user, x_token, bbox, influxdb_client):
@@ -29,24 +29,27 @@ async def handler(data, x_user, x_token, bbox, influxdb_client):
     # TODO Move below and set flag for incompatible track so that it is not being refetched and cleaned every time
     tracks_df = clean_data(tracks_df)
 
-    existing_tracks = await get_strapi_tracks(data)
-
     if tracks_df.empty:
         message = 'New tracks: 0'
         print(message)
         return handler_success(message)
 
-    tracks_df, track_ids = filter_tracks(tracks_df, existing_tracks, data)
-
-    existing_tracks_count = len(existing_tracks)
+    track_ids = tracks_df[ENVIROCAR_DATA.TRACK_ID].unique()
     tracks_count = len(track_ids)
-    additional_tracks_data = None
 
-    if data.phaseNumber != 1 and existing_tracks_count < 3:
-        message = 'New tracks: {}, Previous tracks: {}, Insufficient participant'.format(
-            tracks_count, existing_tracks_count)
-        print(message)
-        return handler_success(message)
+    if data.phaseNumber != 1:
+        existing_phase_1_tracks_count = await get_strapi_phase_1_tracks_count(data)
+
+        if existing_phase_1_tracks_count < PHASE_1_MIN_TRACKS:
+            message = '{} new tracks but {} tracks recorded during phase 1'.format(
+                tracks_count, existing_phase_1_tracks_count)
+            print(message)
+            return handler_success(message)
+
+    existing_tracks = await get_strapi_tracks(data)
+
+    tracks_df, track_ids = filter_tracks(tracks_df, existing_tracks, data)
+    additional_tracks_data = None
 
     try:
         additional_tracks_data = await persist_new_tracks_data(tracks_df, track_ids, x_user, x_token, data, influxdb_client)
@@ -238,10 +241,10 @@ def calculate_track_data(track_df, additional_tracks_data, track_id):
 def get_track_eco_score(additional_track_data, phase_1_consumptions):
     track_2_consumption = additional_track_data['consumption']
 
-    part_50 = None
-    part_25 = None
-    part_15 = None
-    part_10 = None
+    component_1 = None
+    component_2 = None
+    component_3 = None
+    component_4 = None
 
     lower_consumption_threshold = phase_1_consumptions['mean'] - \
         phase_1_consumptions['stddev']
@@ -249,30 +252,30 @@ def get_track_eco_score(additional_track_data, phase_1_consumptions):
         phase_1_consumptions['stddev']
 
     if track_2_consumption >= upper_consumption_threshold:
-        part_50 = 0
+        component_1 = 0
     elif track_2_consumption <= lower_consumption_threshold:
-        part_50 = 100
+        component_1 = 100
     else:
-        part_50 = 100 - int(
+        component_1 = 100 - int(
             (track_2_consumption / upper_consumption_threshold) * 100)
 
     if track_2_consumption < phase_1_consumptions['min']:
-        part_25 = 100
+        component_2 = 100
     else:
-        part_25 = 0
+        component_2 = 0
 
     if track_2_consumption < phase_1_consumptions['mean']:
-        part_15 = 100
+        component_3 = 100
     else:
-        part_15 = 0
+        component_3 = 0
 
     if track_2_consumption < phase_1_consumptions['max']:
-        part_10 = 100
+        component_4 = 100
     else:
-        part_10 = 0
+        component_4 = 0
 
-    additional_track_data['score'] = int(part_50 * 0.50 + part_25 * 0.25 +
-                                         part_15 * 0.15 + part_10 * 0.10)
+    additional_track_data['score'] = int(component_1 * COMPONENT_1_WEIGHT + component_2 * COMPONENT_2_WEIGHT +
+                                         component_3 * COMPONENT_3_WEIGHT + component_4 * COMPONENT_4_WEIGHT)
 
     return additional_track_data
 

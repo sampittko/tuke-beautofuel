@@ -14,6 +14,23 @@ const {
 
 module.exports = {
   /**
+   * Count records.
+   *
+   * @return {Number}
+   */
+
+  count(ctx) {
+    if (ctx.state.user.username !== "updater") {
+      return ctx.badRequest("You are not allowed to perform this action");
+    }
+
+    if (ctx.query._q) {
+      return strapi.services.tracks.countSearch(ctx.query);
+    }
+    return strapi.services.tracks.count(ctx.query);
+  },
+
+  /**
    * Create a record.
    *
    * @return {Object}
