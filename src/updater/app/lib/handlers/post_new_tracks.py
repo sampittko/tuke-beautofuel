@@ -31,15 +31,22 @@ async def handler(data, x_user, x_token, bbox, influxdb_client):
 
     existing_tracks = await get_strapi_tracks(data)
 
-    tracks_df, track_ids = filter_tracks(tracks_df, existing_tracks, data)
-
     if tracks_df.empty:
         message = 'New tracks: 0'
         print(message)
         return handler_success(message)
 
+    tracks_df, track_ids = filter_tracks(tracks_df, existing_tracks, data)
+
+    existing_tracks_count = len(existing_tracks)
     tracks_count = len(track_ids)
     additional_tracks_data = None
+
+    if data.phaseNumber != 1 and existing_tracks_count < 3:
+        message = 'New tracks: {}, Previous tracks: {}, Insufficient participant'.format(
+            tracks_count, existing_tracks_count)
+        print(message)
+        return handler_success(message)
 
     try:
         additional_tracks_data = await persist_new_tracks_data(tracks_df, track_ids, x_user, x_token, data, influxdb_client)
