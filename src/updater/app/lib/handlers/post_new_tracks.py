@@ -50,6 +50,7 @@ async def handler(data, x_user, x_token, bbox, influxdb_client):
 
     tracks_df, track_ids = filter_tracks(tracks_df, existing_tracks, data)
     additional_tracks_data = None
+    tracks_count = len(track_ids)
 
     try:
         additional_tracks_data = await persist_new_tracks_data(tracks_df, track_ids, x_user, x_token, data, influxdb_client)
