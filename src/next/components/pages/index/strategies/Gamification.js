@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import _ from "lodash";
 
 const Gamification = ({ position }) => {
   const [rank, setRank] = useState("Bez poradia");

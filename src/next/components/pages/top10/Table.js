@@ -1,5 +1,4 @@
 import React from "react";
-import _ from "lodash";
 import { useSession } from "next-auth/client";
 
 const Table = ({ top10 }) => {
