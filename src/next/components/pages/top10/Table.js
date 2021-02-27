@@ -2,13 +2,12 @@ import React from "react";
 import _ from "lodash";
 import { useSession } from "next-auth/client";
 
-const Table = ({ drivers }) => {
+const Table = ({ top10 }) => {
   const [session] = useSession();
 
-  const top10 = _.chain(drivers)
-    .orderBy(["score", "username"], ["desc", "asc"])
-    .dropRight(drivers.length > 10 ? drivers.length - 10 : 0)
-    .value();
+  if (!top10) {
+    return null;
+  }
 
   return (
     <div

@@ -1,102 +1,53 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import _ from "lodash";
-import { USER_GROUPS } from "../../../../utils/constants";
-import { useSession } from "next-auth/client";
 
-const Gamification = ({ allTracks, allUsers, phaseNumber }) => {
-  const [session] = useSession();
+const Gamification = ({ position }) => {
   const [rank, setRank] = useState("Bez poradia");
 
   useEffect(() => {
-    if (allTracks && allUsers) {
-      const allUsernamesByStrategy = allUsers;
-      const driversWithTracksObject = _.chain(allTracks)
-        .groupBy("user.username")
-        .map((track, key, tracks) => ({
-          username: key,
-          id: track[0].user.id,
-          score: Math.floor(
-            track[0].user.wallet[`score${phaseNumber}`] / tracks[key].length
-          ),
-          group: track[0].user.group,
-        }))
-        .keyBy("username")
-        .value();
+    if (position) {
+      let positionString;
 
-      const allUsernames = [
-        ...allUsernamesByStrategy.gamificationUsernames,
-        ...allUsernamesByStrategy.rewardsUsernames,
-      ];
-
-      allUsernames.forEach((driver) => {
-        if (!driversWithTracksObject[`${driver.username}`]) {
-          driversWithTracksObject[`${driver.username}`] = {
-            id: driver.id,
-            username: driver.username,
-            score: 0,
-            group: driver.group,
-          };
-        }
-      });
-
-      let newDrivers = [];
-
-      _.forOwn(driversWithTracksObject, (value) => {
-        if (phaseNumber === 3 || value.group === USER_GROUPS.gamification) {
-          newDrivers.push(value);
-        }
-      });
-
-      newDrivers = _.orderBy(
-        newDrivers,
-        ["score", "username"],
-        ["desc", "asc"]
-      );
-
-      const newRank = newDrivers.findIndex((elm) => elm.id === session.id) + 1;
-
-      let newRankString;
-
-      switch (newRank) {
+      switch (position) {
         case 1:
-          newRankString = "Prvý";
+          positionString = "Prvý";
           break;
         case 2:
-          newRankString = "Druhý";
+          positionString = "Druhý";
           break;
         case 3:
-          newRankString = "Tretí";
+          positionString = "Tretí";
           break;
         case 4:
-          newRankString = "Štvrtý";
+          positionString = "Štvrtý";
           break;
         case 5:
-          newRankString = "Piaty";
+          positionString = "Piaty";
           break;
         case 6:
-          newRankString = "Šiesty";
+          positionString = "Šiesty";
           break;
         case 7:
-          newRankString = "Siedmy";
+          positionString = "Siedmy";
           break;
         case 8:
-          newRankString = "Ôsmy";
+          positionString = "Ôsmy";
           break;
         case 9:
-          newRankString = "Deviaty";
+          positionString = "Deviaty";
           break;
         case 10:
-          newRankString = "Desiaty";
+          positionString = "Desiaty";
           break;
         default:
-          newRankString = `${newRank}.`;
+          positionString = "11. a viac";
           break;
       }
 
-      setRank(newRankString);
+      setRank(positionString);
     }
-  }, [allTracks, allUsers]);
+  }, [position]);
 
   return (
     <div className="overflow-hidden bg-white rounded-lg shadow">

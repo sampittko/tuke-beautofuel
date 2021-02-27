@@ -4,7 +4,9 @@ import Error from "./Error";
 
 const Spinner = ({ dependencies, errors, children }) => {
   const visible = dependencies.includes(true);
-  const noErrors = errors.every((error) => error === undefined);
+  const noErrors = errors.every(
+    (error) => error === undefined || error === null
+  );
 
   return (
     <>

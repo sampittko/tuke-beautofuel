@@ -4,14 +4,7 @@ import Gamification from "./Gamification";
 import Rewards from "./Rewards";
 import { USER_GROUPS } from "../../../../utils/constants";
 
-const Strategies = ({
-  phase,
-  user,
-  recommendation,
-  allTracks,
-  allUsers,
-  tracks,
-}) => {
+const Strategies = ({ phase, user, recommendation, tracks, position }) => {
   const phaseNumber = phase?.number;
   const userGroup = user?.group;
 
@@ -36,11 +29,7 @@ const Strategies = ({
 
           {(phaseNumber === 3 ||
             (phaseNumber === 2 && userGroup === USER_GROUPS.gamification)) && (
-            <Gamification
-              allTracks={allTracks}
-              allUsers={allUsers}
-              phaseNumber={phaseNumber}
-            />
+            <Gamification position={position} />
           )}
 
           {phaseNumber === 3 && (

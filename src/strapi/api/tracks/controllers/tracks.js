@@ -110,10 +110,6 @@ module.exports = {
       phaseNumber,
     });
 
-    if (tracks.length === 0) {
-      return { drivers: [] };
-    }
-
     let users;
     if (phaseNumber === 2) {
       users = await strapi.query("user", "users-permissions").find({
@@ -182,9 +178,7 @@ module.exports = {
       .dropRight(drivers.length > 10 ? drivers.length - 10 : 0)
       .value();
 
-    return {
-      drivers,
-    };
+    return drivers;
   },
 
   async top10Stats(ctx) {
@@ -216,7 +210,7 @@ module.exports = {
     }
 
     const score = Math.floor(_.meanBy(tracks, "score"));
-    const duration = _.sumBy(tracks, "duration");
+    const duration = _.sumBy(tracks, "duration.low_");
     const distance = _.sumBy(tracks, "totalDistance");
     const fuelConsumed = _.sumBy(tracks, "fuelConsumed");
 
@@ -244,9 +238,7 @@ module.exports = {
 
     const username = ctx.state.user.username;
 
-    const { drivers: top10Drivers } = await strapi.controllers.tracks.top10(
-      ctx
-    );
+    let top10Drivers = await strapi.controllers.tracks.top10(ctx);
 
     let positionIndex = top10Drivers.findIndex(
       (driver) => driver.username === username
@@ -256,8 +248,6 @@ module.exports = {
       positionIndex = 10;
     }
 
-    return {
-      position: positionIndex + 1,
-    };
+    return positionIndex + 1;
   },
 };

@@ -7,15 +7,24 @@ import Table from "./Table";
 import Spinner from "../../common/Spinner";
 import { useQuery } from "@apollo/client";
 import PhaseAPI from "../../../lib/api/phase";
-import TracksAPI from "../../../lib/api/tracks";
-import _ from "lodash";
 import UsersAPI from "../../../lib/api/users";
 import Redirects from "../../common/Redirects";
 import { USER_GROUPS } from "../../../utils/constants";
+import { getApiUrl } from "../../../utils/functions";
+import axios from "axios";
 
 const Top10PageComponent = () => {
   const [session] = useSession();
-  const [drivers, setDrivers] = useState([]);
+
+  // last minute refactoring
+  const [top10, setTop10] = useState(null);
+  const [top10Loading, setTop10Loading] = useState(false);
+  const [top10Error, setTop10Error] = useState(null);
+
+  // last minute refactoring
+  const [top10Stats, setTop10Stats] = useState(null);
+  const [top10StatsLoading, setTop10StatsLoading] = useState(false);
+  const [top10StatsError, setTop10StatsError] = useState(null);
 
   const {
     loading: phaseLoading,
@@ -23,78 +32,42 @@ const Top10PageComponent = () => {
     data: phaseData,
   } = useQuery(PhaseAPI.only);
 
-  const {
-    loading: tracksLoading,
-    error: tracksError,
-    data: tracksData,
-  } = useQuery(TracksAPI.top10, {
-    variables: {
-      phaseNumber: phaseData?.phase.number,
-    },
-    skip: !phaseData,
-    pollInterval: 30000,
-  });
-
   const { data: userData } = useQuery(UsersAPI.bySession, {
     skip: !session,
     variables: { userId: session?.id },
   });
 
-  const { data: usersData } = useQuery(UsersAPI.allUsernamesByStrategy);
+  useEffect(() => {
+    setTop10Error(null);
+    setTop10Loading(true);
+    axios
+      .get(`${getApiUrl()}/tracks/top10`)
+      .then((res) => {
+        setTop10(res.data);
+      })
+      .catch((err) => {
+        setTop10Error(err);
+      })
+      .finally(() => {
+        setTop10Loading(false);
+      });
+  }, []);
 
   useEffect(() => {
-    if (tracksData && usersData) {
-      const allUsernamesByStrategy = usersData;
-      const driversWithTracksObject = _.chain(tracksData.tracks)
-        .groupBy("user.username")
-        .map((track, key, tracks) => ({
-          username: key,
-          id: track[0].user.id,
-          score: Math.floor(
-            track[0].user.wallet[`score${phaseData.phase.number}`] /
-              tracks[key].length
-          ),
-          duration: _.sumBy(track, "duration"),
-          distance: _.sumBy(track, "totalDistance"),
-          fuelConsumed: _.sumBy(track, "fuelConsumed"),
-          group: track[0].user.group,
-        }))
-        .keyBy("username")
-        .value();
-
-      const allUsernames = [
-        ...allUsernamesByStrategy.gamificationUsernames,
-        ...allUsernamesByStrategy.rewardsUsernames,
-      ];
-
-      allUsernames.forEach((driver) => {
-        if (!driversWithTracksObject[`${driver.username}`]) {
-          driversWithTracksObject[`${driver.username}`] = {
-            id: driver.id,
-            username: driver.username,
-            score: 0,
-            distance: 0,
-            duration: 0,
-            fuelConsumed: 0,
-            group: driver.group,
-          };
-        }
+    setTop10StatsError(null);
+    setTop10StatsLoading(true);
+    axios
+      .get(`${getApiUrl()}/tracks/top10/stats`)
+      .then((res) => {
+        setTop10Stats(res.data);
+      })
+      .catch((err) => {
+        setTop10StatsError(err);
+      })
+      .finally(() => {
+        setTop10StatsLoading(false);
       });
-
-      const newDrivers = [];
-
-      _.forOwn(driversWithTracksObject, (value) => {
-        if (
-          phaseData.phase.number === 3 ||
-          value.group === USER_GROUPS.gamification
-        ) {
-          newDrivers.push(value);
-        }
-      });
-
-      setDrivers(newDrivers);
-    }
-  }, [tracksData, usersData]);
+  }, []);
 
   if (
     phaseData?.phase.number === 1 ||
@@ -106,15 +79,15 @@ const Top10PageComponent = () => {
 
   return (
     <Spinner
-      dependencies={[phaseLoading, tracksLoading]}
-      errors={[phaseError, tracksError]}
+      dependencies={[phaseLoading, top10Loading, top10StatsLoading]}
+      errors={[phaseError, top10Error, top10StatsError]}
     >
       <div className="min-h-screen bg-gray-100">
         <Navigation />
         <main>
-          <Table drivers={drivers} />
+          <Table top10={top10} />
           {session && <Share />}
-          <Stats phaseNumber={phaseData?.phase.number} drivers={drivers} />
+          <Stats phaseNumber={phaseData?.phase.number} stats={top10Stats} />
         </main>
       </div>
     </Spinner>

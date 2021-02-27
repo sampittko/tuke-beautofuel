@@ -1,27 +1,13 @@
 import { useSession } from "next-auth/client";
-import React, { useEffect, useState } from "react";
-import {
-  formatDistance,
-  formatDuration,
-  formatConsumption,
-} from "../../../utils/functions";
+import React from "react";
+import { formatDistance, formatConsumption } from "../../../utils/functions";
 
-const Stats = ({ phaseNumber, tracks, drivers }) => {
+const Stats = ({ phaseNumber, stats }) => {
   const [session] = useSession();
 
-  const [totalDistance, setTotalDistance] = useState(0);
-  const [totalDuration, setTotalDuration] = useState(0);
-  const [averageEcoScore, setAverageEcoScore] = useState(0);
-  const [totalFuelConsumed, setTotalFuelConsumed] = useState(0);
-
-  useEffect(() => {
-    setAverageEcoScore(
-      drivers.length !== 0 ? Math.floor(_.meanBy(drivers, "score")) : 0
-    );
-    setTotalDuration(_.sumBy(drivers, "duration"));
-    setTotalDistance(_.sumBy(drivers, "distance"));
-    setTotalFuelConsumed(_.sumBy(drivers, "fuelConsumed"));
-  }, [tracks]);
+  if (!stats) {
+    return null;
+  }
 
   return (
     <div className="py-32">
@@ -47,7 +33,7 @@ const Stats = ({ phaseNumber, tracks, drivers }) => {
                     Spolu najazdené
                   </dt>
                   <dd className="order-1 text-5xl font-extrabold text-green-600">
-                    {formatDistance(totalDistance, 2)}
+                    {formatDistance(parseFloat(stats.distance))}
                   </dd>
                 </div>
                 <div className="flex flex-col p-6 text-center border-t border-gray-100 sm:border-0 sm:border-l">
@@ -55,7 +41,7 @@ const Stats = ({ phaseNumber, tracks, drivers }) => {
                     Priemerné ekologické skóre
                   </dt>
                   <dd className="order-1 text-5xl font-extrabold text-green-600">
-                    {averageEcoScore}
+                    {stats.score}
                   </dd>
                 </div>
                 <div className="flex flex-col p-6 text-center border-t border-b border-gray-100 sm:border-0 sm:border-l sm:border-r">
@@ -63,7 +49,7 @@ const Stats = ({ phaseNumber, tracks, drivers }) => {
                     Spotrebované množstvo paliva
                   </dt>
                   <dd className="order-1 text-5xl font-extrabold text-green-600">
-                    {formatConsumption(totalFuelConsumed)}
+                    {formatConsumption(parseFloat(stats.fuelConsumed))}
                   </dd>
                 </div>
                 <div className="flex flex-col p-6 text-center border-t border-b border-gray-100 sm:border-0 sm:border-l sm:border-r">
@@ -71,7 +57,7 @@ const Stats = ({ phaseNumber, tracks, drivers }) => {
                     Celkový čas za volantom
                   </dt>
                   <dd className="order-1 text-5xl font-extrabold text-green-600">
-                    {formatDuration(totalDuration)}
+                    {stats.duration}
                   </dd>
                 </div>
               </dl>

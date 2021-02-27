@@ -16,12 +16,11 @@ import PurchaseNotification from "./notifications/PurchaseNotification";
 import Skeleton from "./Skeleton";
 import TracksAPI from "../../../lib/api/tracks";
 import SynchronizationsAPI from "../../../lib/api/synchronizations";
-import {
-  SYNCHRONIZATION_STATUSES,
-  USER_GROUPS,
-} from "../../../utils/constants";
+import { SYNCHRONIZATION_STATUSES } from "../../../utils/constants";
 import PhaseBanner from "./PhaseBanner";
 import ExperimentOverviewLink from "./ExperimentOverviewLink";
+import { getApiUrl } from "../../../utils/functions";
+import axios from "axios";
 
 const IndexPageComponent = () => {
   const [session] = useSession();
@@ -38,6 +37,11 @@ const IndexPageComponent = () => {
     setExperimentOverviewLinkVisible,
   ] = useState(false);
   const [historyStartIdx, setHistoryStartIdx] = useState(null);
+
+  // last minute refactoring
+  const [position, setPosition] = useState(null);
+  const [positionLoading, setPositionLoading] = useState(false);
+  const [positionError, setPositionError] = useState(null);
 
   const {
     loading: phaseLoading,
@@ -73,35 +77,6 @@ const IndexPageComponent = () => {
   } = useQuery(TracksAPI.bySession, {
     variables: { userId: session.id, phaseNumber: phaseData?.phase.number },
     skip: !phaseData,
-  });
-
-  const {
-    loading: gamificationTracksLoading,
-    error: gamificationTracksError,
-    data: gamificationTracksData,
-  } = useQuery(TracksAPI.gamification, {
-    variables: {
-      phaseNumber: phaseData?.phase.number,
-    },
-    skip:
-      !phaseData ||
-      !userData ||
-      phaseData?.phase.number === 1 ||
-      (phaseData?.phase.number === 2 &&
-        userData?.user.group === USER_GROUPS.rewards),
-  });
-
-  const {
-    data: gamificationUsersData,
-    loading: gamificationUsersDataLoading,
-    error: gamificationUsersDataError,
-  } = useQuery(UsersAPI.allUsernamesByStrategy, {
-    skip:
-      !phaseData ||
-      !userData ||
-      phaseData?.phase.number === 1 ||
-      (phaseData?.phase.number === 2 &&
-        userData?.user.group === USER_GROUPS.rewards),
   });
 
   const { error: synchronizationError, data: synchronizationData } = useQuery(
@@ -162,6 +137,28 @@ const IndexPageComponent = () => {
     }
   }, [tracksData]);
 
+  useEffect(() => {
+    if (session) {
+      setPositionError(null);
+      setPositionLoading(true);
+      axios
+        .get(`${getApiUrl()}/tracks/top10/position`, {
+          headers: {
+            authorization: `Bearer ${session.jwt}`,
+          },
+        })
+        .then((res) => {
+          setPosition(res.data);
+        })
+        .catch((err) => {
+          setPositionError(err);
+        })
+        .finally(() => {
+          setPositionLoading(false);
+        });
+    }
+  }, [tracksData?.tracks.length]);
+
   return (
     <Spinner
       dependencies={[
@@ -169,16 +166,14 @@ const IndexPageComponent = () => {
         recommendationLoading,
         userLoading,
         tracksLoading,
-        gamificationTracksLoading,
-        gamificationUsersDataLoading,
+        positionLoading,
       ]}
       errors={[
         phaseError,
         recommendationError,
         userError,
         tracksError,
-        gamificationTracksError,
-        gamificationUsersDataError,
+        positionError,
       ]}
     >
       <div className="z-0 flex h-screen overflow-hidden bg-gray-100">
@@ -196,9 +191,8 @@ const IndexPageComponent = () => {
                 user={userData?.user}
                 phase={phaseData?.phase}
                 recommendation={recommendationData?.recommendation}
-                allTracks={gamificationTracksData?.tracks}
-                allUsers={gamificationUsersData}
                 tracks={tracksData?.tracks}
+                position={position}
               />
               <Stats tracks={tracksData?.tracks} />
               <History
