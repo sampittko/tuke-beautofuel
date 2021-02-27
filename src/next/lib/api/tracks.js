@@ -23,39 +23,6 @@ const TracksAPI = {
       }
     }
   `,
-  top10: gql`
-    query top10Tracks($phaseNumber: Int!) {
-      tracks(where: { phaseNumber: $phaseNumber }) {
-        user {
-          id
-          username
-          wallet {
-            score2
-            score3
-          }
-          group
-        }
-        duration
-        totalDistance
-        fuelConsumed
-      }
-    }
-  `,
-  gamification: gql`
-    query gamificationTracks($phaseNumber: Int!) {
-      tracks(where: { phaseNumber: $phaseNumber }) {
-        user {
-          id
-          username
-          wallet {
-            score2
-            score3
-          }
-          group
-        }
-      }
-    }
-  `,
 };
 
 export default TracksAPI;

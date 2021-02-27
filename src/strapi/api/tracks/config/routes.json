@@ -18,6 +18,30 @@
     },
     {
       "method": "GET",
+      "path": "/tracks/top10/position",
+      "handler": "tracks.top10Position",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/tracks/top10/stats",
+      "handler": "tracks.top10Stats",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/tracks/top10",
+      "handler": "tracks.top10",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
       "path": "/tracks/:id",
       "handler": "tracks.findOne",
       "config": {

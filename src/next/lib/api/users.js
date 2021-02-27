@@ -79,33 +79,6 @@ const UsersAPI = {
       }
     }
   `,
-  allUsernamesByStrategy: gql`
-    query allUsernamesByStrategy {
-      gamificationUsernames: users(where: { group: "gamification" }) {
-        id
-        username
-        group
-      }
-      rewardsUsernames: users(where: { group: "rewards" }) {
-        id
-        username
-        group
-      }
-    }
-  `,
-  allUsersWithWallets: gql`
-    query allUsers {
-      users {
-        id
-        wallet {
-          credits2
-          credits3
-        }
-        group
-        username
-      }
-    }
-  `,
 };
 
 export default UsersAPI;

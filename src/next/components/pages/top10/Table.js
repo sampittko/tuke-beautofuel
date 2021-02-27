@@ -113,14 +113,7 @@ const Table = ({ drivers }) => {
                         const color = rank <= 3 ? "yellow-50" : "white";
 
                         return (
-                          <tr
-                            className={`bg-${color} border-2 border-dashed ${
-                              session?.id === driver.id
-                                ? " border-gray-300"
-                                : "border-gray-50"
-                            }`}
-                            key={`driver-${i}`}
-                          >
+                          <tr className={`bg-${color}}`} key={`driver-${i}`}>
                             <td className="px-6 py-4 text-sm font-medium text-gray-500 whitespace-nowrap">
                               {driver.score === 0 ? "-" : rank}
                             </td>
