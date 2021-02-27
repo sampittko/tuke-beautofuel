@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   next:
-    image: my-next:2.0.0
+    image: my-next:3.0.0
     environment:
       NODE_ENV: production
     build:
@@ -44,7 +44,7 @@ services:
       - strapidb-volume:/data/db
 
   updater:
-    image: my-updater:2.0.0
+    image: my-updater:3.0.0
     env_file:
       - ./../../src/updater/app/.env
     build:
