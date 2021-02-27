@@ -17,8 +17,8 @@ const Spinner = ({ dependencies, errors, children }) => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-90"
       >
-        <div className="h-screen w-screen bg-white flex items-center justify-center">
-          <div className="h-5 w-5 bg-green-600" />
+        <div className="flex items-center justify-center w-screen h-screen bg-white">
+          <div className="w-5 h-5 bg-green-600 animate-bounce" />
         </div>
       </Transition>
       <Transition

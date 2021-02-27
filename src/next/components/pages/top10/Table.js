@@ -110,14 +110,7 @@ const Table = ({ drivers }) => {
                     <tbody className="bg-white divide-y divide-gray-200">
                       {top10.map((driver, i) => {
                         const rank = i + 1;
-                        const color =
-                          rank === 1
-                            ? "red-50"
-                            : rank === 2
-                            ? "yellow-50"
-                            : rank === 3
-                            ? "purple-50"
-                            : "white";
+                        const color = rank <= 3 ? "yellow-50" : "white";
 
                         return (
                           <tr

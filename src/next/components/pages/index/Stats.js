@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
 import {
+  formatConsumption,
   formatDistance,
   formatDuration,
   formatNumber,
@@ -124,7 +125,7 @@ const Stats = ({ tracks }) => {
                     </dt>
                     <dd>
                       <div className="text-lg font-medium text-green-900">
-                        {formatNumber(totalConsumption)} L / 100 km
+                        {formatConsumption(totalConsumption)} / 100 km
                         <span className="mt-px mx-1 inline-flex items-center px-2.5 py-0.5 rounded-full text-sm uppercase font-medium bg-yellow-50 text-yellow-500">
                           Približne
                         </span>
@@ -162,7 +163,7 @@ const Stats = ({ tracks }) => {
                     </dt>
                     <dd>
                       <div className="text-lg font-medium text-green-900">
-                        {formatNumber(totalFuelConsumed)} L
+                        {formatConsumption(totalFuelConsumed)}
                         <span className="mt-px mx-1 inline-flex items-center px-2.5 py-0.5 rounded-full text-sm uppercase font-medium bg-yellow-50 text-yellow-500">
                           Približne
                         </span>

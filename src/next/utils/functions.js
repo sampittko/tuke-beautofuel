@@ -25,6 +25,9 @@ export const formatDuration = (secs) => {
   // return pad(hours)+":"+pad(minutes)+":"+pad(secs); for old browsers
 };
 
+export const formatConsumption = (fuelConsumed) =>
+  `${fuelConsumed.toFixed(2).replace(".", ",")} L`;
+
 export const formatDistance = (distance) =>
   `${distance.toFixed(2).replace(".", ",")} km`;
 

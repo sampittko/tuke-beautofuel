@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Moment from "react-moment";
 import { USER_GROUPS } from "../../../../utils/constants";
 import {
+  formatConsumption,
   formatDistance,
   formatDuration,
   formatNumber,
@@ -83,7 +84,7 @@ const History = ({
                         {formatDuration(track.duration)}
                       </span>
                       <span className="mt-1 inline-flex px-2.5 py-0.5 text-xs font-medium">
-                        {formatNumber(track.consumption)} L / 100 km
+                        {formatConsumption(track.consumption)} / 100 km
                       </span>
                       <span className="mt-1 inline-flex px-2.5 py-0.5 text-xs font-medium">
                         {formatNumber(track.speed)} km / h
@@ -358,7 +359,7 @@ const History = ({
                         {formatDuration(track.duration)}
                       </td>
                       <td className="px-6 py-4 text-sm text-right text-gray-500 whitespace-nowrap">
-                        {formatNumber(track.consumption)} L / 100 km
+                        {formatConsumption(track.consumption)} / 100 km
                       </td>
                       <td className="px-6 py-4 text-sm text-right text-gray-500 whitespace-nowrap">
                         {formatNumber(track.speed)} km / h

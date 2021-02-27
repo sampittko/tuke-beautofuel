@@ -1,6 +1,10 @@
 import { useSession } from "next-auth/client";
 import React, { useEffect, useState } from "react";
-import { formatDistance, formatDuration } from "../../../utils/functions";
+import {
+  formatDistance,
+  formatDuration,
+  formatConsumption,
+} from "../../../utils/functions";
 
 const Stats = ({ phaseNumber, tracks, drivers }) => {
   const [session] = useSession();
@@ -59,7 +63,7 @@ const Stats = ({ phaseNumber, tracks, drivers }) => {
                     Spotrebované množstvo paliva
                   </dt>
                   <dd className="order-1 text-5xl font-extrabold text-green-600">
-                    {totalFuelConsumed.toFixed(2)} L
+                    {formatConsumption(totalFuelConsumed)}
                   </dd>
                 </div>
                 <div className="flex flex-col p-6 text-center border-t border-b border-gray-100 sm:border-0 sm:border-l sm:border-r">
