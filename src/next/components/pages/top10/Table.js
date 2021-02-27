@@ -109,10 +109,17 @@ const Table = ({ top10 }) => {
                     <tbody className="bg-white divide-y divide-gray-200">
                       {top10.map((driver, i) => {
                         const rank = i + 1;
-                        const color = rank <= 3 ? "yellow-50" : "white";
+                        const color =
+                          rank === 3
+                            ? "bg-green-50"
+                            : rank === 2
+                            ? "bg-green-100"
+                            : rank === 1
+                            ? "bg-green-200"
+                            : "bg-white";
 
                         return (
-                          <tr className={`bg-${color}}`} key={`driver-${i}`}>
+                          <tr className={color} key={`driver-${i}`}>
                             <td className="px-6 py-4 text-sm font-medium text-gray-500 whitespace-nowrap">
                               {driver.score === 0 ? "-" : rank}
                             </td>
