@@ -13,7 +13,7 @@ const options = {
   session: {
     jwt: true,
   },
-  secret: "someamazingtotallyrandomsecret",
+  secret: "someamazingtotallyrandomsecret2",
   debug: process.env.NODE_ENV !== "production",
   callbacks: {
     session: async (session, user) => {
