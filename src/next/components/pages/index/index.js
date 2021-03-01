@@ -138,7 +138,11 @@ const IndexPageComponent = () => {
   }, [tracksData]);
 
   useEffect(() => {
-    if (session) {
+    if (
+      session &&
+      (phaseData?.phase.number === 2 || phaseData?.phase.number === 3)
+    ) {
+      console.log(phaseData?.phase.number);
       setPositionError(null);
       setPositionLoading(true);
       axios
@@ -157,7 +161,7 @@ const IndexPageComponent = () => {
           setPositionLoading(false);
         });
     }
-  }, [tracksData?.tracks.length]);
+  }, [tracksData?.tracks.length, phaseData?.phase.number]);
 
   return (
     <Spinner
