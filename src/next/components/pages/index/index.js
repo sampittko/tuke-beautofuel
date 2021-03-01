@@ -16,7 +16,10 @@ import PurchaseNotification from "./notifications/PurchaseNotification";
 import Skeleton from "./Skeleton";
 import TracksAPI from "../../../lib/api/tracks";
 import SynchronizationsAPI from "../../../lib/api/synchronizations";
-import { SYNCHRONIZATION_STATUSES } from "../../../utils/constants";
+import {
+  SYNCHRONIZATION_STATUSES,
+  USER_GROUPS,
+} from "../../../utils/constants";
 import PhaseBanner from "./PhaseBanner";
 import ExperimentOverviewLink from "./ExperimentOverviewLink";
 import { getApiUrl } from "../../../utils/functions";
@@ -140,7 +143,8 @@ const IndexPageComponent = () => {
   useEffect(() => {
     if (
       session &&
-      (phaseData?.phase.number === 2 || phaseData?.phase.number === 3)
+      (phaseData?.phase.number === 2 || phaseData?.phase.number === 3) &&
+      userData?.user.group === USER_GROUPS.gamification
     ) {
       console.log(phaseData?.phase.number);
       setPositionError(null);
