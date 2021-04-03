@@ -43,7 +43,7 @@ services:
     volumes:
       - strapidb-volume:/data/db
     # use when you want to export data
-    # hint: hack them up first
+    # hint: back them up first and make sure you are using strong password
     # ports:
     #   - 27017:27017
 
@@ -87,7 +87,7 @@ services:
     volumes:
       - grafanadb-volume:/var/lib/influxdb
     # use when you want to export data
-    # hint: hack them up first
+    # hint: back them up first and make sure you are using strong password
     # ports:
     #   - 8086:8086
 
