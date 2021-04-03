@@ -1,0 +1,20 @@
+version: '3.9'
+
+services:
+  strapidb:
+    image: mongo:4.4.2
+    restart: unless-stopped
+    env_file: ./../../src/strapi/.db.env
+    volumes:
+      - strapidb-volume:/data/db
+    ports:
+      - 27017:27017
+
+  grafanadb:
+    image: influxdb:1.8.3
+    restart: unless-stopped
+    env_file: ./../../src/grafana/.db.env
+    volumes:
+      - grafanadb-volume:/var/lib/influxdb
+    ports:
+      - 8086:8086
