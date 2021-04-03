@@ -42,8 +42,10 @@ services:
       - core-network
     volumes:
       - strapidb-volume:/data/db
-    ports:
-      - 27017:27017
+    # use when you want to export data
+    # hint: hack them up first
+    # ports:
+    #   - 27017:27017
 
   updater:
     image: my-updater:3.0.0
@@ -84,8 +86,10 @@ services:
       - updater-network
     volumes:
       - grafanadb-volume:/var/lib/influxdb
-    ports:
-      - 8086:8086
+    # use when you want to export data
+    # hint: hack them up first
+    # ports:
+    #   - 8086:8086
 
 networks:
   app-network:
