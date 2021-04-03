@@ -114,4 +114,4 @@ The only requirement for starting up application in the production _environment_
 
 ## License
 
-This project is under the MIT license which is great! Read more inside [LICENSE](https://github.com/sampittko/gatsby-starter-intl-blog/blob/main/LICENSE).
+This project is under the MIT license which is great! Read more inside [LICENSE](https://github.com/sampittko/tuke-beautofuel/blob/main/LICENSE).
