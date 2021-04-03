@@ -111,6 +111,7 @@ The only requirement for starting up application in the production _environment_
 ## Helpers
 
 - hook at Docker container's CLI: `docker exec -it <HASH> /bin/sh; exit`
+- export data from databases that the solution uses to analyze them locally in seconds thanks to this [tutorial](https://github.com/sampittko/tuke-beautofuel/blob/main/EXPORT.md) that I prepared
 
 ## License
 

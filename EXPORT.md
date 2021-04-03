@@ -1,10 +1,15 @@
 # Export
 
-In order to export data from databases (MongoDB and InfluxDB) that are being used in the solution, you will need to open ports of database containers in production's `docker-compose.yml` file first. In order to do that, uncomment the lines in that file where the ports are specified and you will be ready right after the restart of those containers.
+Want to do some data analysis locally? Export data from databases (MongoDB and InfluxDB) that the solution uses to CSV in seconds by going through the following steps:
+
+1. Open `/docker/prod/docker-compose.yml`
+2. Uncomment the two lines where ports are specified which will cause database APIs to be public
+3. Restart these database Docker containers to apply changes
+4. Run the commands below to download data to CSV
 
 ## InfluxDB
 
-Install the `influx` CLI and execute the following commands from your terminal:
+Install the `influx` CLI (make sure it is **v1.x.x**) and execute the following commands from your terminal:
 
 ```bash
 # Track Features collection
