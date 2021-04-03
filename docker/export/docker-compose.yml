@@ -18,3 +18,7 @@ services:
       - grafanadb-volume:/var/lib/influxdb
     ports:
       - 8086:8086
+
+volumes:
+  strapidb-volume:
+  grafanadb-volume:
