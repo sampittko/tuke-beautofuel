@@ -11,18 +11,14 @@ This application had been used by 11 users for the period of 1 and a half month 
 
 ## Minimal Requirements
 
-Make sure your machine satisfies all the requirements below before you proceed any further.
+Make sure your machine satisfies all the requirements below before you proceed any further and also make sure that you install Docker with Docker Compose included.
 
 ```
- -----------------------------------------------------------
-| What			|			Version			| 		Note										|
- -----------------------------------------------------------
-| Docker 		|			v3.1.0			|			with Docker Compose			|
- -----------------------------------------------------------
-| Python 		|		 	v3.8.5			|															|
- -----------------------------------------------------------
-| Node 			|		 	v14.16.0		|															|
- -----------------------------------------------------------
+          |   Version
+-------------------------
+Docker    |   v3.1.0
+Python    |   v3.8.5
+Node      |   v14.16.0
 ```
 
 ## Initial Configuration
@@ -35,7 +31,7 @@ Go through the following steps before starting the project in either _developmen
    - `/src/strapi/.env` - _strapi_ and _updater_ containers URLs, _strapidb_ and _grafanadb_ credentials, `ON_VPS` toggle
    - `/src/strapi/.db.env` - _strapidb_ credentials
    - `/src/updater/app/lib/utils/constants.py` - _strapi_ URL and access token (tutorial on how to create it below), _grafanadb_ credentials
-2. Appropriately configure `strapi`
+2. Appropriately configure *strapi*
    1. Run the container in either _development_ or _production_ environment
    2. Create _token_
    3. Create _user_ with username _updater_
@@ -43,36 +39,36 @@ Go through the following steps before starting the project in either _developmen
    5. Create _recommendations_ (before 2nd phase of the experiment starts)
    6. Create _products_ (before 2nd phase of the experiment starts)
    7. Set-up permissions on endpoints for both _Authenticated_ and _Public_ roles as follows:
-      - role _Authenticated_:
-        - section _APPLICATION_
+      - role **_Authenticated_**:
+        - section **APPLICATION**:
           - _ENVIROCAR_: usercredentialsvalid
           - _PHASE_: find
           - _PURCHASES_: update
           - _RECOMMENDATIONS_: findone
           - _SYNCHRONIZATIONS_: create, findone
           - _TRACKS_: count, create, find, top10, top10position, top10stats
-        - _USERS-PERMISSIONS_
+        - section **USERS-PERMISSIONS**:
           - _AUTH_: connect
           - _USER_: findone, me, update
-      - role _Public_:
-        - section _APPLICATION_
+      - role **_Public_**:
+        - section **APPLICATION**:
           - _PHASE_: find
           - _TRACKS_: top10, top10stats
-        - section _USERS-PERMISSIONS_
+        - section **USERS-PERMISSIONS**:
           - _AUTH_: callback, connect, emailconfirmation, forgotpassword, register, resetpassword
           - _USER_: me
    8. Turn off registration with e-mail
    9. Enable Google provider
-3. Open `grafana` and configure data source for InfluxDB
+3. Open _grafana_ and configure data source for InfluxDB
 
 ## Run Project
 
 If you managed to configure all the application modules, you can start developing and deploying in the following workflow:
 
-1. Develop new features in *development* environment
-2. Test new features in *development* environment
-3. Test new features in *production* environment
-4. Release new version to *production* environment
+1. Develop new features in _development_ environment
+2. Test new features in _development_ environment
+3. Test new features in _production_ environment
+4. Release new version to _production_ environment
 
 ### Development
 
@@ -105,13 +101,12 @@ I recommend starting up the application for development in the order as describe
 
 ### Production
 
+The only requirement for starting up application in the production _environment_ is to turn on all Docker containers with the following sequence of commands:
+
 1. `cd docker/prod`
 2. `docker-compose build`
 3. `docker-compose up`
 
 ## Helpers
 
-### hook at Docker container's CLI
-
-`docker exec -it <HASH> /bin/sh; exit`
-
+- hook at Docker container's CLI: `docker exec -it <HASH> /bin/sh; exit`
