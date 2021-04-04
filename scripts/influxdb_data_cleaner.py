@@ -29,4 +29,4 @@ new_file_1.to_csv(absolute_path + "/data/cleaned/" +
                   filename_1, index=False)
 new_file_2 = data_2[keep_columns_2]
 new_file_2.to_csv(absolute_path + "/data/cleaned/" +
-                  filename_1, index=False)
+                  filename_2, index=False)
