@@ -6,7 +6,7 @@ absolute_path = "/Users/sampittko/_dev/tuke/dp/beautofuel/scripts"
 filename_1 = "trackfeatures.csv"
 filename_2 = "tracks.csv"
 keep_columns_1 = ['name', 'time', 'car', 'carEngineDisplacement', 'consumption',
-                  'emissions', 'id', 'phase', 'speed', 'strategy', 'track', 'user']
+                  'emissions', 'id', 'lat', 'lng', 'phase', 'speed', 'strategy', 'track', 'user']
 keep_columns_2 = ['name', 'time', 'begin', 'car', 'carEngineDisplacement', 'consumption', 'duration', 'end', 'fuelConsumed', 'id',
                   'length', 'phase', 'score', 'scoreConsumption', 'scoreDuration', 'scoreFuelConsumed', 'scoreLength', 'scoreSpeed', 'speed', 'strategy', 'user']
 
