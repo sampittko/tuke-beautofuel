@@ -8,9 +8,9 @@ TRACKFEATURES_FILENAME = "trackfeatures.csv"
 DATA_DIR_ABSOLUTE_PATH = os.path.abspath('./data')
 ANONYMIZED_DATA_DIR_ABSOLUTE_PATH = os.path.abspath('./data/anonymized')
 
-TRACKS_KEEP_COLS = ['name', 'time', 'begin', 'car', 'carEngineDisplacement', 'consumption',
+TRACKS_KEEP_COLS = ['time', 'begin', 'car', 'carEngineDisplacement', 'consumption',
                     'duration', 'end', 'fuelConsumed', 'id', 'length', 'phase', 'score', 'speed', 'strategy', 'user']
-TRACKFEATURES_KEEP_COLS = ['name', 'time', 'car', 'carEngineDisplacement', 'consumption',
+TRACKFEATURES_KEEP_COLS = ['time', 'car', 'carEngineDisplacement', 'consumption',
                            'emissions', 'id', 'lat', 'lng', 'phase', 'speed', 'strategy', 'track', 'user']
 
 # Read CSV files

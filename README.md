@@ -26,7 +26,7 @@ Node      |   v14.16.0
 There are 3 main folders in the root of the project:
 
 - `/docker` - contains configuration files for Docker Compose for development and production environments
-- `/scripts` - contains scripts that were used for data cleaning before submission
+- `/scripts` - contains scripts that were used for data anonymization before submission but also Jupyter Notebook file for dataset mining
 - `/src` - contains all the source codes
   - `/grafana` - Grafana configuration file that Docker image uses so that it can be started up on port `3001` as opposed to the default `3000` where the frontend runs already in case of this project
   - `/next` - frontend part of the application written in React.js using Next.js with NextAuth, TailwindCSS and Apollo GraphQL
@@ -47,7 +47,7 @@ Go through the following steps before starting the project in either development
 3. Appropriately configure **strapi**
    1. Run the container in either development or production environment
    2. Create token
-   3. Create user with username *updater*
+   3. Create user with username _updater_
    4. Create phase
    5. Create recommendations (before 2nd phase of the experiment starts)
    6. Create products (before 2nd phase of the experiment starts)
