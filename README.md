@@ -26,12 +26,12 @@ Node      |   v14.16.0
 There are 3 main folders in the root of the project:
 
 - `/docker` - contains configuration files for Docker Compose for development and production environments
-- `/scripts` - contains scripts that were used for data anonymization before submission but also Jupyter Notebook file for dataset mining
+- `/data` - contains scripts that were used for data anonymization before submission but also Jupyter Notebook file for dataset mining
 - `/src` - contains all the source codes
   - `/grafana` - Grafana configuration file that Docker image uses so that it can be started up on port `3001` as opposed to the default `3000` where the frontend runs already in case of this project
   - `/next` - frontend part of the application written in React.js using Next.js with NextAuth, TailwindCSS and Apollo GraphQL
   - `/strapi` - customized Strapi CMS for content management
-  - `/updater` - FastAPI micro-service that pulls data from enviroCar, calculates eco score and saves the processed data
+  - `/updater` - FastAPI micro-service that pulls data from enviroCar, calculates eco score and saves the processed data and also Jupyter Notebooks that were created before the actual implementation of some **updater** functionalities
 
 ## Initial Configuration
 
