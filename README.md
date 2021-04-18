@@ -73,8 +73,7 @@ Go through the following steps before starting the project in either development
    8. Turn off registration with e-mail
    9. Enable Google provider
       - redirect URL: http://strapi-host:strapi-port/api/auth/callback/google
-4. Appropriately configure **updater**
-   - Go to file with constants and set the token that you have created in **strapi**.
+4. Appropriately configure **updater** by going to file with constants and setting the token to the one that you have just created in **strapi** in the previous step
 5. Open **grafana** and configure data source for InfluxDB
 
 ## Run Project
