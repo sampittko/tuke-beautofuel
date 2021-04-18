@@ -16,9 +16,9 @@ Make sure your machine satisfies all the requirements below before you proceed a
 ```
           |   Version
 -------------------------
-Docker    |   v3.1.0
-Python    |   v3.8.5
-Node      |   v14.16.0
+Docker    |   v3.x
+Python    |   v3.x
+Node      |   v14.x
 ```
 
 ## Project Structure
@@ -72,7 +72,10 @@ Go through the following steps before starting the project in either development
           - <u>user</u>: me
    8. Turn off registration with e-mail
    9. Enable Google provider
-4. Open **grafana** and configure data source for InfluxDB
+      - redirect URL: http://strapi-host:strapi-port/api/auth/callback/google
+4. Appropriately configure **updater**
+   - Go to file with constants and set the token that you have created in **strapi**.
+5. Open **grafana** and configure data source for InfluxDB
 
 ## Run Project
 
